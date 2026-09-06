@@ -13,7 +13,6 @@ const initialLots = [
     price: 24,
     farmer: "Farmer A",
     status: "Available",
-    confirmed: false,
   },
   {
     id: 2,
@@ -26,7 +25,6 @@ const initialLots = [
     price: 23,
     farmer: "Farmer B",
     status: "Available",
-    confirmed: false,
   },
   {
     id: 3,
@@ -39,9 +37,110 @@ const initialLots = [
     price: 25,
     farmer: "Farmer C",
     status: "Available",
-    confirmed: false,
   },
 ];
+
+const translations = {
+  English: {
+    app: "AI Farming Selling Intelligence",
+    slogan: "Sell Smarter. Earn Better.",
+    getStarted: "Get Started",
+    chooseLanguage: "Choose Your Language",
+    selectTelugu: "Select Telugu",
+    selectEnglish: "Select English",
+    continue: "Continue",
+    back: "Back",
+    selectRole: "Select Your Role",
+    farmer: "Farmer",
+    buyer: "Buyer",
+    fpo: "FPO / Cooperative",
+    select: "Select",
+    login: "Login / Registration",
+    name: "Name",
+    mobile: "Mobile / Email",
+    password: "Password",
+    enter: "Enter Application",
+    online: "Online",
+    offline: "Offline",
+    farmerDashboard: "Farmer Dashboard",
+    buyerDashboard: "Buyer Dashboard",
+    addCrop: "Add Crop",
+    cropLots: "My Crop Lots",
+    aiRecommendations: "AI Recommendations",
+    marketIntelligence: "Market Intelligence",
+    orders: "Orders",
+    payments: "Payments",
+    notifications: "Notifications",
+    profile: "Profile",
+    saveCrop: "Save Crop & Continue",
+    voice: "Voice Input",
+    open: "Open",
+    available: "Available",
+    quantity: "Quantity",
+    location: "Location",
+    quality: "Quality",
+    search: "Search",
+    viewDetails: "View Details",
+    accept: "Accept",
+    decline: "Decline",
+    accepted: "Accepted",
+    lowRisk: "Low Risk",
+    mediumRisk: "Medium Risk",
+    highRisk: "High Risk",
+    highConfidence: "High Confidence",
+    success: "Success",
+  },
+
+  Telugu: {
+    app: "AI వ్యవసాయ అమ్మకాల మేధస్సు",
+    slogan: "తెలివిగా అమ్మండి. మెరుగ్గా సంపాదించండి.",
+    getStarted: "ప్రారంభించండి",
+    chooseLanguage: "మీ భాషను ఎంచుకోండి",
+    selectTelugu: "తెలుగు ఎంచుకోండి",
+    selectEnglish: "ఇంగ్లీష్ ఎంచుకోండి",
+    continue: "కొనసాగించండి",
+    back: "వెనుకకు",
+    selectRole: "మీ పాత్రను ఎంచుకోండి",
+    farmer: "రైతు",
+    buyer: "కొనుగోలుదారు",
+    fpo: "FPO / సహకార సంఘం",
+    select: "ఎంచుకోండి",
+    login: "లాగిన్ / నమోదు",
+    name: "పేరు",
+    mobile: "మొబైల్ / ఇమెయిల్",
+    password: "పాస్‌వర్డ్",
+    enter: "అప్లికేషన్‌లోకి ప్రవేశించండి",
+    online: "ఆన్‌లైన్",
+    offline: "ఆఫ్‌లైన్",
+    farmerDashboard: "రైతు డాష్‌బోర్డ్",
+    buyerDashboard: "కొనుగోలుదారు డాష్‌బోర్డ్",
+    addCrop: "పంట జోడించండి",
+    cropLots: "నా పంటలు",
+    aiRecommendations: "AI సిఫార్సులు",
+    marketIntelligence: "మార్కెట్ సమాచారం",
+    orders: "ఆర్డర్లు",
+    payments: "చెల్లింపులు",
+    notifications: "నోటిఫికేషన్లు",
+    profile: "ప్రొఫైల్",
+    saveCrop: "పంటను సేవ్ చేసి కొనసాగించండి",
+    voice: "వాయిస్ ఇన్‌పుట్",
+    open: "తెరవండి",
+    available: "అందుబాటులో ఉంది",
+    quantity: "పరిమాణం",
+    location: "స్థానం",
+    quality: "నాణ్యత",
+    search: "వెతకండి",
+    viewDetails: "వివరాలు చూడండి",
+    accept: "అంగీకరించండి",
+    decline: "తిరస్కరించండి",
+    accepted: "అంగీకరించబడింది",
+    lowRisk: "తక్కువ ప్రమాదం",
+    mediumRisk: "మధ్యస్థ ప్రమాదం",
+    highRisk: "అధిక ప్రమాదం",
+    highConfidence: "అధిక విశ్వాసం",
+    success: "విజయం",
+  },
+};
 
 const screenNames = [
   "Splash Screen",
@@ -119,66 +218,96 @@ function App() {
   });
 
   const [question, setQuestion] = useState("");
-  const [messages, setMessages] = useState([
-    {
-      from: "AI",
-      text: "The listing currently shows 2,000 kg available and harvest details.",
-    },
-  ]);
-
+  const [messages, setMessages] = useState([]);
   const [confirmedIds, setConfirmedIds] = useState([]);
-  const [deliveryMode, setDeliveryMode] = useState("Buyer Pickup");
-  const [paymentStatus, setPaymentStatus] = useState("Payment Pending");
-  const [orderStatus, setOrderStatus] = useState("Order Accepted");
+
+  const [deliveryMode, setDeliveryMode] =
+    useState("Buyer Pickup");
+
+  const [paymentStatus, setPaymentStatus] =
+    useState("Payment Pending");
+
+  const [orderStatus, setOrderStatus] =
+    useState("Order Accepted");
+
   const [offer, setOffer] = useState(25);
+
   const [actualPrice, setActualPrice] = useState(25);
-  const [actualLogistics, setActualLogistics] = useState(2000);
+  const [actualLogistics, setActualLogistics] =
+    useState(2000);
+
   const [dispute, setDispute] = useState("");
   const [online, setOnline] = useState(true);
-  const [marketUpdated, setMarketUpdated] = useState(false);
+  const [marketUpdated, setMarketUpdated] =
+    useState(false);
+
+  const t = translations[language];
+
+  function go(number) {
+    setScreen(Math.max(1, Math.min(44, number)));
+  }
 
   const matches = useMemo(() => {
-    return lots.filter(
-      (lot) =>
-        lot.crop.toLowerCase() === requirement.crop.toLowerCase() &&
-        lot.quantity > 0 &&
+    return lots.filter((lot) => {
+      const cropMatch =
+        lot.crop.toLowerCase() ===
+        requirement.crop.toLowerCase();
+
+      const qualityMatch =
+        requirement.quality === "Any Quality" ||
+        lot.quality === requirement.quality;
+
+      return (
+        cropMatch &&
+        qualityMatch &&
         lot.status === "Available"
-    );
-  }, [lots, requirement.crop]);
+      );
+    });
+  }, [lots, requirement.crop, requirement.quality]);
 
   const confirmedLots = lots.filter((lot) =>
     confirmedIds.includes(lot.id)
   );
 
-  const confirmedQuantity = confirmedLots.reduce(
-    (total, lot) => total + Number(lot.quantity),
-    0
-  );
+  const confirmedQuantity =
+    confirmedLots.reduce(
+      (total, lot) =>
+        total + Number(lot.quantity),
+      0
+    );
 
-  const remainingQuantity = Math.max(
-    0,
-    Number(requirement.quantity) - confirmedQuantity
-  );
+  const remainingQuantity =
+    Math.max(
+      0,
+      Number(requirement.quantity) -
+        confirmedQuantity
+    );
 
-  const totalSupply = matches.reduce(
-    (total, lot) => total + Number(lot.quantity),
-    0
-  );
+  const totalSupply =
+    matches.reduce(
+      (total, lot) =>
+        total + Number(lot.quantity),
+      0
+    );
 
   const estimatedSellingValue =
-    Number(selectedLot.quantity || 0) * Number(selectedLot.price || 0);
+    Number(selectedLot.quantity) *
+    Number(selectedLot.price);
 
-  const transportationCost = Math.round(
-    Number(selectedLot.quantity || 0) * 0.8
-  );
+  const transportationCost =
+    Math.round(
+      Number(selectedLot.quantity) * 0.8
+    );
 
-  const storageCost = Math.round(
-    Number(selectedLot.quantity || 0) * 0.3
-  );
+  const storageCost =
+    Math.round(
+      Number(selectedLot.quantity) * 0.3
+    );
 
-  const handlingCost = Math.round(
-    Number(selectedLot.quantity || 0) * 0.2
-  );
+  const handlingCost =
+    Math.round(
+      Number(selectedLot.quantity) * 0.2
+    );
 
   const estimatedNetReturn =
     estimatedSellingValue -
@@ -186,16 +315,23 @@ function App() {
     storageCost -
     handlingCost;
 
-  const opportunityScore = Math.min(
-    100,
-    Math.round(
-      45 +
-        (selectedLot.quality === "A Grade" ? 15 : 8) +
-        (selectedLot.quantity >= 1000 ? 12 : 5) +
-        (selectedLot.price >= 20 ? 10 : 5) +
-        8
-    )
-  );
+  const opportunityScore =
+    Math.min(
+      100,
+      Math.round(
+        45 +
+          (selectedLot.quality === "A Grade"
+            ? 15
+            : 8) +
+          (selectedLot.quantity >= 1000
+            ? 12
+            : 5) +
+          (selectedLot.price >= 20
+            ? 10
+            : 5) +
+          8
+      )
+    );
 
   const recommendations = [
     {
@@ -211,7 +347,7 @@ function App() {
       rank: 2,
       name: "Second Best",
       buyer: "Regional Wholesale Market",
-      score: Math.max(0, opportunityScore - 7),
+      score: opportunityScore - 7,
       net: estimatedNetReturn - 1800,
       distance: "32 km",
       risk: "Medium",
@@ -220,16 +356,12 @@ function App() {
       rank: 3,
       name: "Third Best",
       buyer: "Food Processing Buyer",
-      score: Math.max(0, opportunityScore - 13),
+      score: opportunityScore - 13,
       net: estimatedNetReturn - 3000,
       distance: "45 km",
       risk: "Medium",
     },
   ];
-
-  function go(n) {
-    setScreen(Math.max(1, Math.min(44, n)));
-  }
 
   function addCrop() {
     const newLot = {
@@ -239,11 +371,11 @@ function App() {
       price: Number(cropForm.price),
       farmer: "Current Farmer",
       status: "Available",
-      confirmed: false,
     };
 
-    setLots([...lots, newLot]);
+    setLots((old) => [...old, newLot]);
     setSelectedLot(newLot);
+
     go(7);
   }
 
@@ -252,11 +384,16 @@ function App() {
 
     setMessages((old) => [
       ...old,
-      { from: "Buyer", text },
+      {
+        from: "Buyer",
+        text,
+      },
       {
         from: "AI",
         text:
-          "Verified listing information is shown above. If confirmation is required, the question has been forwarded to the farmer.",
+          language === "English"
+            ? "Verified listing information is shown. Questions requiring confirmation have been forwarded to the farmer."
+            : "ధృవీకరించిన లిస్టింగ్ సమాచారం చూపబడింది. నిర్ధారణ అవసరమైన ప్రశ్న రైతుకు పంపబడింది.",
       },
     ]);
 
@@ -279,8 +416,17 @@ function App() {
       "Payment Completed",
     ];
 
-    const index = flow.indexOf(paymentStatus);
-    setPaymentStatus(flow[Math.min(index + 1, flow.length - 1)]);
+    const index =
+      flow.indexOf(paymentStatus);
+
+    setPaymentStatus(
+      flow[
+        Math.min(
+          index + 1,
+          flow.length - 1
+        )
+      ]
+    );
   }
 
   function nextOrder() {
@@ -293,49 +439,108 @@ function App() {
       "Payment Completed",
     ];
 
-    const index = flow.indexOf(orderStatus);
-    setOrderStatus(flow[Math.min(index + 1, flow.length - 1)]);
+    const index =
+      flow.indexOf(orderStatus);
+
+    setOrderStatus(
+      flow[
+        Math.min(
+          index + 1,
+          flow.length - 1
+        )
+      ]
+    );
   }
 
-  const Card = ({ children, className = "" }) => (
-    <div className={`card ${className}`}>{children}</div>
+  const Card = ({
+    children,
+    className = "",
+  }) => (
+    <div
+      className={`card ${className}`}
+    >
+      {children}
+    </div>
   );
 
-  const Button = ({ children, onClick, type = "button", className = "" }) => (
-    <button type={type} className={`btn ${className}`} onClick={onClick}>
+  const Button = ({
+    children,
+    onClick,
+    className = "",
+  }) => (
+    <button
+      className={`btn ${className}`}
+      onClick={onClick}
+    >
       {children}
     </button>
   );
 
-  const Input = ({ label, ...props }) => (
+  const Input = ({
+    label,
+    ...props
+  }) => (
     <label className="field">
       <span>{label}</span>
       <input {...props} />
     </label>
   );
 
-  const Select = ({ label, children, ...props }) => (
+  const Select = ({
+    label,
+    children,
+    ...props
+  }) => (
     <label className="field">
       <span>{label}</span>
-      <select {...props}>{children}</select>
+
+      <select {...props}>
+        {children}
+      </select>
     </label>
   );
 
-  function Layout({ title, children, next, back = true }) {
+  function Layout({
+    title,
+    children,
+  }) {
     return (
       <main className="app">
         <header className="topbar">
           <div>
-            <h2>🌾 AI Farming Selling Intelligence</h2>
-            <small>Screen {screen}/44 — {screenNames[screen - 1]}</small>
+            <h2>
+              🌾 {t.app}
+            </h2>
+
+            <small>
+              Screen {screen}/44 —{" "}
+              {screenNames[
+                screen - 1
+              ]}
+            </small>
           </div>
 
           {loggedIn && (
             <div className="top-info">
-              <span>{role}</span>
-              <span>{language}</span>
-              <span className={online ? "online" : "offline"}>
-                {online ? "● Online" : "● Offline"}
+              <span>
+                {role}
+              </span>
+
+              <span>
+                {language}
+              </span>
+
+              <span
+                className={
+                  online
+                    ? "online"
+                    : "offline"
+                }
+              >
+                ●{" "}
+                {online
+                  ? t.online
+                  : t.offline}
               </span>
             </div>
           )}
@@ -343,19 +548,19 @@ function App() {
 
         <section className="content">
           <h1>{title}</h1>
+
           {children}
         </section>
 
         <footer className="navigation">
-          {back && screen > 1 && (
-            <Button className="secondary" onClick={() => go(screen - 1)}>
-              ← Back
-            </Button>
-          )}
-
-          {next && (
-            <Button onClick={() => go(next)}>
-              Continue →
+          {screen > 1 && (
+            <Button
+              className="secondary"
+              onClick={() =>
+                go(screen - 1)
+              }
+            >
+              ← {t.back}
             </Button>
           )}
         </footer>
@@ -367,10 +572,19 @@ function App() {
   if (screen === 1) {
     return (
       <main className="splash">
-        <div className="logo">🌾🤖</div>
-        <h1>AI Farming Selling Intelligence</h1>
-        <p>Sell Smarter. Earn Better.</p>
-        <Button onClick={() => go(2)}>Get Started →</Button>
+        <div className="logo">
+          🌾🤖
+        </div>
+
+        <h1>{t.app}</h1>
+
+        <p>{t.slogan}</p>
+
+        <Button
+          onClick={() => go(2)}
+        >
+          {t.getStarted} →
+        </Button>
       </main>
     );
   }
@@ -378,47 +592,103 @@ function App() {
   // SCREEN 2
   if (screen === 2) {
     return (
-      <Layout title="Choose Your Language" next={3}>
+      <Layout
+        title={t.chooseLanguage}
+      >
         <div className="grid two">
-          <Card>
+
+          <Card
+            className={
+              language === "Telugu"
+                ? "selected"
+                : ""
+            }
+          >
             <h2>తెలుగు</h2>
-            <Button onClick={() => setLanguage("తెలుగు")}>
-              Select Telugu
+
+            <Button
+              onClick={() =>
+                setLanguage("Telugu")
+              }
+            >
+              {t.selectTelugu}
             </Button>
           </Card>
-          <Card>
+
+          <Card
+            className={
+              language === "English"
+                ? "selected"
+                : ""
+            }
+          >
             <h2>English</h2>
-            <Button onClick={() => setLanguage("English")}>
-              Select English
+
+            <Button
+              onClick={() =>
+                setLanguage("English")
+              }
+            >
+              {t.selectEnglish}
             </Button>
           </Card>
         </div>
-        <p className="muted">
-          Future expansion: Other regional languages.
-        </p>
+
+        <br />
+
+        <Button
+          onClick={() => go(3)}
+        >
+          {t.continue} →
+        </Button>
       </Layout>
     );
   }
 
   // SCREEN 3
   if (screen === 3) {
+    const roles = [
+      ["👨‍🌾", "Farmer", t.farmer],
+      ["🏢", "Buyer", t.buyer],
+      ["🏘️", "FPO / Cooperative", t.fpo],
+    ];
+
     return (
-      <Layout title="Select Your Role" next={4}>
+      <Layout
+        title={t.selectRole}
+      >
         <div className="grid three">
-          {["Farmer", "Buyer", "FPO / Cooperative"].map((item) => (
-            <Card key={item} className={role === item ? "selected" : ""}>
-              <h2>
-                {item === "Farmer"
-                  ? "👨‍🌾"
-                  : item === "Buyer"
-                  ? "🏢"
-                  : "🏘️"}
-              </h2>
-              <h3>{item}</h3>
-              <Button onClick={() => setRole(item)}>Select</Button>
-            </Card>
-          ))}
+          {roles.map(
+            ([icon, value, label]) => (
+              <Card
+                key={value}
+                className={
+                  role === value
+                    ? "selected"
+                    : ""
+                }
+              >
+                <h1>{icon}</h1>
+
+                <h3>{label}</h3>
+
+                <Button
+                  onClick={() =>
+                    setRole(value)
+                  }
+                >
+                  {t.select}
+                </Button>
+              </Card>
+            )
+          )}
         </div>
+
+        <Button
+          onClick={() => go(4)}
+        >
+          {t.continue} →
+        </Button>
       </Layout>
     );
   }
@@ -426,18 +696,39 @@ function App() {
   // SCREEN 4
   if (screen === 4) {
     return (
-      <Layout title="Login / Registration" back>
+      <Layout title={t.login}>
         <Card className="form-card">
-          <Input label="Name" placeholder="Enter your name" />
-          <Input label="Mobile / Email" placeholder="Enter mobile or email" />
-          <Input label="Password" type="password" placeholder="Password" />
+
+          <Input
+            label={t.name}
+            placeholder="Enter your name"
+          />
+
+          <Input
+            label={t.mobile}
+            placeholder="Enter mobile or email"
+          />
+
+          <Input
+            label={t.password}
+            type="password"
+            placeholder="Password"
+          />
+
           <Button
             onClick={() => {
               setLoggedIn(true);
-              go(role === "Buyer" ? 9 : 5);
+
+              if (
+                role === "Buyer"
+              ) {
+                go(9);
+              } else {
+                go(5);
+              }
             }}
           >
-            Enter Application
+            {t.enter}
           </Button>
         </Card>
       </Layout>
@@ -446,25 +737,39 @@ function App() {
 
   // SCREEN 5
   if (screen === 5) {
+    const items = [
+      ["➕", t.addCrop, 6],
+      ["📦", t.cropLots, 8],
+      ["🤖", t.aiRecommendations, 23],
+      ["📊", t.marketIntelligence, 18],
+      ["🛒", t.orders, 39],
+      ["💳", t.payments, 38],
+      ["🔔", t.notifications, 16],
+      ["👤", t.profile, 43],
+    ];
+
     return (
-      <Layout title="👨‍🌾 Farmer Dashboard">
+      <Layout
+        title={`👨‍🌾 ${t.farmerDashboard}`}
+      >
         <div className="grid three">
-          {[
-            ["➕", "Add Crop", 6],
-            ["📦", "My Crop Lots", 8],
-            ["🤖", "AI Recommendations", 23],
-            ["📊", "Market Intelligence", 18],
-            ["🛒", "Orders", 39],
-            ["💳", "Payments", 38],
-            ["🔔", "Notifications", 16],
-            ["👤", "Profile", 43],
-          ].map(([icon, name, target]) => (
-            <Card key={name}>
-              <h2>{icon}</h2>
-              <h3>{name}</h3>
-              <Button onClick={() => go(target)}>Open</Button>
-            </Card>
-          ))}
+          {items.map(
+            ([icon, name, target]) => (
+              <Card key={name}>
+                <h2>{icon}</h2>
+
+                <h3>{name}</h3>
+
+                <Button
+                  onClick={() =>
+                    go(target)
+                  }
+                >
+                  {t.open}
+                </Button>
+              </Card>
+            )
+          )}
         </div>
       </Layout>
     );
@@ -473,13 +778,19 @@ function App() {
   // SCREEN 6
   if (screen === 6) {
     return (
-      <Layout title="🌱 Smart Crop Listing">
+      <Layout
+        title="🌱 Smart Crop Listing"
+      >
         <Card className="form-card">
+
           <Input
             label="Crop Name"
             value={cropForm.crop}
             onChange={(e) =>
-              setCropForm({ ...cropForm, crop: e.target.value })
+              setCropForm({
+                ...cropForm,
+                crop: e.target.value,
+              })
             }
           />
 
@@ -488,7 +799,11 @@ function App() {
             type="number"
             value={cropForm.quantity}
             onChange={(e) =>
-              setCropForm({ ...cropForm, quantity: e.target.value })
+              setCropForm({
+                ...cropForm,
+                quantity:
+                  e.target.value,
+              })
             }
           />
 
@@ -496,7 +811,11 @@ function App() {
             label="Location"
             value={cropForm.location}
             onChange={(e) =>
-              setCropForm({ ...cropForm, location: e.target.value })
+              setCropForm({
+                ...cropForm,
+                location:
+                  e.target.value,
+              })
             }
           />
 
@@ -505,7 +824,11 @@ function App() {
             type="date"
             value={cropForm.harvest}
             onChange={(e) =>
-              setCropForm({ ...cropForm, harvest: e.target.value })
+              setCropForm({
+                ...cropForm,
+                harvest:
+                  e.target.value,
+              })
             }
           />
 
@@ -514,7 +837,11 @@ function App() {
             type="date"
             value={cropForm.available}
             onChange={(e) =>
-              setCropForm({ ...cropForm, available: e.target.value })
+              setCropForm({
+                ...cropForm,
+                available:
+                  e.target.value,
+              })
             }
           />
 
@@ -522,12 +849,24 @@ function App() {
             label="Quality"
             value={cropForm.quality}
             onChange={(e) =>
-              setCropForm({ ...cropForm, quality: e.target.value })
+              setCropForm({
+                ...cropForm,
+                quality:
+                  e.target.value,
+              })
             }
           >
-            <option>A Grade</option>
-            <option>B Grade</option>
-            <option>Mixed Grade</option>
+            <option>
+              A Grade
+            </option>
+
+            <option>
+              B Grade
+            </option>
+
+            <option>
+              Mixed Grade
+            </option>
           </Select>
 
           <Input
@@ -535,20 +874,32 @@ function App() {
             type="number"
             value={cropForm.price}
             onChange={(e) =>
-              setCropForm({ ...cropForm, price: e.target.value })
+              setCropForm({
+                ...cropForm,
+                price:
+                  e.target.value,
+              })
             }
           />
 
           <Button
             className="secondary"
             onClick={() =>
-              alert("🎤 Voice input demo: You can speak crop details here.")
+              alert(
+                language === "English"
+                  ? "Voice input feature activated for prototype demo."
+                  : "ప్రోటోటైప్ కోసం వాయిస్ ఇన్‌పుట్ ఫీచర్ యాక్టివేట్ చేయబడింది."
+              )
             }
           >
-            🎤 Voice Input
+            🎤 {t.voice}
           </Button>
 
-          <Button onClick={addCrop}>Save Crop & Continue</Button>
+          <Button
+            onClick={addCrop}
+          >
+            {t.saveCrop}
+          </Button>
         </Card>
       </Layout>
     );
@@ -557,22 +908,48 @@ function App() {
   // SCREEN 7
   if (screen === 7) {
     return (
-      <Layout title="📷 Crop Image & Preliminary Quality Assessment">
+      <Layout
+        title="📷 Crop Image & Preliminary Quality Assessment"
+      >
         <Card>
+
           <Input
             label="Upload Crop Image"
             type="file"
             accept="image/*"
           />
-          <h3>Preliminary AI Assessment</h3>
-          <p>Visible appearance: Good</p>
-          <p>Uniformity: Good</p>
-          <p>Possible visible defects: No major visible defect detected</p>
+
+          <h3>
+            Preliminary AI Assessment
+          </h3>
+
+          <p>
+            Visible appearance:
+            Good
+          </p>
+
+          <p>
+            Uniformity: Good
+          </p>
+
+          <p>
+            Possible visible defects:
+            No major visible defect
+            detected.
+          </p>
+
           <div className="warning">
-            ⚠️ Preliminary AI assessment — physical verification may be
+            ⚠️ Preliminary AI
+            assessment — physical
+            verification may be
             required.
           </div>
-          <Button onClick={() => go(8)}>View My Crop Lots</Button>
+
+          <Button
+            onClick={() => go(8)}
+          >
+            View My Crop Lots
+          </Button>
         </Card>
       </Layout>
     );
@@ -582,15 +959,35 @@ function App() {
   if (screen === 8) {
     return (
       <Layout title="📦 My Crop Lots">
+
         <div className="grid">
           {lots.map((lot) => (
             <Card key={lot.id}>
-              <h3>{lot.crop}</h3>
-              <p>Quantity: {lot.quantity} kg</p>
-              <p>Location: {lot.location}</p>
-              <p>Status: {lot.status}</p>
-              <p>Buyer Interest: Active</p>
-              <p>Aggregation Requests: Available</p>
+
+              <h2>
+                🌱 {lot.crop}
+              </h2>
+
+              <p>
+                Quantity:{" "}
+                {lot.quantity} kg
+              </p>
+
+              <p>
+                Location:
+                {lot.location}
+              </p>
+
+              <p>
+                Quality:
+                {lot.quality}
+              </p>
+
+              <p>
+                Status:
+                {lot.status}
+              </p>
+
               <Button
                 onClick={() => {
                   setSelectedLot(lot);
@@ -608,24 +1005,39 @@ function App() {
 
   // SCREEN 9
   if (screen === 9) {
+    const items = [
+      ["🛒", "Create Requirement", 10],
+      ["🔍", "Find Crops / Supply", 11],
+      ["📋", "My Requirements", 14],
+      ["📦", t.orders, 36],
+      ["💳", "Transactions", 38],
+      ["🔔", t.notifications, 13],
+      ["👤", t.profile, 43],
+    ];
+
     return (
-      <Layout title="🏢 Buyer Dashboard">
+      <Layout
+        title={`🏢 ${t.buyerDashboard}`}
+      >
         <div className="grid three">
-          {[
-            ["🛒", "Create Requirement", 10],
-            ["🔍", "Find Crops / Supply", 11],
-            ["📋", "My Requirements", 14],
-            ["📦", "Orders", 36],
-            ["💳", "Transactions", 38],
-            ["🔔", "Notifications", 13],
-            ["👤", "Profile", 43],
-          ].map(([icon, name, target]) => (
-            <Card key={name}>
-              <h2>{icon}</h2>
-              <h3>{name}</h3>
-              <Button onClick={() => go(target)}>Open</Button>
-            </Card>
-          ))}
+          {items.map(
+            ([icon, name, target]) => (
+              <Card key={name}>
+
+                <h2>{icon}</h2>
+
+                <h3>{name}</h3>
+
+                <Button
+                  onClick={() =>
+                    go(target)
+                  }
+                >
+                  {t.open}
+                </Button>
+              </Card>
+            )
+          )}
         </div>
       </Layout>
     );
@@ -634,45 +1046,110 @@ function App() {
   // SCREEN 10
   if (screen === 10) {
     return (
-      <Layout title="🛒 Create Buyer Requirement">
+      <Layout
+        title="🛒 Create Buyer Requirement"
+      >
         <Card className="form-card">
-          {[
-            ["Required Crop", "crop", "text"],
-            ["Required Quantity (kg)", "quantity", "number"],
-            ["Delivery Location", "location", "text"],
-            ["Required Date", "date", "date"],
-            ["Preferred Price Range", "price", "text"],
-          ].map(([label, key, type]) => (
-            <Input
-              key={key}
-              label={label}
-              type={type}
-              value={requirement[key]}
-              onChange={(e) =>
-                setRequirement({
-                  ...requirement,
-                  [key]: e.target.value,
-                })
-              }
-            />
-          ))}
 
-          <Select
-            label="Quality Requirement"
-            value={requirement.quality}
+          <Input
+            label="Required Crop"
+            value={requirement.crop}
             onChange={(e) =>
               setRequirement({
                 ...requirement,
-                quality: e.target.value,
+                crop:
+                  e.target.value,
+              })
+            }
+          />
+
+          <Input
+            label="Required Quantity (kg)"
+            type="number"
+            value={
+              requirement.quantity
+            }
+            onChange={(e) =>
+              setRequirement({
+                ...requirement,
+                quantity:
+                  e.target.value,
+              })
+            }
+          />
+
+          <Select
+            label="Quality Requirement"
+            value={
+              requirement.quality
+            }
+            onChange={(e) =>
+              setRequirement({
+                ...requirement,
+                quality:
+                  e.target.value,
               })
             }
           >
-            <option>A Grade</option>
-            <option>B Grade</option>
-            <option>Any Quality</option>
+            <option>
+              A Grade
+            </option>
+
+            <option>
+              B Grade
+            </option>
+
+            <option>
+              Any Quality
+            </option>
           </Select>
 
-          <Button onClick={() => go(11)}>Create Demand Request</Button>
+          <Input
+            label="Delivery Location"
+            value={
+              requirement.location
+            }
+            onChange={(e) =>
+              setRequirement({
+                ...requirement,
+                location:
+                  e.target.value,
+              })
+            }
+          />
+
+          <Input
+            label="Required Date"
+            type="date"
+            value={requirement.date}
+            onChange={(e) =>
+              setRequirement({
+                ...requirement,
+                date:
+                  e.target.value,
+              })
+            }
+          />
+
+          <Input
+            label="Preferred Price Range"
+            value={
+              requirement.price
+            }
+            onChange={(e) =>
+              setRequirement({
+                ...requirement,
+                price:
+                  e.target.value,
+              })
+            }
+          />
+
+          <Button
+            onClick={() => go(11)}
+          >
+            Create Demand Request
+          </Button>
         </Card>
       </Layout>
     );
@@ -681,36 +1158,55 @@ function App() {
   // SCREEN 11
   if (screen === 11) {
     return (
-      <Layout title="🔍 Available Supply & Crop Search">
+      <Layout
+        title="🔍 Available Supply & Crop Search"
+      >
         <Card>
+
           <Input
             label="Search Crop"
             value={requirement.crop}
             onChange={(e) =>
               setRequirement({
                 ...requirement,
-                crop: e.target.value,
+                crop:
+                  e.target.value,
               })
             }
           />
 
-          <p>Compatible Supply Found: {matches.length} lots</p>
+          <p>
+            Compatible Supply Found:
+            {matches.length} lots
+          </p>
 
           <div className="grid">
             {matches.map((lot) => (
               <Card key={lot.id}>
-                <h3>{lot.crop}</h3>
-                <p>{lot.quantity} kg</p>
-                <p>{lot.location}</p>
-                <p>{lot.quality}</p>
-                <p>Available: {lot.available}</p>
+
+                <h3>
+                  {lot.crop}
+                </h3>
+
+                <p>
+                  {lot.quantity} kg
+                </p>
+
+                <p>
+                  {lot.location}
+                </p>
+
+                <p>
+                  {lot.quality}
+                </p>
+
                 <Button
                   onClick={() => {
                     setSelectedLot(lot);
                     go(12);
                   }}
                 >
-                  View Details
+                  {t.viewDetails}
                 </Button>
               </Card>
             ))}
@@ -725,14 +1221,46 @@ function App() {
     return (
       <Layout title="Crop Details">
         <Card>
-          <h2>🍅 {selectedLot.crop}</h2>
-          <p>Available Quantity: {selectedLot.quantity} kg</p>
-          <p>Farmer/FPO: {selectedLot.farmer}</p>
-          <p>Location: {selectedLot.location}</p>
-          <p>Availability Date: {selectedLot.available}</p>
-          <p>Quality: {selectedLot.quality}</p>
-          <p>Preliminary quality information available.</p>
-          <Button onClick={() => go(13)}>💬 Ask About This Crop</Button>
+
+          <h2>
+            🌱 {selectedLot.crop}
+          </h2>
+
+          <p>
+            Available Quantity:
+            {selectedLot.quantity} kg
+          </p>
+
+          <p>
+            Farmer/FPO:
+            {selectedLot.farmer}
+          </p>
+
+          <p>
+            Location:
+            {selectedLot.location}
+          </p>
+
+          <p>
+            Harvest Date:
+            {selectedLot.harvest}
+          </p>
+
+          <p>
+            Availability Date:
+            {selectedLot.available}
+          </p>
+
+          <p>
+            Quality:
+            {selectedLot.quality}
+          </p>
+
+          <Button
+            onClick={() => go(13)}
+          >
+            💬 Ask About This Crop
+          </Button>
         </Card>
       </Layout>
     );
@@ -749,38 +1277,71 @@ function App() {
     ];
 
     return (
-      <Layout title="💬 Buyer Crop Inquiry">
+      <Layout
+        title="💬 Buyer Crop Inquiry"
+      >
         <Card>
+
           <div className="quick-buttons">
-            {quickQuestions.map((q) => (
-              <Button
-                key={q}
-                className="secondary"
-                onClick={() => sendQuestion(q)}
-              >
-                {q}
-              </Button>
-            ))}
+            {quickQuestions.map(
+              (q) => (
+                <Button
+                  key={q}
+                  className="secondary"
+                  onClick={() =>
+                    sendQuestion(q)
+                  }
+                >
+                  {q}
+                </Button>
+              )
+            )}
           </div>
 
           <div className="messages">
-            {messages.map((message, index) => (
-              <p key={index} className={message.from === "Buyer" ? "buyer-msg" : "ai-msg"}>
-                <strong>{message.from}: </strong>
-                {message.text}
-              </p>
-            ))}
+            {messages.map(
+              (message, index) => (
+                <p
+                  key={index}
+                  className={
+                    message.from ===
+                    "Buyer"
+                      ? "buyer-msg"
+                      : "ai-msg"
+                  }
+                >
+                  <strong>
+                    {message.from}:
+                  </strong>{" "}
+                  {message.text}
+                </p>
+              )
+            )}
           </div>
 
           <Input
             label="Custom Question"
             value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-            placeholder="Ask anything about this crop..."
+            onChange={(e) =>
+              setQuestion(
+                e.target.value
+              )
+            }
+            placeholder="Ask about this crop..."
           />
 
-          <Button onClick={() => sendQuestion()}>Send Question</Button>
-          <Button className="secondary" onClick={() => go(14)}>
+          <Button
+            onClick={() =>
+              sendQuestion()
+            }
+          >
+            Send Question
+          </Button>
+
+          <Button
+            className="secondary"
+            onClick={() => go(14)}
+          >
             Find Supply Match
           </Button>
         </Card>
@@ -788,28 +1349,25 @@ function App() {
     );
   }
 
-  // SCREEN 14
+  // SCREENS 14–44
+  // Continue functionality
+
   if (screen === 14) {
     return (
       <Layout title="🤖 Opportunity Detection & Supply Matching">
         <Card>
           <h3>Buyer Requirement</h3>
-          <p>
-            {requirement.quantity} kg {requirement.crop}
-          </p>
+          <p>{requirement.quantity} kg {requirement.crop}</p>
 
-          <h3>AI Compatible Farmers</h3>
+          <h3>Compatible Supply</h3>
 
           {matches.map((lot) => (
             <p key={lot.id}>
-              ✅ {lot.farmer}: {lot.quantity} kg — {lot.quality} —
-              {lot.location}
+              ✅ {lot.farmer} → {lot.quantity} kg
             </p>
           ))}
 
-          <p>
-            <strong>Total Compatible Supply: {totalSupply} kg</strong>
-          </p>
+          <h2>Total Supply: {totalSupply} kg</h2>
 
           <Button onClick={() => go(15)}>
             Build Aggregated Supply
@@ -819,12 +1377,11 @@ function App() {
     );
   }
 
-  // SCREEN 15
   if (screen === 15) {
     return (
       <Layout title="⭐ Dynamic AI Supply Aggregation">
         <Card>
-          <h3>Buyer needs: {requirement.quantity} kg</h3>
+          <h3>Buyer Needs: {requirement.quantity} kg</h3>
 
           {matches.map((lot) => (
             <p key={lot.id}>
@@ -832,12 +1389,10 @@ function App() {
             </p>
           ))}
 
-          <h2>Aggregated Potential Supply = {totalSupply} kg</h2>
-
-          <div className="warning">
-            The system does not automatically commit farmers. Individual
-            confirmation is required.
-          </div>
+          <h2>
+            Aggregated Potential Supply:
+            {totalSupply} kg
+          </h2>
 
           <Button onClick={() => go(16)}>
             Send Farmer Confirmation Requests
@@ -847,34 +1402,50 @@ function App() {
     );
   }
 
-  // SCREEN 16
   if (screen === 16) {
     return (
       <Layout title="🔔 Farmer Confirmation Request">
+
         <div className="grid">
           {matches.map((lot) => {
-            const confirmed = confirmedIds.includes(lot.id);
+            const confirmed =
+              confirmedIds.includes(lot.id);
 
             return (
               <Card key={lot.id}>
                 <h3>{lot.farmer}</h3>
+
                 <p>
-                  A buyer requires {lot.quantity} kg of your {lot.crop}.
+                  Buyer requires {lot.quantity} kg
                 </p>
-                <p>Do you want to participate?</p>
 
                 <Button
-                  className={confirmed ? "success" : ""}
-                  onClick={() => toggleConfirmation(lot.id)}
+                  className={
+                    confirmed
+                      ? "success"
+                      : ""
+                  }
+                  onClick={() =>
+                    toggleConfirmation(
+                      lot.id
+                    )
+                  }
                 >
-                  {confirmed ? "✅ Accepted" : "✅ Accept"}
+                  {confirmed
+                    ? "✅ Accepted"
+                    : "✅ Accept"}
                 </Button>
 
                 <Button
                   className="danger"
                   onClick={() =>
-                    setConfirmedIds((old) =>
-                      old.filter((item) => item !== lot.id)
+                    setConfirmedIds(
+                      (old) =>
+                        old.filter(
+                          (item) =>
+                            item !==
+                            lot.id
+                        )
                     )
                   }
                 >
@@ -892,7 +1463,6 @@ function App() {
     );
   }
 
-  // SCREEN 17
   if (screen === 17) {
     return (
       <Layout title="Quantity Gap Detection">
@@ -902,28 +1472,24 @@ function App() {
           <h2>Remaining: {remainingQuantity} kg</h2>
 
           {remainingQuantity > 0 ? (
-            <>
-              <div className="warning">
-                AI searches additional compatible farmers, nearby supply and
-                upcoming harvests.
-              </div>
-              <p>Additional potential supply available: {totalSupply - confirmedQuantity} kg</p>
-            </>
+            <div className="warning">
+              Additional compatible farmers and
+              nearby supply are being searched.
+            </div>
           ) : (
             <div className="success-box">
-              🎉 Full buyer quantity can be fulfilled.
+              🎉 Full quantity can be fulfilled.
             </div>
           )}
 
           <Button onClick={() => go(18)}>
-            Continue to Market Intelligence
+            Market Intelligence
           </Button>
         </Card>
       </Layout>
     );
   }
 
-  // SCREEN 18
   if (screen === 18) {
     return (
       <Layout title="📊 Market Intelligence Dashboard">
@@ -932,80 +1498,101 @@ function App() {
           <Card><h3>Historical Trend</h3><h2>📈 +8%</h2></Card>
           <Card><h3>Arrival Volume</h3><h2>Medium</h2></Card>
           <Card><h3>Price Change</h3><h2>+₹2</h2></Card>
-          <Card><h3>Last Updated</h3><h2>Demo Data</h2></Card>
         </div>
-        <Button onClick={() => go(19)}>View Demand Intelligence</Button>
+
+        <Button onClick={() => go(19)}>
+          Demand Intelligence
+        </Button>
       </Layout>
     );
   }
 
-  // SCREEN 19
   if (screen === 19) {
     return (
       <Layout title="🔮 Demand & Future Opportunity Intelligence">
         <div className="grid two">
           <Card>
             <h2>✅ Confirmed Demand</h2>
-            <p>Actual buyer requirement: {requirement.quantity} kg {requirement.crop}</p>
+            <p>{requirement.quantity} kg {requirement.crop}</p>
           </Card>
 
           <Card>
             <h2>📊 Potential Demand</h2>
-            <p>AI-estimated future opportunity based on seasonal patterns and market signals.</p>
+            <p>AI estimated future opportunity.</p>
           </Card>
         </div>
-        <Button onClick={() => go(20)}>Next Crop Opportunity</Button>
+
+        <Button onClick={() => go(20)}>
+          Next Crop Opportunity
+        </Button>
       </Layout>
     );
   }
 
-  // SCREEN 20
   if (screen === 20) {
     return (
       <Layout title="🌱 Next Crop Opportunity Insights">
         <Card>
-          <h2>Suggested Opportunity: Tomato / Chilli</h2>
-          <p>Based on seasonal patterns, demand, historical prices and market trends.</p>
+          <h2>Suggested: Tomato / Chilli</h2>
+          <p>Based on demand, seasonal patterns and market trends.</p>
+
           <div className="warning">
-            ⚠️ Recommendation only — profit is not guaranteed.
+            Recommendation only. Profit is not guaranteed.
           </div>
-          <Button onClick={() => go(21)}>Analyze Net Return</Button>
+
+          <Button onClick={() => go(21)}>
+            Analyze Net Return
+          </Button>
         </Card>
       </Layout>
     );
   }
 
-  // SCREEN 21
   if (screen === 21) {
     return (
       <Layout title="💰 Estimated Net Return Analysis">
         <Card>
           <p>Selling Value: ₹{estimatedSellingValue}</p>
-          <p>− Transportation Cost: ₹{transportationCost}</p>
-          <p>− Storage Cost: ₹{storageCost}</p>
-          <p>− Handling Cost: ₹{handlingCost}</p>
+          <p>− Transportation: ₹{transportationCost}</p>
+          <p>− Storage: ₹{storageCost}</p>
+          <p>− Handling: ₹{handlingCost}</p>
+
           <hr />
-          <h2>Estimated Net Return: ₹{estimatedNetReturn}</h2>
-          <Button onClick={() => go(22)}>Calculate Opportunity Score</Button>
+
+          <h2>
+            Estimated Net Return:
+            ₹{estimatedNetReturn}
+          </h2>
+
+          <Button onClick={() => go(22)}>
+            Opportunity Score
+          </Button>
         </Card>
       </Layout>
     );
   }
 
-  // SCREEN 22
   if (screen === 22) {
     return (
       <Layout title="📍 Opportunity Score">
         <Card>
-          <div className="score">{opportunityScore}/100</div>
-          <p>Based on estimated net return, demand, distance, logistics cost, quality compatibility, buyer reliability and transaction risk.</p>
-          <Button onClick={() => go(23)}>View Top 3 Recommendations</Button>
+          <div className="score">
+            {opportunityScore}/100
+          </div>
+
+          <p>
+            Based on demand, net return,
+            distance, quality and risk.
+          </p>
+
+          <Button onClick={() => go(23)}>
+            Top 3 Recommendations
+          </Button>
         </Card>
       </Layout>
     );
   }
 
-  // SCREEN 23
   if (screen === 23) {
     return (
       <Layout title="🏆 AI-Powered Top 3 Recommendations">
@@ -1013,86 +1600,100 @@ function App() {
           {recommendations.map((item) => (
             <Card key={item.rank}>
               <h2>
-                {item.rank === 1 ? "🥇" : item.rank === 2 ? "🥈" : "🥉"} {item.name}
+                {item.rank === 1 ? "🥇" :
+                 item.rank === 2 ? "🥈" : "🥉"}
+                {" "}
+                {item.name}
               </h2>
+
               <p>Buyer: {item.buyer}</p>
-              <p>Opportunity Score: {item.score}/100</p>
-              <p>Estimated Net Return: ₹{item.net}</p>
+              <p>Score: {item.score}/100</p>
+              <p>Net Return: ₹{item.net}</p>
               <p>Distance: {item.distance}</p>
               <p>Risk: {item.risk}</p>
             </Card>
           ))}
         </div>
-        <Button onClick={() => go(24)}>Why is this recommended?</Button>
+
+        <Button onClick={() => go(24)}>
+          Why is this recommended?
+        </Button>
       </Layout>
     );
   }
 
-  // SCREEN 24
   if (screen === 24) {
     return (
       <Layout title="🧾 Explainable AI">
         <Card>
-          <h3>Why is this recommended?</h3>
           <ul>
             <li>Higher estimated net return</li>
             <li>Lower transportation cost</li>
-            <li>Suitable quantity match</li>
-            <li>Better reliability indicators</li>
+            <li>Quantity matches demand</li>
             <li>Quality requirement matches</li>
+            <li>Better reliability indicators</li>
             <li>Lower transaction risk</li>
           </ul>
-          <Button onClick={() => go(25)}>Selling Decision Intelligence</Button>
+
+          <Button onClick={() => go(25)}>
+            Selling Decision
+          </Button>
         </Card>
       </Layout>
     );
   }
 
-  // SCREEN 25
   if (screen === 25) {
     return (
       <Layout title="Sell / Wait / Store Intelligence">
         <div className="grid three">
           <Card className="selected">
             <h2>🟢 Sell Now</h2>
-            <p>Strong current opportunity and lower storage risk.</p>
+            <p>Strong current opportunity.</p>
           </Card>
+
           <Card>
             <h2>🟡 Wait</h2>
-            <p>Possible price improvement but with uncertainty.</p>
+            <p>Possible price improvement.</p>
           </Card>
+
           <Card>
             <h2>🔵 Consider Storage</h2>
-            <p>Only if storage cost and spoilage risk are acceptable.</p>
+            <p>Check storage and spoilage costs.</p>
           </Card>
         </div>
-        <Button onClick={() => go(26)}>Compare Storage</Button>
+
+        <Button onClick={() => go(26)}>
+          Compare Storage
+        </Button>
       </Layout>
     );
   }
 
-  // SCREEN 26
   if (screen === 26) {
     return (
       <Layout title="Storage Feasibility Analysis">
         <div className="grid two">
           <Card>
             <h2>Sell Now</h2>
-            <p>Estimated Return: ₹{estimatedNetReturn}</p>
+            <p>₹{estimatedNetReturn}</p>
           </Card>
+
           <Card>
-            <h2>Store & Sell Later</h2>
-            <p>Potential Price Increase: ₹4,000</p>
+            <h2>Store Later</h2>
+            <p>Potential Increase: ₹4000</p>
             <p>Storage Cost: ₹{storageCost}</p>
             <p>Spoilage Risk: Medium</p>
           </Card>
         </div>
-        <Button onClick={() => go(27)}>View Scenarios</Button>
+
+        <Button onClick={() => go(27)}>
+          View Scenarios
+        </Button>
       </Layout>
     );
   }
 
-  // SCREEN 27
   if (screen === 27) {
     return (
       <Layout title="📈 Scenario-Based Return Analysis">
@@ -1101,60 +1702,96 @@ function App() {
           <Card><h2>Better</h2><p>₹{estimatedNetReturn + 5000}</p></Card>
           <Card><h2>Risk</h2><p>₹{Math.max(0, estimatedNetReturn - 7000)}</p></Card>
         </div>
-        <Button onClick={() => go(28)}>Logistics Analysis</Button>
+
+        <Button onClick={() => go(28)}>
+          Logistics
+        </Button>
       </Layout>
     );
   }
 
-  // SCREEN 28
   if (screen === 28) {
     return (
       <Layout title="🚛 Logistics & Distance Analysis">
         <Card>
-          <p>Buyer Delivery Location: {requirement.location}</p>
+          <p>Buyer Location: {requirement.location}</p>
           <p>Estimated Distance: 18 km</p>
           <p>Delivery Date: {requirement.date}</p>
-          <p>Estimated Transportation Cost: ₹{transportationCost}</p>
-          <Button onClick={() => go(29)}>Choose Delivery Responsibility</Button>
+          <p>Transportation Cost: ₹{transportationCost}</p>
+
+          <Button onClick={() => go(29)}>
+            Delivery Responsibility
+          </Button>
         </Card>
       </Layout>
     );
   }
 
-  // SCREEN 29
   if (screen === 29) {
+    const modes = [
+      "Buyer Pickup",
+      "Farmer Delivery",
+      "Logistics Provider",
+    ];
+
     return (
       <Layout title="Delivery Responsibility">
         <div className="grid three">
-          {["Buyer Pickup", "Farmer Delivery", "Logistics Provider"].map((mode) => (
-            <Card key={mode} className={deliveryMode === mode ? "selected" : ""}>
+          {modes.map((mode) => (
+            <Card
+              key={mode}
+              className={
+                deliveryMode === mode
+                  ? "selected"
+                  : ""
+              }
+            >
               <h3>{mode}</h3>
-              <Button onClick={() => setDeliveryMode(mode)}>Select</Button>
+
+              <Button
+                onClick={() =>
+                  setDeliveryMode(mode)
+                }
+              >
+                Select
+              </Button>
             </Card>
           ))}
         </div>
-        <p>Selected: <strong>{deliveryMode}</strong></p>
-        <Button onClick={() => go(30)}>Collection Point</Button>
+
+        <Button onClick={() => go(30)}>
+          Collection Point
+        </Button>
       </Layout>
     );
   }
 
-  // SCREEN 30
   if (screen === 30) {
     return (
       <Layout title="📦 Smart Collection Point">
         <Card>
-          <h2>Multiple Farmers → Collection Point → Bulk Buyer</h2>
-          <p>Suggested collection point: Kakinada Agricultural Hub</p>
-          <p>Participating farmers: {confirmedLots.length}</p>
-          <p>Confirmed quantity: {confirmedQuantity} kg</p>
-          <Button onClick={() => go(31)}>Backup Logistics Plan</Button>
+          <h2>
+            Multiple Farmers → Collection Point → Bulk Buyer
+          </h2>
+
+          <p>
+            Participating Farmers:
+            {confirmedLots.length}
+          </p>
+
+          <p>
+            Confirmed Quantity:
+            {confirmedQuantity} kg
+          </p>
+
+          <Button onClick={() => go(31)}>
+            Backup Logistics
+          </Button>
         </Card>
       </Layout>
     );
   }
 
-  // SCREEN 31
   if (screen === 31) {
     return (
       <Layout title="Backup Logistics Planning">
@@ -1164,100 +1801,131 @@ function App() {
           <Card>📦 Collection Point</Card>
           <Card>📅 Reschedule Delivery</Card>
         </div>
-        <Button onClick={() => go(32)}>Check Buyer Reliability</Button>
-      </Layout>
-    );
-  }
 
-  // SCREEN 32
-  if (screen === 32) {
-    return (
-      <Layout title="⭐ Buyer Reliability Profile">
-        <Card>
-          <p>Verification Status: Verified Demo Buyer</p>
-          <p>Transaction History: Established History</p>
-          <p>Payment Behaviour: Good</p>
-          <p>Cancellation Pattern: Low</p>
-          <div className="success-box">🟢 Established History</div>
-          <Button onClick={() => go(33)}>Analyze Transaction Risk</Button>
-        </Card>
-      </Layout>
-    );
-  }
-
-  // SCREEN 33
-  if (screen === 33) {
-    return (
-      <Layout title="🚨 AI-Assisted Transaction Risk Detection">
-        <Card>
-          <p>Unusual Price: No</p>
-          <p>Buyer Reliability: Good</p>
-          <p>Quantity Match: Compatible</p>
-          <p>Logistics Feasibility: Good</p>
-          <p>Delivery Feasibility: Good</p>
-          <div className="success-box">🟢 LOW RISK</div>
-          <Button onClick={() => go(34)}>Check Data Confidence</Button>
-        </Card>
-      </Layout>
-    );
-  }
-
-  // SCREEN 34
-  if (screen === 34) {
-    return (
-      <Layout title="📊 Data Confidence Indicator">
-        <Card>
-          <div className="score">🟢 High Confidence</div>
-          <p>Available listing, quantity, demand and market information are sufficient for this demo recommendation.</p>
-          <p className="muted">If data is insufficient: “Insufficient data for a reliable recommendation.”</p>
-          <Button onClick={() => go(35)}>View Offers</Button>
-        </Card>
-      </Layout>
-    );
-  }
-
-  // SCREEN 35
-  if (screen === 35) {
-    return (
-      <Layout title="💰 Offer Comparison & Negotiation">
-        <div className="grid three">
-          <Card><h3>Buyer A</h3><h2>₹25/kg</h2><p>Best Net Return</p></Card>
-          <Card><h3>Buyer B</h3><h2>₹24/kg</h2><p>Lower Distance</p></Card>
-          <Card><h3>Buyer C</h3><h2>₹26/kg</h2><p>Medium Risk</p></Card>
-        </div>
-
-        <Input
-          label="Your Negotiated Price"
-          type="number"
-          value={offer}
-          onChange={(e) => setOffer(e.target.value)}
-        />
-
-        <Button onClick={() => go(36)}>
-          Accept Offer ₹{offer}/kg
+        <Button onClick={() => go(32)}>
+          Buyer Reliability
         </Button>
       </Layout>
     );
   }
 
-  // SCREEN 36
-  if (screen === 36) {
+  if (screen === 32) {
     return (
-      <Layout title="Buyer Aggregated Supply Review">
+      <Layout title="⭐ Buyer Reliability Profile">
         <Card>
-          <p>Total Confirmed Quantity: {confirmedQuantity} kg</p>
-          <p>Participating Farmers/FPOs: {confirmedLots.length}</p>
-          <p>Crop: {requirement.crop}</p>
-          <p>Quality Compatibility: Compatible</p>
-          <p>Quantity Fulfilment: {confirmedQuantity >= requirement.quantity ? "Full" : "Partial"}</p>
-          <p>Delivery Feasibility: Good</p>
-          <Button onClick={() => go(37)}>Create Agreement</Button>
+          <p>Verification: Verified</p>
+          <p>Transaction History: Established</p>
+          <p>Payment Behaviour: Good</p>
+          <p>Cancellation Pattern: Low</p>
+
+          <Button onClick={() => go(33)}>
+            Analyze Risk
+          </Button>
         </Card>
       </Layout>
     );
   }
 
-  // SCREEN 37
+  if (screen === 33) {
+    return (
+      <Layout title="🚨 AI-Assisted Transaction Risk Detection">
+        <Card>
+          <p>Unusual Price: No</p>
+          <p>Quantity Match: Compatible</p>
+          <p>Logistics: Feasible</p>
+          <p>Delivery: Feasible</p>
+
+          <div className="success-box">
+            🟢 LOW RISK
+          </div>
+
+          <Button onClick={() => go(34)}>
+            Data Confidence
+          </Button>
+        </Card>
+      </Layout>
+    );
+  }
+
+  if (screen === 34) {
+    return (
+      <Layout title="📊 Data Confidence Indicator">
+        <Card>
+          <div className="score">
+            🟢 High Confidence
+          </div>
+
+          <p>
+            Data available for recommendation.
+          </p>
+
+          <Button onClick={() => go(35)}>
+            View Offers
+          </Button>
+        </Card>
+      </Layout>
+    );
+  }
+
+  if (screen === 35) {
+    return (
+      <Layout title="💰 Offer Comparison & Negotiation">
+
+        <div className="grid three">
+          <Card>
+            <h3>Buyer A</h3>
+            <h2>₹25/kg</h2>
+          </Card>
+
+          <Card>
+            <h3>Buyer B</h3>
+            <h2>₹24/kg</h2>
+          </Card>
+
+          <Card>
+            <h3>Buyer C</h3>
+            <h2>₹26/kg</h2>
+          </Card>
+        </div>
+
+        <Input
+          label="Negotiated Price"
+          type="number"
+          value={offer}
+          onChange={(e) =>
+            setOffer(e.target.value)
+          }
+        />
+
+        <Button onClick={() => go(36)}>
+          Accept ₹{offer}/kg
+        </Button>
+      </Layout>
+    );
+  }
+
+  if (screen === 36) {
+    return (
+      <Layout title="Buyer Aggregated Supply Review">
+        <Card>
+          <p>Total Confirmed: {confirmedQuantity} kg</p>
+          <p>Farmers: {confirmedLots.length}</p>
+          <p>Crop: {requirement.crop}</p>
+          <p>
+            Fulfilment:
+            {confirmedQuantity >= requirement.quantity
+              ? " Full"
+              : " Partial"}
+          </p>
+
+          <Button onClick={() => go(37)}>
+            Create Agreement
+          </Button>
+        </Card>
+      </Layout>
+    );
+  }
+
   if (screen === 37) {
     return (
       <Layout title="📄 Digital Transaction Agreement">
@@ -1265,74 +1933,59 @@ function App() {
           <p>Crop: {requirement.crop}</p>
           <p>Quantity: {confirmedQuantity} kg</p>
           <p>Price: ₹{offer}/kg</p>
-          <p>Buyer: Demo Bulk Buyer</p>
-          <p>Farmer/FPO: Participating Farmers</p>
           <p>Delivery Date: {requirement.date}</p>
-          <p>Delivery Responsibility: {deliveryMode}</p>
-          <p>Payment Terms: Payment after verification/delivery.</p>
+          <p>Delivery: {deliveryMode}</p>
+          <p>Payment Terms: After verification.</p>
 
           <Button onClick={() => go(38)}>
-            Confirm Digital Agreement
+            Confirm Agreement
           </Button>
         </Card>
       </Layout>
     );
   }
 
-  // SCREEN 38
   if (screen === 38) {
     return (
       <Layout title="💳 Payment Tracking">
         <Card>
           <h2>{paymentStatus}</h2>
 
-          <div className="progress">
-            {["Payment Pending", "Payment Initiated", "Verification", "Payment Completed"].map(
-              (item) => (
-                <p key={item} className={paymentStatus === item ? "active-step" : ""}>
-                  {item}
-                </p>
-              )
-            )}
-          </div>
-
-          {paymentStatus !== "Payment Completed" && (
-            <Button onClick={nextPayment}>Update Payment Status</Button>
+          {paymentStatus !==
+            "Payment Completed" && (
+            <Button onClick={nextPayment}>
+              Update Payment Status
+            </Button>
           )}
 
-          <Button className="secondary" onClick={() => go(39)}>
-            View Order Tracking
+          <Button
+            className="secondary"
+            onClick={() => go(39)}
+          >
+            Order Tracking
           </Button>
         </Card>
       </Layout>
     );
   }
 
-  // SCREEN 39
   if (screen === 39) {
     return (
       <Layout title="📦 Order & Delivery Tracking">
         <Card>
           <h2>{orderStatus}</h2>
 
-          {[
-            "Order Accepted",
-            "Pickup Scheduled",
-            "Collected",
-            "In Transit",
-            "Delivered",
-            "Payment Completed",
-          ].map((item) => (
-            <p key={item} className={orderStatus === item ? "active-step" : ""}>
-              {item}
-            </p>
-          ))}
-
-          {orderStatus !== "Payment Completed" && (
-            <Button onClick={nextOrder}>Update Order Status</Button>
+          {orderStatus !==
+            "Payment Completed" && (
+            <Button onClick={nextOrder}>
+              Update Order Status
+            </Button>
           )}
 
-          <Button className="secondary" onClick={() => go(40)}>
+          <Button
+            className="secondary"
+            onClick={() => go(40)}
+          >
             Raise Dispute
           </Button>
         </Card>
@@ -1340,114 +1993,179 @@ function App() {
     );
   }
 
-  // SCREEN 40
   if (screen === 40) {
     return (
       <Layout title="⚖️ Dispute & Grievance System">
         <Card>
+
           <Select
             label="Issue Type"
             value={dispute}
-            onChange={(e) => setDispute(e.target.value)}
+            onChange={(e) =>
+              setDispute(
+                e.target.value
+              )
+            }
           >
-            <option value="">Select an issue</option>
-            <option>Payment Issue</option>
-            <option>Quantity Issue</option>
-            <option>Quality Issue</option>
-            <option>Delivery Issue</option>
+            <option value="">
+              Select Issue
+            </option>
+
+            <option>
+              Payment Issue
+            </option>
+
+            <option>
+              Quantity Issue
+            </option>
+
+            <option>
+              Quality Issue
+            </option>
+
+            <option>
+              Delivery Issue
+            </option>
           </Select>
 
           <Button
             onClick={() => {
-              if (dispute) alert(`${dispute} raised successfully.`);
+              if (dispute) {
+                alert(
+                  `${dispute} raised successfully.`
+                );
+              }
             }}
           >
             Raise Issue
           </Button>
 
-          <p>Issue Raised → Under Review → Resolution Status</p>
-          <Button onClick={() => go(41)}>Actual Outcome</Button>
+          <Button
+            onClick={() => go(41)}
+          >
+            Actual Outcome
+          </Button>
         </Card>
       </Layout>
     );
   }
 
-  // SCREEN 41
   if (screen === 41) {
     const actualReturn =
-      Number(selectedLot.quantity) * Number(actualPrice) -
+      Number(selectedLot.quantity) *
+        Number(actualPrice) -
       Number(actualLogistics);
 
     return (
       <Layout title="Feedback & Actual Outcome">
         <Card className="form-card">
+
           <Input
-            label="Actual Selling Price / kg"
+            label="Actual Selling Price"
             type="number"
             value={actualPrice}
-            onChange={(e) => setActualPrice(e.target.value)}
+            onChange={(e) =>
+              setActualPrice(
+                e.target.value
+              )
+            }
           />
 
           <Input
             label="Actual Logistics Cost"
             type="number"
             value={actualLogistics}
-            onChange={(e) => setActualLogistics(e.target.value)}
+            onChange={(e) =>
+              setActualLogistics(
+                e.target.value
+              )
+            }
           />
 
-          <p>Delivery Result: Completed</p>
-          <hr />
-          <p>Estimated Net Return: ₹{estimatedNetReturn}</p>
-          <h2>Actual Net Return: ₹{actualReturn}</h2>
+          <p>
+            Estimated Return:
+            ₹{estimatedNetReturn}
+          </p>
 
-          <Button onClick={() => go(42)}>Update Recommendations</Button>
+          <h2>
+            Actual Return:
+            ₹{actualReturn}
+          </h2>
+
+          <Button
+            onClick={() => go(42)}
+          >
+            Update Recommendations
+          </Button>
         </Card>
       </Layout>
     );
   }
 
-  // SCREEN 42
   if (screen === 42) {
     return (
       <Layout title="🔄 Dynamic Recommendation Updates">
         <Card>
+
           <Button
-            onClick={() => setMarketUpdated(true)}
+            onClick={() =>
+              setMarketUpdated(
+                !marketUpdated
+              )
+            }
           >
             Simulate Market Change
           </Button>
 
           {marketUpdated && (
             <div className="warning">
-              ⚠️ Market conditions have changed. Recommendations updated.
-              <p>Opportunity Score updated.</p>
-              <p>Top 3 ranking updated.</p>
-              <p>Net return estimate updated.</p>
-              <p>Risk level updated.</p>
+              ⚠️ Market conditions changed.
+              Recommendations updated.
             </div>
           )}
 
-          <Button onClick={() => go(43)}>Offline Support</Button>
+          <Button
+            onClick={() => go(43)}
+          >
+            Offline Support
+          </Button>
         </Card>
       </Layout>
     );
   }
 
-  // SCREEN 43
   if (screen === 43) {
     return (
       <Layout title="📡 Low Internet / Offline Support">
         <Card>
-          <p>Current Mode: {online ? "Online" : "Offline"}</p>
-          <p>Pending actions can be saved locally.</p>
-          <p>Previously loaded information remains visible.</p>
-          <p>Data sync can happen when internet returns.</p>
 
-          <Button onClick={() => setOnline(!online)}>
-            {online ? "Simulate Offline Mode" : "Restore Internet"}
+          <h2>
+            {online
+              ? "🟢 Online"
+              : "🔴 Offline"}
+          </h2>
+
+          <p>
+            Pending actions can be saved.
+          </p>
+
+          <p>
+            Previous information remains available.
+          </p>
+
+          <Button
+            onClick={() =>
+              setOnline(!online)
+            }
+          >
+            {online
+              ? "Simulate Offline"
+              : "Restore Internet"}
           </Button>
 
-          <Button className="secondary" onClick={() => go(44)}>
+          <Button
+            onClick={() => go(44)}
+          >
             Safe Failure Handling
           </Button>
         </Card>
@@ -1459,24 +2177,47 @@ function App() {
   return (
     <Layout title="⚙️ Safe Failure Handling">
       <Card>
-        <h3>If market data fails</h3>
-        <p>Show last verified data and timestamp.</p>
 
-        <h3>If AI confidence is low</h3>
-        <p>Insufficient data for a reliable recommendation.</p>
+        <h3>
+          If market data fails
+        </h3>
 
-        <h3>If payment verification fails</h3>
-        <p>Transaction Pending Verification</p>
+        <p>
+          Show last verified data
+          and timestamp.
+        </p>
+
+        <h3>
+          If AI confidence is low
+        </h3>
+
+        <p>
+          Insufficient data for a
+          reliable recommendation.
+        </p>
+
+        <h3>
+          If payment verification fails
+        </h3>
+
+        <p>
+          Transaction Pending Verification
+        </p>
 
         <div className="success-box">
-          🎉 All 44 app screens are available in this prototype.
+          🎉 All 44 screens are available
+          and functional.
         </div>
 
         <Button onClick={() => go(5)}>
-          Return to Farmer Dashboard
+          Farmer Dashboard
         </Button>
-        <Button className="secondary" onClick={() => go(9)}>
-          Open Buyer Dashboard
+
+        <Button
+          className="secondary"
+          onClick={() => go(9)}
+        >
+          Buyer Dashboard
         </Button>
       </Card>
     </Layout>
