@@ -1,9 +1,14 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import "./App.css";
 
-/* ==================================================
-   LANGUAGE TRANSLATIONS
-================================================== */
+/* =========================================================
+   AI FARMING SELLING INTELLIGENCE
+   FINAL HACKATHON PROTOTYPE
+========================================================= */
+
+/* =========================================================
+   TRANSLATIONS
+========================================================= */
 
 const translations = {
   English: {
@@ -17,15 +22,40 @@ const translations = {
     dashboard: "Dashboard",
     back: "Back",
     logout: "Logout",
-    farmer: "Farmer",
-    buyer: "Buyer",
-    fpo: "FPO / Cooperative",
     online: "Online",
     offline: "Offline",
     continue: "Continue",
+
+    farmer: "Farmer",
+    buyer: "Buyer",
+    fpo: "FPO / Cooperative",
+
     name: "Name",
-    mobile: "Mobile / Email",
+    contact: "Mobile Number / Email",
     password: "Password",
+
+    cropName: "Crop Name",
+    quantity: "Available Quantity (kg)",
+    location: "Location",
+    harvestDate: "Harvest Date",
+    quality: "Quality",
+    expectedPrice: "Expected Price per kg",
+
+    requiredCrop: "Required Crop",
+    requiredQuantity: "Required Quantity (kg)",
+    deliveryLocation: "Delivery Location",
+    requiredDate: "Required Date",
+    requiredQuality: "Required Quality",
+
+    edit: "Edit",
+    save: "Save",
+    cancel: "Cancel",
+    update: "Update",
+    voiceInput: "Voice Input",
+    listening: "Listening...",
+    buyNow: "Buy Now",
+    askQuestion: "Ask Question",
+    transaction: "Transaction",
   },
 
   Telugu: {
@@ -39,21 +69,140 @@ const translations = {
     dashboard: "డాష్‌బోర్డ్",
     back: "వెనుకకు",
     logout: "లాగ్అవుట్",
-    farmer: "రైతు",
-    buyer: "కొనుగోలుదారు",
-    fpo: "ఎఫ్‌పీఓ / సహకార సంఘం",
     online: "ఆన్‌లైన్",
     offline: "ఆఫ్‌లైన్",
     continue: "కొనసాగించండి",
+
+    farmer: "రైతు",
+    buyer: "కొనుగోలుదారు",
+    fpo: "ఎఫ్‌పీఓ / సహకార సంఘం",
+
     name: "పేరు",
-    mobile: "మొబైల్ / ఇమెయిల్",
+    contact: "మొబైల్ నంబర్ / ఇమెయిల్",
     password: "పాస్‌వర్డ్",
+
+    cropName: "పంట పేరు",
+    quantity: "అందుబాటులో ఉన్న పరిమాణం (కిలోలు)",
+    location: "ప్రాంతం",
+    harvestDate: "పంట కోత తేదీ",
+    quality: "నాణ్యత",
+    expectedPrice: "అంచనా ధర కిలోకు",
+
+    requiredCrop: "అవసరమైన పంట",
+    requiredQuantity: "అవసరమైన పరిమాణం (కిలోలు)",
+    deliveryLocation: "డెలివరీ ప్రాంతం",
+    requiredDate: "అవసరమైన తేదీ",
+    requiredQuality: "అవసరమైన నాణ్యత",
+
+    edit: "సవరించు",
+    save: "సేవ్ చేయండి",
+    cancel: "రద్దు",
+    update: "నవీకరించు",
+    voiceInput: "వాయిస్ ఇన్‌పుట్",
+    listening: "వింటోంది...",
+    buyNow: "ఇప్పుడే కొనండి",
+    askQuestion: "ప్రశ్న అడగండి",
+    transaction: "లావాదేవీ",
+  },
+
+  Hindi: {
+    appName: "एआई कृषि बिक्री बुद्धिमत्ता",
+    tagline: "समझदारी से बेचें। अधिक कमाएं।",
+    getStarted: "शुरू करें",
+    chooseLanguage: "अपनी भाषा चुनें",
+    chooseRole: "अपनी भूमिका चुनें",
+    login: "लॉगिन / पंजीकरण",
+    enterApplication: "एप्लिकेशन में प्रवेश करें",
+    dashboard: "डैशबोर्ड",
+    back: "वापस",
+    logout: "लॉगआउट",
+    online: "ऑनलाइन",
+    offline: "ऑफलाइन",
+    continue: "जारी रखें",
+
+    farmer: "किसान",
+    buyer: "खरीदार",
+    fpo: "एफपीओ / सहकारी समिति",
+
+    name: "नाम",
+    contact: "मोबाइल नंबर / ईमेल",
+    password: "पासवर्ड",
+
+    cropName: "फसल का नाम",
+    quantity: "उपलब्ध मात्रा (किलो)",
+    location: "स्थान",
+    harvestDate: "कटाई की तारीख",
+    quality: "गुणवत्ता",
+    expectedPrice: "प्रति किलो अपेक्षित मूल्य",
+
+    requiredCrop: "आवश्यक फसल",
+    requiredQuantity: "आवश्यक मात्रा (किलो)",
+    deliveryLocation: "डिलीवरी स्थान",
+    requiredDate: "आवश्यक तारीख",
+    requiredQuality: "आवश्यक गुणवत्ता",
+
+    edit: "संपादित करें",
+    save: "सेव करें",
+    cancel: "रद्द करें",
+    update: "अपडेट करें",
+    voiceInput: "वॉयस इनपुट",
+    listening: "सुन रहा है...",
+    buyNow: "अभी खरीदें",
+    askQuestion: "प्रश्न पूछें",
+    transaction: "लेनदेन",
+  },
+
+  Marathi: {
+    appName: "एआय कृषी विक्री बुद्धिमत्ता",
+    tagline: "हुशारीने विक्री करा. अधिक कमवा.",
+    getStarted: "सुरू करा",
+    chooseLanguage: "तुमची भाषा निवडा",
+    chooseRole: "तुमची भूमिका निवडा",
+    login: "लॉगिन / नोंदणी",
+    enterApplication: "अॅपमध्ये प्रवेश करा",
+    dashboard: "डॅशबोर्ड",
+    back: "मागे",
+    logout: "लॉगआउट",
+    online: "ऑनलाइन",
+    offline: "ऑफलाइन",
+    continue: "पुढे जा",
+
+    farmer: "शेतकरी",
+    buyer: "खरेदीदार",
+    fpo: "एफपीओ / सहकारी संस्था",
+
+    name: "नाव",
+    contact: "मोबाईल नंबर / ईमेल",
+    password: "पासवर्ड",
+
+    cropName: "पिकाचे नाव",
+    quantity: "उपलब्ध प्रमाण (किलो)",
+    location: "स्थान",
+    harvestDate: "काढणीची तारीख",
+    quality: "गुणवत्ता",
+    expectedPrice: "प्रति किलो अपेक्षित किंमत",
+
+    requiredCrop: "आवश्यक पीक",
+    requiredQuantity: "आवश्यक प्रमाण (किलो)",
+    deliveryLocation: "वितरण स्थान",
+    requiredDate: "आवश्यक तारीख",
+    requiredQuality: "आवश्यक गुणवत्ता",
+
+    edit: "संपादित करा",
+    save: "जतन करा",
+    cancel: "रद्द करा",
+    update: "अपडेट करा",
+    voiceInput: "व्हॉइस इनपुट",
+    listening: "ऐकत आहे...",
+    buyNow: "आता खरेदी करा",
+    askQuestion: "प्रश्न विचारा",
+    transaction: "व्यवहार",
   },
 };
 
-/* ==================================================
-   INITIAL DEMO DATA
-================================================== */
+/* =========================================================
+   INITIAL DATA
+========================================================= */
 
 const initialLots = [
   {
@@ -63,9 +212,12 @@ const initialLots = [
     location: "Kakinada",
     harvest: "2026-09-08",
     quality: "A Grade",
+    aiGrade: "A Grade",
     price: 24,
     farmer: "Farmer A",
+    phone: "9876543210",
     ownerId: "demo-farmer-a",
+    image: "",
     status: "Available",
   },
   {
@@ -75,9 +227,12 @@ const initialLots = [
     location: "Pithapuram",
     harvest: "2026-09-09",
     quality: "A Grade",
+    aiGrade: "A Grade",
     price: 23,
     farmer: "Farmer B",
+    phone: "9876500000",
     ownerId: "demo-farmer-b",
+    image: "",
     status: "Available",
   },
   {
@@ -87,102 +242,70 @@ const initialLots = [
     location: "Samalkota",
     harvest: "2026-09-10",
     quality: "A Grade",
+    aiGrade: "A Grade",
     price: 25,
     farmer: "Farmer C",
+    phone: "9876111111",
     ownerId: "demo-farmer-c",
-    status: "Available",
-  },
-  {
-    id: 4,
-    crop: "Chilli",
-    quantity: 2500,
-    location: "Guntur",
-    harvest: "2026-10-02",
-    quality: "A Grade",
-    price: 48,
-    farmer: "Farmer D",
-    ownerId: "demo-farmer-d",
+    image: "",
     status: "Available",
   },
 ];
 
-const buyerHistoryData = [
+const initialCustomers = [
   {
     id: 1,
-    buyer: "FreshMart Traders",
-    totalOrders: 12,
-    successfulTransactions: 11,
-    disputes: 0,
-    reliability: 96,
-    status: "Highly Reliable",
+    customer: "Kakinada Fresh Mart",
+    transactions: 14,
+    completed: 13,
+    disputed: 1,
+    paymentScore: 93,
+    reliability: "High",
   },
   {
     id: 2,
-    buyer: "Green Foods Pvt Ltd",
-    totalOrders: 8,
-    successfulTransactions: 7,
-    disputes: 1,
-    reliability: 82,
-    status: "Reliable",
+    customer: "East Godavari Foods",
+    transactions: 8,
+    completed: 6,
+    disputed: 2,
+    paymentScore: 75,
+    reliability: "Medium",
   },
   {
     id: 3,
-    buyer: "Quick Agro Market",
-    totalOrders: 4,
-    successfulTransactions: 2,
-    disputes: 2,
-    reliability: 50,
-    status: "Medium Risk",
+    customer: "Coastal Traders",
+    transactions: 5,
+    completed: 3,
+    disputed: 2,
+    paymentScore: 55,
+    reliability: "Low",
   },
 ];
 
-const futureCropData = [
+const initialTransactions = [
   {
-    crop: "Chilli",
-    seasonalDemand: 92,
-    buyerDemand: 88,
-    priceTrend: 85,
-    profitPotential: 90,
-    logisticsScore: 82,
-  },
-  {
-    crop: "Tomato",
-    seasonalDemand: 78,
-    buyerDemand: 90,
-    priceTrend: 72,
-    profitPotential: 74,
-    logisticsScore: 88,
-  },
-  {
-    crop: "Maize",
-    seasonalDemand: 84,
-    buyerDemand: 76,
-    priceTrend: 82,
-    profitPotential: 80,
-    logisticsScore: 86,
-  },
-  {
-    crop: "Groundnut",
-    seasonalDemand: 81,
-    buyerDemand: 79,
-    priceTrend: 84,
-    profitPotential: 86,
-    logisticsScore: 75,
+    id: "TXN-1001",
+    customer: "Kakinada Fresh Mart",
+    amount: 48000,
+    status: "Completed",
+    paymentStatus: "Payment Received",
+    date: "2026-08-20",
   },
 ];
 
-/* ==================================================
+/* =========================================================
    REUSABLE COMPONENTS
-   IMPORTANT: OUTSIDE APP()
-================================================== */
+   ALL OUTSIDE APP()
+   THIS HELPS PREVENT FOCUS LOSS
+========================================================= */
 
-function Button({
+const Button = ({
   children,
   onClick,
   className = "",
   type = "button",
   disabled = false,
-}) {
+}) => {
   return (
     <button
       type={type}
@@ -193,49 +316,154 @@ function Button({
       {children}
     </button>
   );
-}
+};
 
-function Card({ children, className = "" }) {
+const Card = ({ children, className = "" }) => {
   return <div className={`card ${className}`}>{children}</div>;
-}
+};
 
-function Input({ label, ...props }) {
+const Input = ({ label, ...props }) => {
   return (
-    <label className="field">
-      <span>{label}</span>
+    <div className="field">
+      {label && <label>{label}</label>}
       <input {...props} />
-    </label>
+    </div>
+  );
+};
+
+const Select = ({ label, children, ...props }) => {
+  return (
+    <div className="field">
+      {label && <label>{label}</label>}
+      <select {...props}>{children}</select>
+    </div>
+  );
+};
+
+const TextArea = ({ label, ...props }) => {
+  return (
+    <div className="field">
+      {label && <label>{label}</label>}
+      <textarea {...props} />
+    </div>
+  );
+};
+
+/* =========================================================
+   VOICE INPUT
+========================================================= */
+
+function VoiceInput({ onResult, language = "English", buttonText }) {
+  const [listening, setListening] = useState(false);
+
+  const languageMap = {
+    English: "en-IN",
+    Telugu: "te-IN",
+    Hindi: "hi-IN",
+    Marathi: "mr-IN",
+  };
+
+  function startListening() {
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      alert("Voice input is not supported in this browser. Please use Chrome.");
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+
+    recognition.lang = languageMap[language] || "en-IN";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.onstart = () => setListening(true);
+
+    recognition.onend = () => setListening(false);
+
+    recognition.onerror = () => setListening(false);
+
+    recognition.onresult = (event) => {
+      const text = event.results[0][0].transcript;
+      onResult(text);
+    };
+
+    recognition.start();
+  }
+
+  return (
+    <Button
+      className={listening ? "danger" : "secondary"}
+      onClick={startListening}
+    >
+      🎤 {listening ? "Listening..." : buttonText || "Voice Input"}
+    </Button>
   );
 }
 
-function Select({ label, children, ...props }) {
+/* =========================================================
+   EXPLAINABLE AI VOICE
+========================================================= */
+
+function AIVoiceExplanation({ text, language }) {
+  function speak() {
+    if (!window.speechSynthesis) {
+      alert("Voice explanation is not supported in this browser.");
+      return;
+    }
+
+    const languageMap = {
+      English: "en-IN",
+      Telugu: "te-IN",
+      Hindi: "hi-IN",
+      Marathi: "mr-IN",
+    };
+
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    utterance.lang = languageMap[language] || "en-IN";
+
+    window.speechSynthesis.speak(utterance);
+  }
+
   return (
-    <label className="field">
-      <span>{label}</span>
-      <select {...props}>{children}</select>
-    </label>
+    <Button className="secondary" onClick={speak}>
+      🔊 AI Voice Explanation
+    </Button>
   );
 }
+
+/* =========================================================
+   LAYOUT
+   OUTSIDE APP() TO PREVENT REMOUNTING
+========================================================= */
 
 function Layout({
   title,
   children,
+  showNavigation = true,
   loggedIn,
+  appName,
   userName,
   role,
   online,
-  t,
+  onlineText,
+  offlineText,
+  dashboardText,
+  backText,
   historyLength,
-  onBack,
   onDashboard,
-  showNavigation = true,
+  onBack,
 }) {
   return (
     <main className="app">
       {loggedIn && (
         <header className="topbar">
           <div>
-            <h2>🌾 {t.appName}</h2>
+            <h2>🌾 {appName}</h2>
 
             <small>
               {userName} • {role}
@@ -244,11 +472,11 @@ function Layout({
 
           <div className="top-info">
             <span className={online ? "online" : "offline"}>
-              ● {online ? t.online : t.offline}
+              ● {online ? onlineText : offlineText}
             </span>
 
             <Button className="secondary" onClick={onDashboard}>
-              🏠 {t.dashboard}
+              🏠 {dashboardText}
             </Button>
           </div>
         </header>
@@ -262,11 +490,11 @@ function Layout({
       {showNavigation && loggedIn && historyLength > 0 && (
         <footer className="navigation">
           <Button className="secondary" onClick={onBack}>
-            ← {t.back}
+            ← {backText}
           </Button>
 
           <Button onClick={onDashboard}>
-            🏠 {t.dashboard}
+            🏠 {dashboardText}
           </Button>
         </footer>
       )}
@@ -274,9 +502,9 @@ function Layout({
   );
 }
 
-/* ==================================================
-   MAIN APPLICATION
-================================================== */
+/* =========================================================
+   MAIN APP
+========================================================= */
 
 function App() {
   const [page, setPage] = useState("splash");
@@ -295,7 +523,10 @@ function App() {
   const [lots, setLots] = useState(initialLots);
   const [selectedLot, setSelectedLot] = useState(null);
 
-  const [selectedBuyer, setSelectedBuyer] = useState(null);
+  const [customers] = useState(initialCustomers);
+  const [transactions, setTransactions] = useState(initialTransactions);
+
+  const [loginHistory, setLoginHistory] = useState([]);
 
   const [cropForm, setCropForm] = useState({
     crop: "",
@@ -304,15 +535,21 @@ function App() {
     harvest: "",
     quality: "A Grade",
     price: "",
+    image: "",
+    aiGrade: "",
   });
+
+  const [editingLotId, setEditingLotId] = useState(null);
 
   const [requirement, setRequirement] = useState({
     crop: "Tomato",
-    quantity: 10000,
+    quantity: "10000",
     location: "Kakinada",
     date: "2026-09-15",
     quality: "A Grade",
   });
+
+  const [requirementEditing, setRequirementEditing] = useState(true);
 
   const [confirmedIds, setConfirmedIds] = useState([]);
 
@@ -322,6 +559,7 @@ function App() {
   const [marketUpdated, setMarketUpdated] = useState(false);
 
   const [deliveryMode, setDeliveryMode] = useState("Buyer Pickup");
+  const [deliveryDistance, setDeliveryDistance] = useState(18);
 
   const [paymentStatus, setPaymentStatus] =
     useState("Payment Pending");
@@ -329,25 +567,32 @@ function App() {
   const [orderStatus, setOrderStatus] =
     useState("Order Received");
 
-  const [dispute, setDispute] = useState("");
+  const [trackingProgress, setTrackingProgress] =
+    useState(25);
 
-  const [transactions, setTransactions] = useState([
-    {
-      id: 1,
-      crop: "Tomato",
-      buyer: "FreshMart Traders",
-      amount: 48000,
-      status: "Successful",
-      date: "2026-08-28",
-      reliability: 96,
-    },
-  ]);
+  const [buyerOffer, setBuyerOffer] = useState({
+    amount: "",
+    quantity: "",
+    deliveryLocation: "",
+  });
+
+  const [transactionDetails, setTransactionDetails] =
+    useState({
+      buyerName: "",
+      phone: "",
+      address: "",
+      paymentMethod: "",
+    });
+
+  const [cameraOpen, setCameraOpen] = useState(false);
+  const videoRef = useRef(null);
+  const streamRef = useRef(null);
 
   const t = translations[language];
 
-  /* ==================================================
+  /* =======================================================
      SESSION RESTORE
-  ================================================== */
+  ======================================================= */
 
   useEffect(() => {
     const savedSession = localStorage.getItem("aiFarmingSession");
@@ -375,26 +620,9 @@ function App() {
     }
   }, []);
 
-  /* ==================================================
+  /* =======================================================
      NAVIGATION
-  ================================================== */
-
-  function navigate(nextPage) {
-    setHistory((oldHistory) => [...oldHistory, page]);
-    setPage(nextPage);
-  }
-
-  function goBack() {
-    setHistory((oldHistory) => {
-      if (oldHistory.length === 0) return oldHistory;
-
-      const newHistory = [...oldHistory];
-      const previousPage = newHistory.pop();
-
-      setPage(previousPage);
-      return newHistory;
-    });
-  }
+  ======================================================= */
 
   function getDashboard() {
     if (role === "Farmer") return "farmer-dashboard";
@@ -402,6 +630,24 @@ function App() {
     if (role === "FPO") return "fpo-dashboard";
 
     return "splash";
+  }
+
+  function navigate(nextPage) {
+    setHistory((previous) => [...previous, page]);
+    setPage(nextPage);
+  }
+
+  function goBack() {
+    setHistory((previous) => {
+      if (previous.length === 0) return previous;
+
+      const copy = [...previous];
+      const lastPage = copy.pop();
+
+      setPage(lastPage);
+
+      return copy;
+    });
   }
 
   function goDashboard() {
@@ -417,93 +663,104 @@ function App() {
     setUserName("");
     setContact("");
     setPassword("");
+    setSelectedLot(null);
     setHistory([]);
     setPage("splash");
   }
 
-  function protectedNavigate(target) {
-    navigate(target);
-  }
+  /* =======================================================
+     LAYOUT PROPS
+  ======================================================= */
 
-  /* ==================================================
-     USER LOTS
-  ================================================== */
+  const layoutProps = {
+    loggedIn,
+    appName: t.appName,
+    userName,
+    role,
+    online,
+    onlineText: t.online,
+    offlineText: t.offline,
+    dashboardText: t.dashboard,
+    backText: t.back,
+    historyLength: history.length,
+    onDashboard: goDashboard,
+    onBack: goBack,
+  };
+
+  /* =======================================================
+     MY LOTS
+  ======================================================= */
 
   const myLots = useMemo(() => {
     return lots.filter((lot) => lot.ownerId === contact);
   }, [lots, contact]);
 
-  /* ==================================================
-     BUYER MATCHING
-  ================================================== */
-
-  const matches = useMemo(() => {
-    return lots.filter((lot) => {
-      const cropMatch =
-        lot.crop.toLowerCase() ===
-        String(requirement.crop).toLowerCase().trim();
-
-      const qualityMatch =
-        requirement.quality === "Any Quality" ||
-        lot.quality === requirement.quality;
-
-      return cropMatch && qualityMatch && lot.status === "Available";
-    });
-  }, [lots, requirement]);
-
-  const totalSupply = useMemo(() => {
-    return matches.reduce(
-      (total, lot) => total + Number(lot.quantity),
-      0
-    );
-  }, [matches]);
-
-  const confirmedLots = useMemo(() => {
-    return lots.filter((lot) => confirmedIds.includes(lot.id));
-  }, [lots, confirmedIds]);
-
-  const confirmedQuantity = useMemo(() => {
-    return confirmedLots.reduce(
-      (total, lot) => total + Number(lot.quantity),
-      0
-    );
-  }, [confirmedLots]);
-
-  const remainingQuantity = Math.max(
-    0,
-    Number(requirement.quantity) - confirmedQuantity
-  );
-
-  /* ==================================================
-     FARMER INTELLIGENCE
-  ================================================== */
+  /* =======================================================
+     ACTIVE LOT
+  ======================================================= */
 
   const farmerActiveLot =
     selectedLot && selectedLot.ownerId === contact
       ? selectedLot
       : myLots[0] || null;
 
-  const grossValue =
+  /* =======================================================
+     BUYER MATCHING
+  ======================================================= */
+
+  const matches = useMemo(() => {
+    return lots.filter((lot) => {
+      const cropMatch =
+        lot.crop.toLowerCase() ===
+        requirement.crop.toLowerCase().trim();
+
+      const qualityMatch =
+        requirement.quality === "Any Quality" ||
+        lot.quality === requirement.quality;
+
+      return (
+        cropMatch &&
+        qualityMatch &&
+        lot.status === "Available"
+      );
+    });
+  }, [lots, requirement]);
+
+  const totalSupply = matches.reduce(
+    (sum, lot) => sum + Number(lot.quantity),
+    0
+  );
+
+  const confirmedLots = lots.filter((lot) =>
+    confirmedIds.includes(lot.id)
+  );
+
+  const confirmedQuantity = confirmedLots.reduce(
+    (sum, lot) => sum + Number(lot.quantity),
+    0
+  );
+
+  const remainingQuantity = Math.max(
+    0,
+    Number(requirement.quantity) - confirmedQuantity
+  );
+
+  /* =======================================================
+     NET RETURN
+  ======================================================= */
+
+  const sellingValue =
     Number(farmerActiveLot?.quantity || 0) *
     Number(farmerActiveLot?.price || 0);
 
-  const estimatedDistance =
-    selectedBuyer?.buyer === "FreshMart Traders"
-      ? 28
-      : selectedBuyer?.buyer === "Green Foods Pvt Ltd"
-      ? 42
-      : selectedBuyer?.buyer === "Quick Agro Market"
-      ? 65
-      : 30;
-
   const transportationCost = Math.round(
     Number(farmerActiveLot?.quantity || 0) *
-      estimatedDistance *
-      0.025
+      Number(deliveryDistance || 0) *
+      0.03
   );
 
   const storageCost = Math.round(
-    Number(farmerActiveLot?.quantity || 0) * 0.35
+    Number(farmerActiveLot?.quantity || 0) * 0.3
   );
 
   const handlingCost = Math.round(
@@ -511,116 +768,182 @@ function App() {
   );
 
   const estimatedNetReturn =
-    grossValue -
+    sellingValue -
     transportationCost -
     storageCost -
     handlingCost;
 
-  const storageFeasible =
-    farmerActiveLot &&
-    farmerActiveLot.quantity > 0 &&
-    storageCost < grossValue * 0.1;
+  /* =======================================================
+     MARKET INTELLIGENCE
+  ======================================================= */
 
-  const riskScore = useMemo(() => {
-    if (!farmerActiveLot) return 0;
+  const marketPrice = marketUpdated ? 27 : 24;
+  const seasonalDemand = marketUpdated ? "High" : "Medium";
 
-    let risk = 15;
+  const thresholdPrice =
+    farmerActiveLot?.crop?.toLowerCase() === "tomato"
+      ? 23
+      : 20;
 
-    if (farmerActiveLot.quality !== "A Grade") {
-      risk += 15;
+  const recommendedPrice = Math.round(
+    marketPrice * 1.05
+  );
+
+  /* =======================================================
+     STORAGE FEASIBILITY
+  ======================================================= */
+
+  const storageFeasibility = useMemo(() => {
+    if (!farmerActiveLot) {
+      return {
+        score: 0,
+        status: "No Crop Selected",
+        recommendation: "Select a crop first.",
+      };
     }
 
-    if (estimatedDistance > 50) {
-      risk += 20;
+    const currentPrice = Number(farmerActiveLot.price);
+
+    if (currentPrice < thresholdPrice) {
+      return {
+        score: 85,
+        status: "Recommended",
+        recommendation:
+          "Current price is below the estimated threshold. Storage may help wait for a better market opportunity.",
+      };
     }
 
-    if (marketUpdated) {
-      risk -= 5;
+    return {
+      score: 60,
+      status: "Limited Feasibility",
+      recommendation:
+        "Current price is at or above the threshold. Selling earlier may reduce storage cost and spoilage risk.",
+    };
+  }, [farmerActiveLot, thresholdPrice]);
+
+  /* =======================================================
+     STORAGE CENTERS - DEMO DATA
+  ======================================================= */
+
+  const storageCenters = [
+    {
+      name: "Kakinada Cold Storage Center",
+      distance: "8 km",
+      charge: "₹0.80/kg/day",
+    },
+    {
+      name: "Pithapuram Agri Storage",
+      distance: "15 km",
+      charge: "₹0.65/kg/day",
+    },
+    {
+      name: "Samalkota Fresh Storage",
+      distance: "22 km",
+      charge: "₹0.75/kg/day",
+    },
+  ];
+
+  /* =======================================================
+     TRANSACTION RISK
+  ======================================================= */
+
+  const transactionRisk = useMemo(() => {
+    const total = customers.reduce(
+      (sum, customer) => sum + customer.transactions,
+      0
+    );
+
+    const completed = customers.reduce(
+      (sum, customer) => sum + customer.completed,
+      0
+    );
+
+    const completionRate =
+      total > 0
+        ? Math.round((completed / total) * 100)
+        : 0;
+
+    let level = "High";
+
+    if (completionRate >= 85) {
+      level = "Low";
+    } else if (completionRate >= 65) {
+      level = "Medium";
     }
 
-    if (selectedBuyer && selectedBuyer.reliability < 70) {
-      risk += 30;
-    }
+    return {
+      completionRate,
+      level,
+    };
+  }, [customers]);
 
-    return Math.max(0, Math.min(100, risk));
-  }, [
-    farmerActiveLot,
-    estimatedDistance,
-    marketUpdated,
-    selectedBuyer,
-  ]);
+  /* =======================================================
+     OPPORTUNITY SCORE
+  ======================================================= */
 
   const opportunityScore = useMemo(() => {
     if (!farmerActiveLot) return 0;
 
-    let score = 45;
+    let score = 40;
 
     if (farmerActiveLot.quality === "A Grade") score += 15;
-    if (farmerActiveLot.quantity >= 1000) score += 10;
-    if (farmerActiveLot.price >= 20) score += 10;
-    if (marketUpdated) score += 5;
 
-    score -= Math.round(riskScore * 0.1);
+    if (Number(farmerActiveLot.quantity) >= 1000) score += 12;
 
-    return Math.max(0, Math.min(100, Math.round(score)));
-  }, [farmerActiveLot, marketUpdated, riskScore]);
+    if (Number(farmerActiveLot.price) >= thresholdPrice) score += 10;
 
-  /* ==================================================
+    if (marketUpdated) score += 8;
+
+    if (transactionRisk.level === "Low") score += 10;
+
+    return Math.min(100, score);
+  }, [
+    farmerActiveLot,
+    marketUpdated,
+    transactionRisk,
+    thresholdPrice,
+  ]);
+
+  /* =======================================================
      FUTURE CROP PREDICTION
-  ================================================== */
+  ======================================================= */
 
-  const futurePredictions = useMemo(() => {
-    return futureCropData
-      .map((item) => {
-        const score = Math.round(
-          item.seasonalDemand * 0.25 +
-            item.buyerDemand * 0.3 +
-            item.priceTrend * 0.2 +
-            item.profitPotential * 0.15 +
-            item.logisticsScore * 0.1
-        );
+  const futureCropPrediction = useMemo(() => {
+    const demandFactor =
+      Number(requirement.quantity) >= 10000
+        ? 25
+        : 15;
 
-        return {
-          ...item,
-          score,
-        };
-      })
-      .sort((a, b) => b.score - a.score);
-  }, []);
+    const predictions = [
+      {
+        crop: "Tomato",
+        score: Math.min(
+          100,
+          55 + demandFactor + (marketUpdated ? 20 : 15)
+        ),
+        reason:
+          "Buyer demand and seasonal market activity are strong.",
+      },
+      {
+        crop: "Chilli",
+        score: marketUpdated ? 78 : 70,
+        reason:
+          "Seasonal demand and market potential are favorable.",
+      },
+      {
+        crop: "Paddy",
+        score: 68,
+        reason:
+          "Demand is comparatively stable and market conditions are predictable.",
+      },
+    ];
 
-  /* ==================================================
-     TRANSACTION RISK
-  ================================================== */
+    return predictions.sort((a, b) => b.score - a.score);
+  }, [requirement.quantity, marketUpdated]);
 
-  const selectedBuyerRisk = selectedBuyer
-    ? 100 - selectedBuyer.reliability
-    : 20;
-
-  const transactionRecommendation =
-    selectedBuyerRisk <= 15
-      ? "Safe to proceed with normal verification."
-      : selectedBuyerRisk <= 35
-      ? "Proceed with additional payment and order verification."
-      : "High risk detected. Use secure verification before confirming.";
-
-  /* ==================================================
-     LAYOUT PROPS
-  ================================================== */
-
-  const layoutProps = {
-    loggedIn,
-    userName,
-    role,
-    online,
-    t,
-    historyLength: history.length,
-    onBack: goBack,
-    onDashboard: goDashboard,
-  };
-
-  /* ==================================================
+  /* =======================================================
      SPLASH
-  ================================================== */
+  ======================================================= */
 
   if (page === "splash") {
     return (
@@ -628,6 +951,7 @@ function App() {
         <div className="logo">🌾🤖</div>
 
         <h1>{t.appName}</h1>
+
         <p>{t.tagline}</p>
 
         <Button onClick={() => navigate("language")}>
@@ -637,9 +961,9 @@ function App() {
     );
   }
 
-  /* ==================================================
+  /* =======================================================
      LANGUAGE
-  ================================================== */
+  ======================================================= */
 
   if (page === "language") {
     return (
@@ -649,20 +973,27 @@ function App() {
         showNavigation={false}
       >
         <div className="grid two">
-          <Card className={language === "English" ? "selected" : ""}>
-            <h2>English</h2>
-            <Button onClick={() => setLanguage("English")}>
-              Select English
-            </Button>
-          </Card>
+          {Object.keys(translations).map((lang) => (
+            <Card
+              key={lang}
+              className={
+                language === lang ? "selected" : ""
+              }
+            >
+              <h2>{lang}</h2>
 
-          <Card className={language === "Telugu" ? "selected" : ""}>
-            <h2>తెలుగు</h2>
-            <Button onClick={() => setLanguage("Telugu")}>
-              తెలుగు ఎంచుకోండి
-            </Button>
-          </Card>
+              <Button
+                onClick={() => setLanguage(lang)}
+              >
+                {language === lang
+                  ? "✓ Selected"
+                  : "Select"}
+              </Button>
+            </Card>
+          ))}
         </div>
+
+        <br />
 
         <Button onClick={() => navigate("role")}>
           {t.continue} →
@@ -671,9 +1002,9 @@ function App() {
     );
   }
 
-  /* ==================================================
+  /* =======================================================
      ROLE
-  ================================================== */
+  ======================================================= */
 
   if (page === "role") {
     const roles = [
@@ -692,9 +1023,12 @@ function App() {
           {roles.map(([value, icon, label]) => (
             <Card
               key={value}
-              className={role === value ? "selected" : ""}
+              className={
+                role === value ? "selected" : ""
+              }
             >
               <h1>{icon}</h1>
+
               <h2>{label}</h2>
 
               <Button onClick={() => setRole(value)}>
@@ -713,21 +1047,33 @@ function App() {
     );
   }
 
-  /* ==================================================
+  /* =======================================================
      LOGIN
-  ================================================== */
+  ======================================================= */
 
   if (page === "login") {
     function enterApplication() {
       if (
         !userName.trim() ||
         !contact.trim() ||
-        !password.trim() ||
-        !role
+        !password.trim()
       ) {
-        alert("Please complete all login details.");
+        alert("Please complete all required details.");
         return;
       }
+
+      const now = new Date().toLocaleString();
+
+      const newLogin = {
+        name: userName,
+        role,
+        time: now,
+      };
+
+      setLoginHistory((previous) => [
+        newLogin,
+        ...previous,
+      ]);
 
       localStorage.setItem(
         "aiFarmingSession",
@@ -741,10 +1087,7 @@ function App() {
 
       setLoggedIn(true);
       setHistory([]);
-
-      if (role === "Farmer") setPage("farmer-dashboard");
-      if (role === "Buyer") setPage("buyer-dashboard");
-      if (role === "FPO") setPage("fpo-dashboard");
+      setPage(getDashboard());
     }
 
     return (
@@ -757,23 +1100,32 @@ function App() {
           <Input
             label={t.name}
             value={userName}
-            placeholder="Enter your name"
-            onChange={(e) => setUserName(e.target.value)}
+            onChange={(e) =>
+              setUserName(e.target.value)
+            }
+          />
+
+          <VoiceInput
+            language={language}
+            buttonText={t.voiceInput}
+            onResult={setUserName}
           />
 
           <Input
-            label={t.mobile}
+            label={t.contact}
             value={contact}
-            placeholder="Enter mobile number or email"
-            onChange={(e) => setContact(e.target.value)}
+            onChange={(e) =>
+              setContact(e.target.value)
+            }
           />
 
           <Input
             label={t.password}
             type="password"
             value={password}
-            placeholder="Enter password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
           />
 
           <p>
@@ -788,634 +1140,34 @@ function App() {
     );
   }
 
-  /* ==================================================
+  /* =======================================================
      FARMER DASHBOARD
-  ================================================== */
+  ======================================================= */
 
   if (page === "farmer-dashboard") {
     const items = [
       ["➕", "Add Crop", "crop-listing"],
       ["📦", "My Crop Lots", "my-crops"],
-      ["📷", "Crop Quality", "crop-quality"],
       ["📊", "Market Intelligence", "market-intelligence"],
       ["🤖", "AI Recommendations", "recommendations"],
       ["💰", "Net Return Intelligence", "net-return"],
+      ["📈", "Future Crop Prediction", "future-prediction"],
       ["🏪", "Storage Feasibility", "storage-feasibility"],
-      ["🔮", "Future Crop Prediction", "future-crop"],
+      ["⚠️", "Transaction Risk", "risk-intelligence"],
       ["👥", "Customer History", "customer-history"],
-      ["⚠️", "Risk & Reliability", "risk-reliability"],
-      ["🚛", "Logistics", "logistics"],
-      ["💳", "Payments", "payments"],
-      ["🧾", "Transactions", "transactions"],
+      ["🤝", "Buyer Offers", "buyer-offers"],
+      ["🚛", "Logistics & Live Tracking", "logistics"],
+      ["💳", "Transactions", "payments"],
       ["📦", "Orders", "orders"],
+      ["📜", "Login History", "login-history"],
+      ["📡", "Offline Mode", "offline-support"],
       ["👤", "Profile", "profile"],
     ];
 
     return (
       <Layout
         {...layoutProps}
-        title="👨‍🌾 Farmer Dashboard"
-        showNavigation={false}
-      >
-        <div className="grid three">
-          {items.map(([icon, label, target]) => (
-            <Card key={target}>
-              <h2>{icon}</h2>
-              <h3>{label}</h3>
-
-              <Button
-                onClick={() => protectedNavigate(target)}
-              >
-                Open
-              </Button>
-            </Card>
-          ))}
-        </div>
-      </Layout>
-    );
-  }
-
-  /* ==================================================
-     CROP LISTING
-  ================================================== */
-
-  if (page === "crop-listing") {
-    function saveCrop() {
-      if (
-        !cropForm.crop ||
-        !cropForm.quantity ||
-        !cropForm.location ||
-        !cropForm.price
-      ) {
-        alert("Please fill all required crop details.");
-        return;
-      }
-
-      const newLot = {
-        id: Date.now(),
-        crop: cropForm.crop,
-        quantity: Number(cropForm.quantity),
-        location: cropForm.location,
-        harvest: cropForm.harvest,
-        quality: cropForm.quality,
-        price: Number(cropForm.price),
-        farmer: userName,
-        ownerId: contact,
-        status: "Available",
-      };
-
-      setLots((oldLots) => [...oldLots, newLot]);
-      setSelectedLot(newLot);
-
-      setCropForm({
-        crop: "",
-        quantity: "",
-        location: "",
-        harvest: "",
-        quality: "A Grade",
-        price: "",
-      });
-
-      alert("Crop listed successfully.");
-      navigate("my-crops");
-    }
-
-    return (
-      <Layout {...layoutProps} title="🌱 Smart Crop Listing">
-        <Card className="form-card">
-          <Input
-            label="Crop Name"
-            value={cropForm.crop}
-            onChange={(e) =>
-              setCropForm({
-                ...cropForm,
-                crop: e.target.value,
-              })
-            }
-          />
-
-          <Input
-            label="Available Quantity (kg)"
-            type="number"
-            value={cropForm.quantity}
-            onChange={(e) =>
-              setCropForm({
-                ...cropForm,
-                quantity: e.target.value,
-              })
-            }
-          />
-
-          <Input
-            label="Farm Location"
-            value={cropForm.location}
-            onChange={(e) =>
-              setCropForm({
-                ...cropForm,
-                location: e.target.value,
-              })
-            }
-          />
-
-          <Input
-            label="Harvest Date"
-            type="date"
-            value={cropForm.harvest}
-            onChange={(e) =>
-              setCropForm({
-                ...cropForm,
-                harvest: e.target.value,
-              })
-            }
-          />
-
-          <Select
-            label="Quality"
-            value={cropForm.quality}
-            onChange={(e) =>
-              setCropForm({
-                ...cropForm,
-                quality: e.target.value,
-              })
-            }
-          >
-            <option>A Grade</option>
-            <option>B Grade</option>
-            <option>Mixed Grade</option>
-          </Select>
-
-          <Input
-            label="Expected Price per kg"
-            type="number"
-            value={cropForm.price}
-            onChange={(e) =>
-              setCropForm({
-                ...cropForm,
-                price: e.target.value,
-              })
-            }
-          />
-
-          <Button onClick={saveCrop}>Save Crop</Button>
-        </Card>
-      </Layout>
-    );
-  }
-
-  /* ==================================================
-     MY CROPS
-  ================================================== */
-
-  if (page === "my-crops") {
-    return (
-      <Layout {...layoutProps} title="📦 My Crop Lots">
-        {myLots.length === 0 ? (
-          <Card>
-            <h3>No crops listed yet.</h3>
-
-            <Button onClick={() => navigate("crop-listing")}>
-              Add Your First Crop
-            </Button>
-          </Card>
-        ) : (
-          <div className="grid">
-            {myLots.map((lot) => (
-              <Card key={lot.id}>
-                <h2>🌱 {lot.crop}</h2>
-                <p>Quantity: {lot.quantity} kg</p>
-                <p>Location: {lot.location}</p>
-                <p>Quality: {lot.quality}</p>
-                <p>Expected Price: ₹{lot.price}/kg</p>
-                <p>Status: {lot.status}</p>
-
-                <Button
-                  onClick={() => {
-                    setSelectedLot(lot);
-                    navigate("crop-quality");
-                  }}
-                >
-                  View Intelligence
-                </Button>
-              </Card>
-            ))}
-          </div>
-        )}
-      </Layout>
-    );
-  }
-
-  /* ==================================================
-     CROP QUALITY
-  ================================================== */
-
-  if (page === "crop-quality") {
-    return (
-      <Layout {...layoutProps} title="📷 Crop Quality Assessment">
-        {!farmerActiveLot ? (
-          <Card>
-            <h3>Please select or add a crop first.</h3>
-          </Card>
-        ) : (
-          <Card>
-            <h2>{farmerActiveLot.crop}</h2>
-
-            <Input
-              label="Upload Crop Image"
-              type="file"
-              accept="image/*"
-            />
-
-            <h3>Prototype Assessment</h3>
-            <p>Detected Quality: {farmerActiveLot.quality}</p>
-
-            <div className="warning">
-              Prototype demonstration. A production version can connect
-              a trained computer-vision AI model.
-            </div>
-          </Card>
-        )}
-      </Layout>
-    );
-  }
-
-  /* ==================================================
-     MARKET INTELLIGENCE
-  ================================================== */
-
-  if (page === "market-intelligence") {
-    return (
-      <Layout {...layoutProps} title="📊 Market Intelligence">
-        <div className="grid three">
-          <Card>
-            <h3>Current Market Price</h3>
-            <h2>₹{marketUpdated ? 27 : 24}/kg</h2>
-          </Card>
-
-          <Card>
-            <h3>Historical Trend</h3>
-            <h2>{marketUpdated ? "📈 +12%" : "📈 +8%"}</h2>
-          </Card>
-
-          <Card>
-            <h3>Buyer Demand</h3>
-            <h2>{marketUpdated ? "High" : "Medium"}</h2>
-          </Card>
-
-          <Card>
-            <h3>Seasonal Demand</h3>
-            <h2>Growing</h2>
-          </Card>
-
-          <Card>
-            <h3>Market Arrival Volume</h3>
-            <h2>{marketUpdated ? "High" : "Medium"}</h2>
-          </Card>
-        </div>
-
-        <Button onClick={() => setMarketUpdated((old) => !old)}>
-          Simulate Market Update
-        </Button>
-      </Layout>
-    );
-  }
-
-  /* ==================================================
-     AI RECOMMENDATIONS + EXPLAINABLE AI
-  ================================================== */
-
-  if (page === "recommendations") {
-    return (
-      <Layout {...layoutProps} title="🤖 AI Recommendations">
-        {!farmerActiveLot ? (
-          <Card>
-            <h3>Add a crop lot first.</h3>
-          </Card>
-        ) : (
-          <>
-            <Card>
-              <div className="score">{opportunityScore}/100</div>
-
-              <h3>Opportunity Score</h3>
-
-              <p>
-                The score considers crop quality, quantity, expected
-                price, market conditions and transaction risk.
-              </p>
-            </Card>
-
-            <div className="grid three">
-              <Card className="selected">
-                <h2>🥇 Sell Now</h2>
-                <p>Estimated Net Return: ₹{estimatedNetReturn}</p>
-                <p>Risk Score: {riskScore}/100</p>
-              </Card>
-
-              <Card>
-                <h2>🥈 Wait</h2>
-                <p>
-                  Potential for better price, but market uncertainty
-                  exists.
-                </p>
-              </Card>
-
-              <Card>
-                <h2>🥉 Store</h2>
-                <p>
-                  Storage Feasibility:{" "}
-                  {storageFeasible ? "Suitable" : "Not Recommended"}
-                </p>
-                <p>Estimated Storage Cost: ₹{storageCost}</p>
-              </Card>
-            </div>
-
-            <Card>
-              <h2>🔍 Explainable AI</h2>
-
-              <p>
-                <strong>Why Sell Now?</strong>
-              </p>
-
-              <ul>
-                <li>Current market demand is favorable.</li>
-                <li>
-                  Crop quality: {farmerActiveLot.quality}.
-                </li>
-                <li>
-                  Estimated net return is ₹{estimatedNetReturn}.
-                </li>
-                <li>
-                  Risk score is {riskScore}/100.
-                </li>
-                <li>
-                  Storage feasibility is{" "}
-                  {storageFeasible
-                    ? "economically acceptable"
-                    : "less favorable"}.
-                </li>
-              </ul>
-            </Card>
-          </>
-        )}
-      </Layout>
-    );
-  }
-
-  /* ==================================================
-     NET RETURN INTELLIGENCE
-  ================================================== */
-
-  if (page === "net-return") {
-    return (
-      <Layout {...layoutProps} title="💰 Net Return Intelligence">
-        <Card>
-          <p>Gross Crop Value: ₹{grossValue}</p>
-          <p>Transportation Cost: ₹{transportationCost}</p>
-          <p>Storage Cost Estimate: ₹{storageCost}</p>
-          <p>Handling Cost: ₹{handlingCost}</p>
-
-          <hr />
-
-          <h2>Estimated Net Return: ₹{estimatedNetReturn}</h2>
-
-          <div className="warning">
-            Net return is calculated after estimated logistics,
-            storage and handling costs.
-          </div>
-        </Card>
-      </Layout>
-    );
-  }
-
-  /* ==================================================
-     STORAGE FEASIBILITY
-  ================================================== */
-
-  if (page === "storage-feasibility") {
-    return (
-      <Layout {...layoutProps} title="🏪 Storage Feasibility">
-        <Card>
-          <h2>
-            {storageFeasible
-              ? "✅ Storage is Feasible"
-              : "⚠️ Storage is Not Economically Ideal"}
-          </h2>
-
-          <p>Estimated Storage Cost: ₹{storageCost}</p>
-
-          <p>
-            Storage analysis considers quantity, estimated storage
-            cost and potential impact on net return.
-          </p>
-        </Card>
-      </Layout>
-    );
-  }
-
-  /* ==================================================
-     FUTURE CROP PREDICTION
-  ================================================== */
-
-  if (page === "future-crop") {
-    return (
-      <Layout {...layoutProps} title="🔮 AI Future Crop Prediction">
-        <Card>
-          <h2>Recommended Future Crops</h2>
-
-          <p>
-            Prediction considers seasonal demand, buyer demand, price
-            trend, profitability and logistics.
-          </p>
-        </Card>
-
-        <div className="grid">
-          {futurePredictions.map((crop, index) => (
-            <Card
-              key={crop.crop}
-              className={index === 0 ? "selected" : ""}
-            >
-              <h2>
-                #{index + 1} 🌱 {crop.crop}
-              </h2>
-
-              <p>AI Prediction Score: {crop.score}/100</p>
-              <p>Seasonal Demand: {crop.seasonalDemand}/100</p>
-              <p>Buyer Demand: {crop.buyerDemand}/100</p>
-              <p>Price Trend: {crop.priceTrend}/100</p>
-              <p>Profit Potential: {crop.profitPotential}/100</p>
-              <p>Logistics Score: {crop.logisticsScore}/100</p>
-            </Card>
-          ))}
-        </div>
-
-        <Card>
-          <h2>🔍 Explainable Prediction</h2>
-
-          <p>
-            The highest ranked crop receives its score from the
-            combination of future seasonal demand, active buyer demand,
-            expected price movement, profitability and logistics
-            feasibility.
-          </p>
-        </Card>
-      </Layout>
-    );
-  }
-
-  /* ==================================================
-     CUSTOMER HISTORY
-  ================================================== */
-
-  if (page === "customer-history") {
-    return (
-      <Layout {...layoutProps} title="👥 Customer / Buyer History">
-        <div className="grid">
-          {buyerHistoryData.map((buyer) => (
-            <Card
-              key={buyer.id}
-              className={
-                selectedBuyer?.id === buyer.id ? "selected" : ""
-              }
-            >
-              <h2>{buyer.buyer}</h2>
-
-              <p>Total Orders: {buyer.totalOrders}</p>
-              <p>
-                Successful Transactions:{" "}
-                {buyer.successfulTransactions}
-              </p>
-              <p>Past Disputes: {buyer.disputes}</p>
-
-              <h3>Reliability: {buyer.reliability}%</h3>
-              <p>Status: {buyer.status}</p>
-
-              <Button onClick={() => setSelectedBuyer(buyer)}>
-                Select Buyer
-              </Button>
-            </Card>
-          ))}
-        </div>
-      </Layout>
-    );
-  }
-
-  /* ==================================================
-     RISK & RELIABILITY
-  ================================================== */
-
-  if (page === "risk-reliability") {
-    return (
-      <Layout
-        {...layoutProps}
-        title="🛡️ AI Transaction Risk & Reliability"
-      >
-        <Card>
-          <h2>
-            Selected Customer:{" "}
-            {selectedBuyer?.buyer || "No customer selected"}
-          </h2>
-
-          <p>
-            Customer Reliability:{" "}
-            {selectedBuyer
-              ? `${selectedBuyer.reliability}%`
-              : "Not calculated"}
-          </p>
-
-          <p>
-            Transaction Risk:{" "}
-            {selectedBuyer
-              ? `${selectedBuyerRisk}/100`
-              : "Select a customer first"}
-          </p>
-
-          <p>
-            Recommendation: {transactionRecommendation}
-          </p>
-        </Card>
-
-        <Card>
-          <h2>🔍 Explainable AI Risk Detection</h2>
-
-          <ul>
-            <li>Previous successful transactions are considered.</li>
-            <li>Past disputes increase the risk level.</li>
-            <li>Customer order history contributes to reliability.</li>
-            <li>
-              Higher transportation distance may increase transaction
-              and logistics risk.
-            </li>
-          </ul>
-        </Card>
-      </Layout>
-    );
-  }
-
-  /* ==================================================
-     LOGISTICS
-  ================================================== */
-
-  if (page === "logistics" || page === "fpo-logistics") {
-    return (
-      <Layout {...layoutProps} title="🚛 Logistics & Delivery Intelligence">
-        <Card>
-          <h2>
-            Delivery Location:{" "}
-            {selectedBuyer?.buyer || requirement.location}
-          </h2>
-
-          <p>Estimated Distance: {estimatedDistance} km</p>
-
-          <p>
-            Estimated Transportation Charges: ₹
-            {transportationCost}
-          </p>
-
-          <Select
-            label="Delivery Responsibility"
-            value={deliveryMode}
-            onChange={(e) => setDeliveryMode(e.target.value)}
-          >
-            <option>Buyer Pickup</option>
-            <option>Farmer Delivery</option>
-            <option>Logistics Provider</option>
-          </Select>
-
-          <Card className="selected">
-            <h3>Logistics Cost Intelligence</h3>
-
-            <p>
-              Transportation charges are estimated using crop quantity
-              and delivery distance.
-            </p>
-          </Card>
-        </Card>
-      </Layout>
-    );
-  }
-
-  /* ==================================================
-     BUYER DASHBOARD
-  ================================================== */
-
-  if (page === "buyer-dashboard") {
-    const items = [
-      ["🛒", "Create Requirement", "buyer-requirement"],
-      ["🔍", "Search Crops", "buyer-search"],
-      ["💬", "Ask Farmer Questions", "buyer-inquiry"],
-      ["🤖", "Dynamic Supply Matching", "supply-matching"],
-      ["📦", "AI Supply Aggregation", "aggregation"],
-      ["🚛", "Delivery & Logistics", "logistics"],
-      ["🛡️", "Transaction Reliability", "risk-reliability"],
-      ["💳", "Payments", "payments"],
-      ["🧾", "Transaction History", "transactions"],
-      ["📦", "Orders", "orders"],
-      ["👤", "Profile", "profile"],
-    ];
-
-    return (
-      <Layout
-        {...layoutProps}
-        title="🏢 Buyer Dashboard"
+        title={`👨‍🌾 ${t.farmer} ${t.dashboard}`}
         showNavigation={false}
       >
         <div className="grid three">
@@ -1434,112 +1186,1024 @@ function App() {
     );
   }
 
-  /* ==================================================
-     BUYER REQUIREMENT
-  ================================================== */
+  /* =======================================================
+     CROP LISTING / EDIT
+  ======================================================= */
 
-  if (page === "buyer-requirement") {
+  if (page === "crop-listing") {
+    function handleImage(e) {
+      const file = e.target.files?.[0];
+
+      if (!file) return;
+
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setCropForm((previous) => ({
+          ...previous,
+          image: reader.result,
+        }));
+      };
+
+      reader.readAsDataURL(file);
+    }
+
+    async function startCamera() {
+      try {
+        const stream =
+          await navigator.mediaDevices.getUserMedia({
+            video: true,
+          });
+
+        streamRef.current = stream;
+
+        setCameraOpen(true);
+
+        setTimeout(() => {
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+          }
+        }, 100);
+      } catch {
+        alert("Camera permission was not available.");
+      }
+    }
+
+    function stopCamera() {
+      if (streamRef.current) {
+        streamRef.current
+          .getTracks()
+          .forEach((track) => track.stop());
+      }
+
+      setCameraOpen(false);
+    }
+
+    function capturePhoto() {
+      if (!videoRef.current) return;
+
+      const canvas = document.createElement("canvas");
+
+      canvas.width = videoRef.current.videoWidth;
+      canvas.height = videoRef.current.videoHeight;
+
+      const context = canvas.getContext("2d");
+
+      context.drawImage(
+        videoRef.current,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      const image = canvas.toDataURL("image/png");
+
+      setCropForm((previous) => ({
+        ...previous,
+        image,
+      }));
+
+      stopCamera();
+    }
+
+    function analyzeQuality() {
+      if (!cropForm.image) {
+        alert("Please upload or capture a crop image first.");
+        return;
+      }
+
+      const grade =
+        cropForm.quality === "A Grade"
+          ? "A Grade"
+          : cropForm.quality;
+
+      setCropForm((previous) => ({
+        ...previous,
+        aiGrade: grade,
+      }));
+    }
+
+    function saveCrop() {
+      if (
+        !cropForm.crop.trim() ||
+        !cropForm.quantity ||
+        !cropForm.location.trim() ||
+        !cropForm.price
+      ) {
+        alert("Please fill all required crop details.");
+        return;
+      }
+
+      if (editingLotId) {
+        setLots((previous) =>
+          previous.map((lot) =>
+            lot.id === editingLotId
+              ? {
+                  ...lot,
+                  crop: cropForm.crop,
+                  quantity: Number(cropForm.quantity),
+                  location: cropForm.location,
+                  harvest: cropForm.harvest,
+                  quality: cropForm.quality,
+                  price: Number(cropForm.price),
+                  image: cropForm.image,
+                  aiGrade:
+                    cropForm.aiGrade ||
+                    cropForm.quality,
+                }
+              : lot
+          )
+        );
+
+        setEditingLotId(null);
+
+        alert("Crop information updated successfully.");
+      } else {
+        const newLot = {
+          id: Date.now(),
+          crop: cropForm.crop,
+          quantity: Number(cropForm.quantity),
+          location: cropForm.location,
+          harvest: cropForm.harvest,
+          quality: cropForm.quality,
+          aiGrade:
+            cropForm.aiGrade ||
+            cropForm.quality,
+          price: Number(cropForm.price),
+          farmer: userName,
+          phone: contact,
+          ownerId: contact,
+          image: cropForm.image,
+          status: "Available",
+        };
+
+        setLots((previous) => [
+          ...previous,
+          newLot,
+        ]);
+
+        setSelectedLot(newLot);
+
+        alert("Crop listed successfully.");
+      }
+
+      setCropForm({
+        crop: "",
+        quantity: "",
+        location: "",
+        harvest: "",
+        quality: "A Grade",
+        price: "",
+        image: "",
+        aiGrade: "",
+      });
+
+      navigate("my-crops");
+    }
+
     return (
-      <Layout {...layoutProps} title="🛒 Create Buyer Requirement">
+      <Layout
+        {...layoutProps}
+        title="🌱 Smart Crop Listing"
+      >
         <Card className="form-card">
           <Input
-            label="Required Crop"
-            value={requirement.crop}
+            label={t.cropName}
+            value={cropForm.crop}
             onChange={(e) =>
-              setRequirement({
-                ...requirement,
+              setCropForm((previous) => ({
+                ...previous,
                 crop: e.target.value,
-              })
+              }))
+            }
+          />
+
+          <VoiceInput
+            language={language}
+            buttonText={t.voiceInput}
+            onResult={(text) =>
+              setCropForm((previous) => ({
+                ...previous,
+                crop: text,
+              }))
             }
           />
 
           <Input
-            label="Required Quantity (kg)"
+            label={t.quantity}
             type="number"
-            value={requirement.quantity}
+            value={cropForm.quantity}
             onChange={(e) =>
-              setRequirement({
-                ...requirement,
+              setCropForm((previous) => ({
+                ...previous,
                 quantity: e.target.value,
-              })
+              }))
             }
           />
 
           <Input
-            label="Customer Delivery Location"
-            value={requirement.location}
+            label={t.location}
+            value={cropForm.location}
             onChange={(e) =>
-              setRequirement({
-                ...requirement,
+              setCropForm((previous) => ({
+                ...previous,
                 location: e.target.value,
-              })
+              }))
+            }
+          />
+
+          <VoiceInput
+            language={language}
+            buttonText={t.voiceInput}
+            onResult={(text) =>
+              setCropForm((previous) => ({
+                ...previous,
+                location: text,
+              }))
             }
           />
 
           <Input
-            label="Required Date"
+            label={t.harvestDate}
             type="date"
-            value={requirement.date}
+            value={cropForm.harvest}
             onChange={(e) =>
-              setRequirement({
-                ...requirement,
-                date: e.target.value,
-              })
+              setCropForm((previous) => ({
+                ...previous,
+                harvest: e.target.value,
+              }))
             }
           />
 
           <Select
-            label="Required Quality"
-            value={requirement.quality}
+            label={t.quality}
+            value={cropForm.quality}
             onChange={(e) =>
-              setRequirement({
-                ...requirement,
+              setCropForm((previous) => ({
+                ...previous,
                 quality: e.target.value,
-              })
+              }))
             }
           >
             <option>A Grade</option>
             <option>B Grade</option>
-            <option>Any Quality</option>
+            <option>Mixed Grade</option>
           </Select>
 
-          <Button onClick={() => navigate("buyer-search")}>
-            Find Supply
+          <Input
+            label={t.expectedPrice}
+            type="number"
+            value={cropForm.price}
+            onChange={(e) =>
+              setCropForm((previous) => ({
+                ...previous,
+                price: e.target.value,
+              }))
+            }
+          />
+
+          <div className="quality-guidance">
+            <strong>📷 AI Quality Capture Guidance</strong>
+            <p>
+              For better crop-quality analysis, capture:
+              Front View, Top View and Side View.
+            </p>
+          </div>
+
+          <Input
+            label="Upload Crop Image"
+            type="file"
+            accept="image/*"
+            onChange={handleImage}
+          />
+
+          <Button
+            className="secondary"
+            onClick={startCamera}
+          >
+            📷 Open Live Camera
+          </Button>
+
+          {cameraOpen && (
+            <div className="camera-container">
+              <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+              />
+
+              <div className="camera-actions">
+                <Button onClick={capturePhoto}>
+                  Capture
+                </Button>
+
+                <Button
+                  className="danger"
+                  onClick={stopCamera}
+                >
+                  Close Camera
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {cropForm.image && (
+            <img
+              src={cropForm.image}
+              alt="Crop preview"
+              className="image-preview"
+            />
+          )}
+
+          <Button
+            className="secondary"
+            onClick={analyzeQuality}
+          >
+            🤖 Analyze Crop Quality
+          </Button>
+
+          {cropForm.aiGrade && (
+            <div className="quality-result">
+              <h3>
+                AI Quality Result:{" "}
+                {cropForm.aiGrade}
+              </h3>
+
+              <p>
+                Prototype analysis confirms the
+                selected grade based on available
+                image information.
+              </p>
+            </div>
+          )}
+
+          <Button onClick={saveCrop}>
+            {editingLotId
+              ? `${t.update} Crop`
+              : `${t.save} Crop`}
           </Button>
         </Card>
       </Layout>
     );
   }
 
-  /* ==================================================
-     BUYER SEARCH
-  ================================================== */
+  /* =======================================================
+     MY CROPS
+  ======================================================= */
 
-  if (page === "buyer-search") {
+  if (page === "my-crops") {
     return (
-      <Layout {...layoutProps} title="🔍 Available Crop Supply">
+      <Layout {...layoutProps} title="📦 My Crop Lots">
+        {myLots.length === 0 ? (
+          <Card>
+            <h3>No crops listed yet.</h3>
+
+            <Button
+              onClick={() =>
+                navigate("crop-listing")
+              }
+            >
+              Add Crop
+            </Button>
+          </Card>
+        ) : (
+          <div className="grid">
+            {myLots.map((lot) => (
+              <Card key={lot.id}>
+                <h2>🌱 {lot.crop}</h2>
+
+                {lot.image && (
+                  <img
+                    src={lot.image}
+                    alt={lot.crop}
+                    className="crop-image-preview"
+                  />
+                )}
+
+                <p>Quantity: {lot.quantity} kg</p>
+                <p>Location: {lot.location}</p>
+                <p>Quality: {lot.quality}</p>
+                <p>
+                  AI Grade:{" "}
+                  {lot.aiGrade || lot.quality}
+                </p>
+                <p>Price: ₹{lot.price}/kg</p>
+
+                <Button
+                  onClick={() => {
+                    setSelectedLot(lot);
+                    navigate("net-return");
+                  }}
+                >
+                  Analyze
+                </Button>
+
+                <Button
+                  className="secondary"
+                  onClick={() => {
+                    setEditingLotId(lot.id);
+
+                    setCropForm({
+                      crop: lot.crop,
+                      quantity: lot.quantity,
+                      location: lot.location,
+                      harvest: lot.harvest,
+                      quality: lot.quality,
+                      price: lot.price,
+                      image: lot.image || "",
+                      aiGrade: lot.aiGrade || "",
+                    });
+
+                    navigate("crop-listing");
+                  }}
+                >
+                  ✏️ {t.edit}
+                </Button>
+              </Card>
+            ))}
+          </div>
+        )}
+      </Layout>
+    );
+  }
+
+  /* =======================================================
+     NET RETURN
+  ======================================================= */
+
+  if (page === "net-return") {
+    return (
+      <Layout
+        {...layoutProps}
+        title="💰 Net Return Intelligence"
+      >
         <Card>
-          <h3>Compatible Lots Found: {matches.length}</h3>
+          {!farmerActiveLot ? (
+            <p>Select a crop first.</p>
+          ) : (
+            <>
+              <h2>{farmerActiveLot.crop}</h2>
+
+              <p>
+                Gross Selling Value: ₹{sellingValue}
+              </p>
+
+              <p>
+                Transportation Cost: ₹
+                {transportationCost}
+              </p>
+
+              <p>
+                Storage Cost: ₹{storageCost}
+              </p>
+
+              <p>
+                Handling Cost: ₹{handlingCost}
+              </p>
+
+              <hr />
+
+              <h2>
+                Estimated Net Return: ₹
+                {estimatedNetReturn}
+              </h2>
+
+              <div className="success-box">
+                Explainable AI calculates net return
+                using quantity, price,
+                transportation, storage and handling
+                costs.
+              </div>
+
+              <AIVoiceExplanation
+                language={language}
+                text={`Estimated net return is ${estimatedNetReturn} rupees after calculating selling value and expected transportation, storage and handling costs.`}
+              />
+            </>
+          )}
+        </Card>
+      </Layout>
+    );
+  }
+
+  /* =======================================================
+     MARKET INTELLIGENCE
+  ======================================================= */
+
+  if (page === "market-intelligence") {
+    return (
+      <Layout
+        {...layoutProps}
+        title="📊 Market Intelligence"
+      >
+        <div className="grid three">
+          <Card>
+            <h3>Current Market Price</h3>
+            <div className="market-price">
+              ₹{marketPrice}/kg
+            </div>
+          </Card>
+
+          <Card>
+            <h3>Seasonal Demand</h3>
+            <h2>{seasonalDemand}</h2>
+          </Card>
+
+          <Card>
+            <h3>Recommended Price</h3>
+            <h2>₹{recommendedPrice}/kg</h2>
+          </Card>
+
+          <Card>
+            <h3>Historical Price Trend</h3>
+            <p>
+              Previous market range:
+              ₹20/kg – ₹27/kg
+            </p>
+          </Card>
+
+          <Card>
+            <h3>Storage Threshold</h3>
+            <h2>₹{thresholdPrice}/kg</h2>
+          </Card>
+
+          <Card>
+            <h3>AI Recommendation</h3>
+            <p>
+              {farmerActiveLot &&
+              Number(farmerActiveLot.price) <
+                thresholdPrice
+                ? "Current price is below the threshold. Storage can be considered."
+                : "Current price is favorable for selling."}
+            </p>
+          </Card>
+        </div>
+
+        <Button
+          onClick={() =>
+            setMarketUpdated(
+              (previous) => !previous
+            )
+          }
+        >
+          Simulate Live Market Update
+        </Button>
+      </Layout>
+    );
+  }
+
+  /* =======================================================
+     STORAGE FEASIBILITY
+  ======================================================= */
+
+  if (page === "storage-feasibility") {
+    return (
+      <Layout
+        {...layoutProps}
+        title="🏪 Storage Feasibility Intelligence"
+      >
+        <Card>
+          <div className="score">
+            {storageFeasibility.score}/100
+          </div>
+
+          <h2>
+            Status: {storageFeasibility.status}
+          </h2>
+
+          <p>
+            {storageFeasibility.recommendation}
+          </p>
+
+          <div className="warning">
+            AI considers market threshold,
+            expected price, crop information
+            and storage cost.
+          </div>
+
+          <AIVoiceExplanation
+            language={language}
+            text={storageFeasibility.recommendation}
+          />
         </Card>
 
-        <div className="grid">
-          {matches.map((lot) => (
-            <Card key={lot.id}>
-              <h2>🌱 {lot.crop}</h2>
+        <h2>Nearby Storage Centers</h2>
 
-              <p>Quantity: {lot.quantity} kg</p>
-              <p>Farmer: {lot.farmer}</p>
-              <p>Location: {lot.location}</p>
-              <p>Quality: {lot.quality}</p>
-              <p>Price: ₹{lot.price}/kg</p>
+        {storageCenters.map((center) => (
+          <div
+            className="storage-center"
+            key={center.name}
+          >
+            <h3>{center.name}</h3>
+
+            <p>
+              Distance: {center.distance}
+            </p>
+
+            <p>
+              Estimated Charge:{" "}
+              {center.charge}
+            </p>
+          </div>
+        ))}
+      </Layout>
+    );
+  }
+
+  /* =======================================================
+     FUTURE CROP PREDICTION
+  ======================================================= */
+
+  if (page === "future-prediction") {
+    return (
+      <Layout
+        {...layoutProps}
+        title="📈 Future Crop Prediction"
+      >
+        <p>
+          AI prediction based on buyer demand,
+          market activity and seasonal conditions.
+        </p>
+
+        <div className="grid">
+          {futureCropPrediction.map(
+            (prediction, index) => (
+              <Card
+                key={prediction.crop}
+                className={
+                  index === 0 ? "selected" : ""
+                }
+              >
+                <h2>
+                  #{index + 1} {prediction.crop}
+                </h2>
+
+                <div className="score">
+                  {prediction.score}%
+                </div>
+
+                <p>
+                  <strong>
+                    Explainable AI:
+                  </strong>{" "}
+                  {prediction.reason}
+                </p>
+              </Card>
+            )
+          )}
+        </div>
+      </Layout>
+    );
+  }
+
+  /* =======================================================
+     AI RECOMMENDATIONS
+  ======================================================= */
+
+  if (page === "recommendations") {
+    return (
+      <Layout
+        {...layoutProps}
+        title="🤖 AI Opportunity Intelligence"
+      >
+        <Card>
+          <h2>Opportunity Score</h2>
+
+          <div className="score">
+            {opportunityScore}/100
+          </div>
+
+          <p>
+            Score considers quality, quantity,
+            market condition, price and
+            transaction reliability.
+          </p>
+        </Card>
+
+        <div className="grid three">
+          <Card className="selected">
+            <h2>🥇 Sell Now</h2>
+
+            <p>
+              Estimated Net Return:
+              ₹{estimatedNetReturn}
+            </p>
+          </Card>
+
+          <Card>
+            <h2>🥈 Wait</h2>
+
+            <p>
+              Possible improvement based on
+              future demand.
+            </p>
+          </Card>
+
+          <Card>
+            <h2>🥉 Store</h2>
+
+            <p>
+              Storage Feasibility:
+              {storageFeasibility.score}/100
+            </p>
+          </Card>
+        </div>
+
+        <Card>
+          <h2>Explainable AI</h2>
+
+          <p>
+            The recommendations combine market
+            price, seasonal demand, crop quality,
+            storage feasibility, net return and
+            transaction risk.
+          </p>
+
+          <AIVoiceExplanation
+            language={language}
+            text="The AI recommendations are based on crop quality, market conditions, expected profit, storage feasibility and transaction reliability."
+          />
+        </Card>
+      </Layout>
+    );
+  }
+
+  /* =======================================================
+     CUSTOMER HISTORY
+  ======================================================= */
+
+  if (page === "customer-history") {
+    return (
+      <Layout
+        {...layoutProps}
+        title="👥 Customer History"
+      >
+        <div className="grid">
+          {customers.map((customer) => (
+            <Card key={customer.id}>
+              <h2>{customer.customer}</h2>
+
+              <p>
+                Previous Transactions:
+                {customer.transactions}
+              </p>
+
+              <p>
+                Completed:
+                {customer.completed}
+              </p>
+
+              <p>
+                Disputes:
+                {customer.disputed}
+              </p>
+
+              <p>
+                Payment Score:
+                {customer.paymentScore}/100
+              </p>
+
+              <h3>
+                Reliability:
+                {customer.reliability}
+              </h3>
+            </Card>
+          ))}
+        </div>
+      </Layout>
+    );
+  }
+
+  /* =======================================================
+     RISK INTELLIGENCE
+  ======================================================= */
+
+  if (page === "risk-intelligence") {
+    return (
+      <Layout
+        {...layoutProps}
+        title="⚠️ Transaction Risk Intelligence"
+      >
+        <Card>
+          <h2>
+            Overall Risk:
+            {transactionRisk.level}
+          </h2>
+
+          <h3>
+            Historical Completion Rate:
+            {transactionRisk.completionRate}%
+          </h3>
+
+          <p>
+            Explainable AI checks completed
+            transactions, disputes and payment
+            reliability.
+          </p>
+
+          <div
+            className={
+              transactionRisk.level === "Low"
+                ? "success-box"
+                : "warning"
+            }
+          >
+            Recommendation: Review buyer history
+            before confirming large transactions.
+          </div>
+        </Card>
+      </Layout>
+    );
+  }
+
+  /* =======================================================
+     BUYER OFFERS
+  ======================================================= */
+
+  if (page === "buyer-offers") {
+    return (
+      <Layout
+        {...layoutProps}
+        title="🤝 Buyer Offers & Confirmation"
+      >
+        <Card>
+          <h2>Incoming Buyer Offer</h2>
+
+          <Input
+            label="Offered Amount"
+            type="number"
+            value={buyerOffer.amount}
+            onChange={(e) =>
+              setBuyerOffer((previous) => ({
+                ...previous,
+                amount: e.target.value,
+              }))
+            }
+          />
+
+          <Input
+            label="Requested Quantity"
+            type="number"
+            value={buyerOffer.quantity}
+            onChange={(e) =>
+              setBuyerOffer((previous) => ({
+                ...previous,
+                quantity: e.target.value,
+              }))
+            }
+          />
+
+          <Input
+            label="Buyer Delivery Location"
+            value={buyerOffer.deliveryLocation}
+            onChange={(e) =>
+              setBuyerOffer((previous) => ({
+                ...previous,
+                deliveryLocation: e.target.value,
+              }))
+            }
+          />
+
+          <Button
+            onClick={() => {
+              if (!buyerOffer.amount) {
+                alert("Enter offer details.");
+                return;
+              }
+
+              alert(
+                "Buyer offer confirmed. Transaction can now proceed."
+              );
+            }}
+          >
+            Confirm Offer
+          </Button>
+        </Card>
+      </Layout>
+    );
+  }
+
+  /* =======================================================
+     LOGISTICS
+  ======================================================= */
+
+  if (page === "logistics") {
+    const logisticsCost = Math.round(
+      Number(deliveryDistance || 0) *
+        Number(farmerActiveLot?.quantity || 0) *
+        0.03
+    );
+
+    return (
+      <Layout
+        {...layoutProps}
+        title="🚛 Smart Logistics & Live Tracking"
+      >
+        <Card className="form-card">
+          <Input
+            label="Estimated Distance (km)"
+            type="number"
+            value={deliveryDistance}
+            onChange={(e) =>
+              setDeliveryDistance(e.target.value)
+            }
+          />
+
+          <Select
+            label="Delivery Responsibility"
+            value={deliveryMode}
+            onChange={(e) =>
+              setDeliveryMode(e.target.value)
+            }
+          >
+            <option>Buyer Pickup</option>
+            <option>Farmer Delivery</option>
+            <option>Logistics Provider</option>
+          </Select>
+
+          <h3>
+            Estimated Transportation Cost:
+            ₹{logisticsCost}
+          </h3>
+        </Card>
+
+        <Card className="tracking-box">
+          <h2>📍 Live Crop Load Tracking</h2>
+
+          <p>
+            Prototype location status:
+            Crop is moving from Farmer →
+            Buyer.
+          </p>
+
+          <div className="tracking-line">
+            <div
+              className="tracking-progress"
+              style={{
+                width: `${trackingProgress}%`,
+              }}
+            />
+          </div>
+
+          <div className="tracking-points">
+            <span>🚜 Farmer</span>
+            <span>🚚 Current Load</span>
+            <span>🏢 Buyer</span>
+          </div>
+
+          <p>
+            Current Route Progress:
+            {trackingProgress}%
+          </p>
+
+          <Button
+            onClick={() =>
+              setTrackingProgress((previous) =>
+                Math.min(100, previous + 10)
+              )
+            }
+          >
+            Update Live Position
+          </Button>
+        </Card>
+      </Layout>
+    );
+  }
+
+  /* =======================================================
+     BUYER DASHBOARD
+  ======================================================= */
+
+  if (page === "buyer-dashboard") {
+    const items = [
+      ["🛒", "Create / Edit Requirement", "buyer-requirement"],
+      ["🔍", "Search Crops", "buyer-search"],
+      ["📊", "AI Supply Matching", "supply-matching"],
+      ["📦", "Dynamic Supply Aggregation", "aggregation"],
+      ["💳", "Transaction Process", "payments"],
+      ["📦", "Order Tracking", "orders"],
+      ["🚛", "Live Load Tracking", "logistics"],
+      ["📡", "Offline Mode", "offline-support"],
+      ["👤", "Profile", "profile"],
+    ];
+
+    return (
+      <Layout
+        {...layoutProps}
+        title={`🏢 ${t.buyer} ${t.dashboard}`}
+        showNavigation={false}
+      >
+        <div className="grid three">
+          {items.map(([icon, label, target]) => (
+            <Card key={target}>
+              <h2>{icon}</h2>
+              <h3>{label}</h3>
 
               <Button
-                onClick={() => {
-                  setSelectedLot(lot);
-                  navigate("crop-details");
-                }}
+                onClick={() => navigate(target)}
               >
-                View Details
+                Open
               </Button>
             </Card>
           ))}
@@ -1548,54 +2212,269 @@ function App() {
     );
   }
 
-  /* ==================================================
-     CROP DETAILS
-  ================================================== */
+  /* =======================================================
+     BUYER REQUIREMENT WITH EDIT
+  ======================================================= */
 
-  if (page === "crop-details") {
+  if (page === "buyer-requirement") {
     return (
-      <Layout {...layoutProps} title="🌱 Crop Details">
-        {!selectedLot ? (
-          <Card>
-            <h3>Select a crop first.</h3>
-          </Card>
-        ) : (
-          <Card>
-            <h2>{selectedLot.crop}</h2>
-            <p>Quantity: {selectedLot.quantity} kg</p>
-            <p>Farmer: {selectedLot.farmer}</p>
-            <p>Location: {selectedLot.location}</p>
-            <p>Quality: {selectedLot.quality}</p>
-            <p>Expected Price: ₹{selectedLot.price}/kg</p>
+      <Layout
+        {...layoutProps}
+        title="🛒 Buyer Requirement"
+      >
+        <Card className="form-card">
+          {!requirementEditing ? (
+            <>
+              <div className="requirement-summary">
+                <h2>{requirement.crop}</h2>
 
-            <Button onClick={() => navigate("buyer-inquiry")}>
-              Ask Farmer Questions
-            </Button>
-          </Card>
-        )}
+                <p>
+                  Quantity:
+                  {requirement.quantity} kg
+                </p>
+
+                <p>
+                  Location:
+                  {requirement.location}
+                </p>
+
+                <p>
+                  Quality:
+                  {requirement.quality}
+                </p>
+
+                <Button
+                  onClick={() =>
+                    setRequirementEditing(true)
+                  }
+                >
+                  ✏️ {t.edit}
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <Input
+                label={t.requiredCrop}
+                value={requirement.crop}
+                onChange={(e) =>
+                  setRequirement((previous) => ({
+                    ...previous,
+                    crop: e.target.value,
+                  }))
+                }
+              />
+
+              <VoiceInput
+                language={language}
+                buttonText={t.voiceInput}
+                onResult={(text) =>
+                  setRequirement((previous) => ({
+                    ...previous,
+                    crop: text,
+                  }))
+                }
+              />
+
+              <Input
+                label={t.requiredQuantity}
+                type="number"
+                value={requirement.quantity}
+                onChange={(e) =>
+                  setRequirement((previous) => ({
+                    ...previous,
+                    quantity: e.target.value,
+                  }))
+                }
+              />
+
+              <Input
+                label={t.deliveryLocation}
+                value={requirement.location}
+                onChange={(e) =>
+                  setRequirement((previous) => ({
+                    ...previous,
+                    location: e.target.value,
+                  }))
+                }
+              />
+
+              <VoiceInput
+                language={language}
+                buttonText={t.voiceInput}
+                onResult={(text) =>
+                  setRequirement((previous) => ({
+                    ...previous,
+                    location: text,
+                  }))
+                }
+              />
+
+              <Input
+                label={t.requiredDate}
+                type="date"
+                value={requirement.date}
+                onChange={(e) =>
+                  setRequirement((previous) => ({
+                    ...previous,
+                    date: e.target.value,
+                  }))
+                }
+              />
+
+              <Select
+                label={t.requiredQuality}
+                value={requirement.quality}
+                onChange={(e) =>
+                  setRequirement((previous) => ({
+                    ...previous,
+                    quality: e.target.value,
+                  }))
+                }
+              >
+                <option>A Grade</option>
+                <option>B Grade</option>
+                <option>Any Quality</option>
+              </Select>
+
+              <Button
+                onClick={() =>
+                  setRequirementEditing(false)
+                }
+              >
+                {t.save} Requirement
+              </Button>
+            </>
+          )}
+
+          <Button
+            onClick={() =>
+              navigate("buyer-search")
+            }
+          >
+            Find Supply
+          </Button>
+        </Card>
       </Layout>
     );
   }
 
-  /* ==================================================
+  /* =======================================================
+     BUYER SEARCH
+  ======================================================= */
+
+  if (page === "buyer-search") {
+    return (
+      <Layout
+        {...layoutProps}
+        title="🔍 Available Farmers & Crops"
+      >
+        <h2>
+          Compatible Lots Found:
+          {matches.length}
+        </h2>
+
+        <div className="grid">
+          {matches.map((lot) => (
+            <Card key={lot.id}>
+              <div className="farmer-details">
+                {lot.image ? (
+                  <img
+                    src={lot.image}
+                    alt={lot.crop}
+                    className="farmer-profile-image"
+                  />
+                ) : (
+                  <div className="farmer-profile-image">
+                    🌾
+                  </div>
+                )}
+
+                <div className="farmer-info">
+                  <h2>{lot.farmer}</h2>
+
+                  <p>
+                    📱 Phone: {lot.phone}
+                  </p>
+
+                  <p>
+                    🌱 Crop: {lot.crop}
+                  </p>
+
+                  <p>
+                    📦 Quantity:
+                    {lot.quantity} kg
+                  </p>
+
+                  <p>
+                    📍 Location:
+                    {lot.location}
+                  </p>
+
+                  <p>
+                    ⭐ AI Grade:
+                    {lot.aiGrade || lot.quality}
+                  </p>
+
+                  <p>
+                    💰 Price:
+                    ₹{lot.price}/kg
+                  </p>
+                </div>
+              </div>
+
+              <Button
+                className="secondary"
+                onClick={() => {
+                  setSelectedLot(lot);
+                  navigate("buyer-inquiry");
+                }}
+              >
+                💬 {t.askQuestion}
+              </Button>
+
+              <Button
+                onClick={() => {
+                  setSelectedLot(lot);
+
+                  setBuyerOffer({
+                    amount:
+                      lot.price * lot.quantity,
+                    quantity: lot.quantity,
+                    deliveryLocation:
+                      requirement.location,
+                  });
+
+                  navigate("transaction-details");
+                }}
+              >
+                🛒 {t.buyNow}
+              </Button>
+            </Card>
+          ))}
+        </div>
+      </Layout>
+    );
+  }
+
+  /* =======================================================
      BUYER INQUIRY
-  ================================================== */
+  ======================================================= */
 
   if (page === "buyer-inquiry") {
     function sendQuestion() {
       if (!question.trim()) return;
 
-      setMessages((oldMessages) => [
-        ...oldMessages,
+      setMessages((previous) => [
+        ...previous,
         {
           from: "Buyer",
           text: question,
         },
         {
-          from: "System",
-          text: `Question recorded for ${
-            selectedLot?.farmer || "the farmer"
-          }.`,
+          from: "AI System",
+          text:
+            "Your question has been recorded and shared with the farmer.",
         },
       ]);
 
@@ -1603,33 +2482,47 @@ function App() {
     }
 
     return (
-      <Layout {...layoutProps} title="💬 Buyer Questions to Farmer">
+      <Layout
+        {...layoutProps}
+        title="💬 Ask Farmer"
+      >
         <Card>
-          <p>
-            Ask optional additional questions about this crop, including
-            harvesting, packing, quality or delivery.
-          </p>
+          <h2>
+            {selectedLot?.farmer}
+          </h2>
 
           <div className="messages">
-            {messages.map((message, index) => (
-              <p
-                key={index}
-                className={
-                  message.from === "Buyer"
-                    ? "buyer-msg"
-                    : "ai-msg"
-                }
-              >
-                <strong>{message.from}:</strong> {message.text}
-              </p>
-            ))}
+            {messages.map(
+              (message, index) => (
+                <p
+                  key={index}
+                  className={
+                    message.from === "Buyer"
+                      ? "buyer-msg"
+                      : "ai-msg"
+                  }
+                >
+                  <strong>
+                    {message.from}:
+                  </strong>{" "}
+                  {message.text}
+                </p>
+              )
+            )}
           </div>
 
           <Input
-            label="Ask Farmer"
+            label="Ask a Question"
             value={question}
-            placeholder="Example: Can you arrange packing and delivery?"
-            onChange={(e) => setQuestion(e.target.value)}
+            onChange={(e) =>
+              setQuestion(e.target.value)
+            }
+          />
+
+          <VoiceInput
+            language={language}
+            buttonText={t.voiceInput}
+            onResult={setQuestion}
           />
 
           <Button onClick={sendQuestion}>
@@ -1637,45 +2530,193 @@ function App() {
           </Button>
 
           <Button
-            className="secondary"
-            onClick={() => navigate("supply-matching")}
+            onClick={() => {
+              if (selectedLot) {
+                setBuyerOffer({
+                  amount:
+                    selectedLot.price *
+                    selectedLot.quantity,
+                  quantity:
+                    selectedLot.quantity,
+                  deliveryLocation:
+                    requirement.location,
+                });
+
+                navigate("transaction-details");
+              }
+            }}
           >
-            Continue to Supply Matching
+            🛒 {t.buyNow}
           </Button>
         </Card>
       </Layout>
     );
   }
 
-  /* ==================================================
+  /* =======================================================
+     TRANSACTION DETAILS
+  ======================================================= */
+
+  if (page === "transaction-details") {
+    function startTransaction() {
+      if (
+        !transactionDetails.buyerName.trim() ||
+        !transactionDetails.phone.trim() ||
+        !transactionDetails.address.trim() ||
+        !transactionDetails.paymentMethod
+      ) {
+        alert(
+          "Please complete all mandatory transaction details."
+        );
+
+        return;
+      }
+
+      setPaymentStatus("Payment Initiated");
+      setOrderStatus("Order Accepted");
+
+      navigate("payments");
+    }
+
+    return (
+      <Layout
+        {...layoutProps}
+        title="💳 Professional Transaction Details"
+      >
+        <Card className="form-card">
+          <h2>
+            Selected Crop:
+            {selectedLot?.crop}
+          </h2>
+
+          <p>
+            Farmer:
+            {selectedLot?.farmer}
+          </p>
+
+          <p>
+            Quantity:
+            {buyerOffer.quantity || selectedLot?.quantity} kg
+          </p>
+
+          <p>
+            Total Amount:
+            ₹{buyerOffer.amount}
+          </p>
+
+          <Input
+            label="Buyer / Organization Name"
+            value={transactionDetails.buyerName}
+            onChange={(e) =>
+              setTransactionDetails(
+                (previous) => ({
+                  ...previous,
+                  buyerName: e.target.value,
+                })
+              )
+            }
+          />
+
+          <Input
+            label="Phone Number"
+            value={transactionDetails.phone}
+            onChange={(e) =>
+              setTransactionDetails(
+                (previous) => ({
+                  ...previous,
+                  phone: e.target.value,
+                })
+              )
+            }
+          />
+
+          <TextArea
+            label="Delivery Address"
+            value={transactionDetails.address}
+            onChange={(e) =>
+              setTransactionDetails(
+                (previous) => ({
+                  ...previous,
+                  address: e.target.value,
+                })
+              )
+            }
+          />
+
+          <Select
+            label="Payment Method"
+            value={
+              transactionDetails.paymentMethod
+            }
+            onChange={(e) =>
+              setTransactionDetails(
+                (previous) => ({
+                  ...previous,
+                  paymentMethod:
+                    e.target.value,
+                })
+              )
+            }
+          >
+            <option value="">
+              Select Payment Method
+            </option>
+
+            <option>UPI</option>
+            <option>Bank Transfer</option>
+            <option>Cash on Delivery</option>
+          </Select>
+
+          <Button onClick={startTransaction}>
+            Proceed with Transaction
+          </Button>
+        </Card>
+      </Layout>
+    );
+  }
+
+  /* =======================================================
      SUPPLY MATCHING
-  ================================================== */
+  ======================================================= */
 
   if (page === "supply-matching") {
     return (
-      <Layout {...layoutProps} title="🤖 Dynamic AI Supply Matching">
+      <Layout
+        {...layoutProps}
+        title="📊 AI Supply Matching"
+      >
         <Card>
-          <h3>Buyer Requirement</h3>
+          <h2>Buyer Requirement</h2>
 
           <p>
-            {requirement.quantity} kg {requirement.crop}
+            {requirement.quantity} kg{" "}
+            {requirement.crop}
           </p>
 
-          <p>Delivery Location: {requirement.location}</p>
-
-          <hr />
-
-          <h3>AI Compatible Supply</h3>
+          <p>
+            AI Compatible Supply:
+            {totalSupply} kg
+          </p>
 
           {matches.map((lot) => (
             <p key={lot.id}>
-              ✅ {lot.farmer} → {lot.quantity} kg • {lot.location}
+              ✅ {lot.farmer} →
+              {lot.quantity} kg •
+              {lot.location}
             </p>
           ))}
 
-          <h2>Total Compatible Supply: {totalSupply} kg</h2>
+          <div className="success-box">
+            Explainable AI matches crop,
+            quality, quantity and
+            availability.
+          </div>
 
-          <Button onClick={() => navigate("aggregation")}>
+          <Button
+            onClick={() =>
+              navigate("aggregation")
+            }
+          >
             Build Dynamic Aggregation
           </Button>
         </Card>
@@ -1683,45 +2724,57 @@ function App() {
     );
   }
 
-  /* ==================================================
-     AI SUPPLY AGGREGATION
-  ================================================== */
+  /* =======================================================
+     DYNAMIC AGGREGATION
+  ======================================================= */
 
   if (page === "aggregation") {
     function toggleLot(id) {
-      setConfirmedIds((oldIds) =>
-        oldIds.includes(id)
-          ? oldIds.filter((item) => item !== id)
-          : [...oldIds, id]
+      setConfirmedIds((previous) =>
+        previous.includes(id)
+          ? previous.filter(
+              (item) => item !== id
+            )
+          : [...previous, id]
       );
     }
 
     return (
-      <Layout {...layoutProps} title="📦 Dynamic AI Supply Aggregation">
-        <Card>
-          <p>
-            The system combines multiple compatible farmer lots to meet
-            the buyer's required quantity.
-          </p>
-        </Card>
-
+      <Layout
+        {...layoutProps}
+        title="📦 Dynamic AI Supply Aggregation"
+      >
         <div className="grid">
           {matches.map((lot) => {
-            const selected = confirmedIds.includes(lot.id);
+            const selected =
+              confirmedIds.includes(lot.id);
 
             return (
               <Card
                 key={lot.id}
-                className={selected ? "selected" : ""}
+                className={
+                  selected ? "selected" : ""
+                }
               >
                 <h2>{lot.farmer}</h2>
-                <p>Crop: {lot.crop}</p>
-                <p>Quantity: {lot.quantity} kg</p>
-                <p>Location: {lot.location}</p>
+
+                <p>
+                  Quantity:
+                  {lot.quantity} kg
+                </p>
+
+                <p>
+                  Location:
+                  {lot.location}
+                </p>
 
                 <Button
-                  className={selected ? "success" : ""}
-                  onClick={() => toggleLot(lot.id)}
+                  className={
+                    selected ? "success" : ""
+                  }
+                  onClick={() =>
+                    toggleLot(lot.id)
+                  }
                 >
                   {selected
                     ? "Confirmed"
@@ -1733,76 +2786,122 @@ function App() {
         </div>
 
         <Card>
-          <h2>Aggregated Supply: {confirmedQuantity} kg</h2>
-          <h2>Remaining Requirement: {remainingQuantity} kg</h2>
+          <h2>
+            Aggregated Quantity:
+            {confirmedQuantity} kg
+          </h2>
 
-          {remainingQuantity === 0 ? (
-            <div className="success-box">
-              Requirement successfully matched using dynamic aggregation.
-            </div>
-          ) : (
-            <div className="warning">
-              Additional compatible supply is required.
-            </div>
-          )}
+          <h2>
+            Remaining Requirement:
+            {remainingQuantity} kg
+          </h2>
         </Card>
       </Layout>
     );
   }
 
-  /* ==================================================
+  /* =======================================================
      FPO DASHBOARD
-  ================================================== */
+  ======================================================= */
 
   if (page === "fpo-dashboard") {
-    const items = [
-      ["👨‍🌾", "Member Farmers", "fpo-members"],
-      ["📦", "Aggregate Crop Lots", "fpo-lots"],
-      ["🛒", "Market Requirements", "fpo-requirements"],
-      ["🚛", "Collection & Logistics", "fpo-logistics"],
-      ["💳", "Payments", "payments"],
-      ["🧾", "Transactions", "transactions"],
-      ["📦", "Orders", "orders"],
-      ["👤", "Profile", "profile"],
-    ];
-
     return (
       <Layout
         {...layoutProps}
-        title="🏘️ FPO / Cooperative Dashboard"
+        title="🏘️ FPO Dashboard"
         showNavigation={false}
       >
         <div className="grid three">
-          {items.map(([icon, label, target]) => (
-            <Card key={target}>
-              <h2>{icon}</h2>
-              <h3>{label}</h3>
+          <Card>
+            <h2>👨‍🌾 Member Farmers</h2>
 
-              <Button onClick={() => navigate(target)}>
-                Open
-              </Button>
-            </Card>
-          ))}
+            <Button
+              onClick={() =>
+                navigate("fpo-members")
+              }
+            >
+              Open
+            </Button>
+          </Card>
+
+          <Card>
+            <h2>📦 Crop Aggregation</h2>
+
+            <Button
+              onClick={() =>
+                navigate("fpo-lots")
+              }
+            >
+              Open
+            </Button>
+          </Card>
+
+          <Card>
+            <h2>📊 Supply Intelligence</h2>
+
+            <Button
+              onClick={() =>
+                navigate("supply-matching")
+              }
+            >
+              Open
+            </Button>
+          </Card>
+
+          <Card>
+            <h2>🚛 Logistics</h2>
+
+            <Button
+              onClick={() =>
+                navigate("logistics")
+              }
+            >
+              Open
+            </Button>
+          </Card>
+
+          <Card>
+            <h2>💳 Transactions</h2>
+
+            <Button
+              onClick={() =>
+                navigate("payments")
+              }
+            >
+              Open
+            </Button>
+          </Card>
         </div>
       </Layout>
     );
   }
 
-  /* ==================================================
+  /* =======================================================
      FPO MEMBERS
-  ================================================== */
+  ======================================================= */
 
   if (page === "fpo-members") {
     return (
-      <Layout {...layoutProps} title="👨‍🌾 Member Farmers">
+      <Layout
+        {...layoutProps}
+        title="👨‍🌾 FPO Member Farmers"
+      >
         <div className="grid">
           {lots.map((lot) => (
             <Card key={lot.id}>
               <h2>{lot.farmer}</h2>
+
               <p>Crop: {lot.crop}</p>
-              <p>Quantity: {lot.quantity} kg</p>
-              <p>Location: {lot.location}</p>
-              <p>Quality: {lot.quality}</p>
+
+              <p>
+                Quantity:
+                {lot.quantity} kg
+              </p>
+
+              <p>
+                Location:
+                {lot.location}
+              </p>
             </Card>
           ))}
         </div>
@@ -1810,225 +2909,188 @@ function App() {
     );
   }
 
-  /* ==================================================
+  /* =======================================================
      FPO LOTS
-  ================================================== */
+  ======================================================= */
 
   if (page === "fpo-lots") {
     const total = lots.reduce(
-      (sum, lot) => sum + Number(lot.quantity),
+      (sum, lot) =>
+        sum + Number(lot.quantity),
       0
     );
 
     return (
-      <Layout {...layoutProps} title="📦 FPO Crop Aggregation">
+      <Layout
+        {...layoutProps}
+        title="📦 FPO Crop Aggregation"
+      >
         <Card>
-          <h2>Total Available Supply: {total} kg</h2>
-          <p>
-            FPO aggregation combines multiple farmer lots for bulk
-            market requirements.
-          </p>
-        </Card>
-
-        <div className="grid">
-          {lots.map((lot) => (
-            <Card key={lot.id}>
-              <h2>{lot.crop}</h2>
-              <p>Farmer: {lot.farmer}</p>
-              <p>Quantity: {lot.quantity} kg</p>
-              <p>Location: {lot.location}</p>
-            </Card>
-          ))}
-        </div>
-      </Layout>
-    );
-  }
-
-  /* ==================================================
-     FPO REQUIREMENTS
-  ================================================== */
-
-  if (page === "fpo-requirements") {
-    return (
-      <Layout {...layoutProps} title="🛒 Market Requirements">
-        <Card>
-          <h2>Current Market Demand</h2>
-
-          <p>Crop: {requirement.crop}</p>
-          <p>Required Quantity: {requirement.quantity} kg</p>
-          <p>Quality: {requirement.quality}</p>
-          <p>Delivery Location: {requirement.location}</p>
+          <h2>
+            Total Available Supply:
+            {total} kg
+          </h2>
 
           <p>
-            The FPO can dynamically identify member supply and
-            coordinate aggregation.
+            The FPO coordinates farmers and
+            aggregates supply for bulk buyers.
           </p>
         </Card>
       </Layout>
     );
   }
 
-  /* ==================================================
+  /* =======================================================
      PAYMENTS
-  ================================================== */
+  ======================================================= */
 
   if (page === "payments") {
-    const flow =
-      role === "Farmer"
-        ? [
-            "Payment Pending",
-            "Buyer Payment Initiated",
-            "Verification",
-            "Payment Received",
-            "Transaction Successful",
-          ]
-        : role === "Buyer"
-        ? [
-            "Payment Pending",
-            "Payment Initiated",
-            "Verification",
-            "Payment Completed",
-            "Transaction Successful",
-          ]
-        : [
-            "Collection Pending",
-            "Payment Processing",
-            "Member Distribution",
-            "Payment Completed",
-            "Transaction Successful",
-          ];
-
     function updatePayment() {
-      const index = flow.indexOf(paymentStatus);
+      const nextStatus =
+        paymentStatus === "Payment Pending"
+          ? "Payment Initiated"
+          : paymentStatus ===
+            "Payment Initiated"
+          ? "Verification"
+          : "Payment Received";
 
-      const next =
-        index === -1
-          ? flow[0]
-          : flow[Math.min(index + 1, flow.length - 1)];
+      setPaymentStatus(nextStatus);
 
-      setPaymentStatus(next);
-
-      if (next === "Transaction Successful") {
-        setTransactions((oldTransactions) => [
-          ...oldTransactions,
+      if (nextStatus === "Payment Received") {
+        setTransactions((previous) => [
           {
-            id: Date.now(),
-            crop: selectedLot?.crop || requirement.crop,
-            buyer: selectedBuyer?.buyer || userName,
+            id: `TXN-${Date.now()}`,
+            customer:
+              transactionDetails.buyerName ||
+              "New Buyer",
             amount:
-              selectedLot
-                ? selectedLot.quantity * selectedLot.price
-                : 0,
-            status: "Successful",
-            date: new Date().toLocaleDateString(),
-            reliability:
-              selectedBuyer?.reliability || 90,
+              Number(buyerOffer.amount) ||
+              sellingValue ||
+              25000,
+            status: "Completed",
+            paymentStatus:
+              "Payment Received",
+            date: new Date()
+              .toISOString()
+              .split("T")[0],
           },
+          ...previous,
         ]);
       }
     }
 
     return (
-      <Layout {...layoutProps} title="💳 Payment & Transaction Status">
+      <Layout
+        {...layoutProps}
+        title="💳 Payment & Transaction Tracking"
+      >
         <Card>
           <h2>{paymentStatus}</h2>
 
-          <div className="progress">
-            {flow.map((item) => (
-              <p
-                key={item}
-                className={
-                  paymentStatus === item ? "active-step" : ""
-                }
-              >
-                {item}
-              </p>
-            ))}
-          </div>
+          <p>
+            Transaction status can be viewed by
+            both buyer and farmer.
+          </p>
 
-          {paymentStatus !== "Transaction Successful" && (
+          {paymentStatus !==
+            "Payment Received" && (
             <Button onClick={updatePayment}>
-              Update Payment Status
+              Update Transaction Status
             </Button>
           )}
 
-          {paymentStatus === "Transaction Successful" && (
+          {paymentStatus ===
+            "Payment Received" && (
             <div className="success-box">
-              Transaction completed successfully and recorded in
-              transaction history.
+              Payment successfully received and
+              transaction recorded.
             </div>
           )}
         </Card>
+
+        <h2>Transaction History</h2>
+
+        <div className="grid">
+          {transactions.map((transaction) => (
+            <Card
+              key={transaction.id}
+              className="transaction-card"
+            >
+              <h3>{transaction.id}</h3>
+
+              <p>
+                Customer:
+                {transaction.customer}
+              </p>
+
+              <p>
+                Amount:
+                ₹{transaction.amount}
+              </p>
+
+              <p>
+                Status:
+                {transaction.status}
+              </p>
+
+              <p>
+                Payment:
+                {transaction.paymentStatus}
+              </p>
+
+              <p>
+                Date:
+                {transaction.date}
+              </p>
+            </Card>
+          ))}
+        </div>
       </Layout>
     );
   }
 
-  /* ==================================================
-     TRANSACTION HISTORY
-  ================================================== */
-
-  if (page === "transactions") {
-    return (
-      <Layout {...layoutProps} title="🧾 Transaction History">
-        {transactions.map((transaction) => (
-          <Card key={transaction.id}>
-            <h2>{transaction.crop}</h2>
-            <p>Customer / Buyer: {transaction.buyer}</p>
-            <p>Amount: ₹{transaction.amount}</p>
-            <p>Date: {transaction.date}</p>
-            <p>Status: {transaction.status}</p>
-            <p>Reliability: {transaction.reliability}%</p>
-          </Card>
-        ))}
-      </Layout>
-    );
-  }
-
-  /* ==================================================
-     ORDERS
-  ================================================== */
+  /* =======================================================
+     ORDER TRACKING
+  ======================================================= */
 
   if (page === "orders") {
-    const flow =
-      role === "Farmer"
-        ? [
-            "Order Received",
-            "Order Accepted",
-            "Pickup Scheduled",
-            "Collected",
-            "Payment Received",
-          ]
-        : role === "Buyer"
-        ? [
-            "Order Received",
-            "Order Accepted",
-            "Pickup Scheduled",
-            "In Transit",
-            "Delivered",
-            "Payment Completed",
-          ]
-        : [
-            "Aggregation Planned",
-            "Collection Scheduled",
-            "Collected",
-            "Bulk Dispatch",
-            "Delivered",
-            "Payment Completed",
-          ];
+    const flow = [
+      "Order Received",
+      "Order Accepted",
+      "Pickup Scheduled",
+      "Collected",
+      "In Transit",
+      "Delivered",
+      "Payment Completed",
+    ];
 
     function updateOrder() {
       const index = flow.indexOf(orderStatus);
 
       const next =
-        index === -1
-          ? flow[0]
-          : flow[Math.min(index + 1, flow.length - 1)];
+        flow[
+          Math.min(
+            index + 1,
+            flow.length - 1
+          )
+        ];
 
       setOrderStatus(next);
+
+      if (next === "In Transit") {
+        setTrackingProgress(60);
+      }
+
+      if (next === "Delivered") {
+        setTrackingProgress(100);
+      }
     }
 
     return (
-      <Layout {...layoutProps} title="📦 Order Tracking">
+      <Layout
+        {...layoutProps}
+        title="📦 Order Tracking"
+      >
         <Card>
           <h2>{orderStatus}</h2>
 
@@ -2037,7 +3099,9 @@ function App() {
               <p
                 key={item}
                 className={
-                  orderStatus === item ? "active-step" : ""
+                  item === orderStatus
+                    ? "active-step"
+                    : ""
                 }
               >
                 {item}
@@ -2045,114 +3109,123 @@ function App() {
             ))}
           </div>
 
-          {orderStatus !== flow[flow.length - 1] && (
+          {orderStatus !==
+            "Payment Completed" && (
             <Button onClick={updateOrder}>
               Update Order Status
             </Button>
           )}
 
-          <Button
-            className="secondary"
-            onClick={() => navigate("disputes")}
-          >
-            Raise Issue
-          </Button>
+          <p>
+            Farmer updates order progress and
+            buyer can see the latest status.
+          </p>
         </Card>
       </Layout>
     );
   }
 
-  /* ==================================================
-     DISPUTES
-  ================================================== */
+  /* =======================================================
+     LOGIN HISTORY
+  ======================================================= */
 
-  if (page === "disputes") {
-    function submitDispute() {
-      if (!dispute) {
-        alert("Please select an issue.");
-        return;
-      }
-
-      alert(`${dispute} submitted successfully.`);
-      setDispute("");
-    }
-
+  if (page === "login-history") {
     return (
-      <Layout {...layoutProps} title="⚖️ Dispute & Grievance">
+      <Layout
+        {...layoutProps}
+        title="📜 Login History"
+      >
         <Card>
-          <Select
-            label="Issue Type"
-            value={dispute}
-            onChange={(e) => setDispute(e.target.value)}
-          >
-            <option value="">Select an issue</option>
-            <option>Payment Issue</option>
-            <option>Quantity Issue</option>
-            <option>Quality Issue</option>
-            <option>Delivery Issue</option>
-            <option>Transaction Issue</option>
-          </Select>
+          {loginHistory.length === 0 ? (
+            <p>
+              Login history for this session will
+              appear here.
+            </p>
+          ) : (
+            loginHistory.map((item, index) => (
+              <div
+                key={index}
+                className="login-history-item"
+              >
+                <strong>{item.name}</strong>
 
-          <Button onClick={submitDispute}>
-            Submit Issue
-          </Button>
+                <span>{item.role}</span>
+
+                <span>{item.time}</span>
+              </div>
+            ))
+          )}
         </Card>
       </Layout>
     );
   }
 
-  /* ==================================================
-     OFFLINE SUPPORT
-  ================================================== */
+  /* =======================================================
+     OFFLINE MODE
+  ======================================================= */
 
   if (page === "offline-support") {
     return (
-      <Layout {...layoutProps} title="📡 Offline Support">
+      <Layout
+        {...layoutProps}
+        title="📡 Offline Support"
+      >
         <Card>
           <h2>
-            Current Mode: {online ? "Online" : "Offline"}
+            Current Mode:
+            {online
+              ? " Online"
+              : " Offline"}
           </h2>
 
           <p>
-            Previously loaded crop and market information remains
-            accessible.
+            Previously loaded information remains
+            available. Prototype actions can be
+            synchronized when connectivity returns.
           </p>
 
-          <p>
-            Actions can be synchronized when the connection returns.
-          </p>
-
-          <Button onClick={() => setOnline((old) => !old)}>
-            {online ? "Simulate Offline" : "Restore Internet"}
+          <Button
+            onClick={() =>
+              setOnline(
+                (previous) => !previous
+              )
+            }
+          >
+            {online
+              ? "Simulate Offline Mode"
+              : "Restore Internet"}
           </Button>
         </Card>
       </Layout>
     );
   }
 
-  /* ==================================================
+  /* =======================================================
      PROFILE
-  ================================================== */
+  ======================================================= */
 
   if (page === "profile") {
     return (
-      <Layout {...layoutProps} title="👤 Profile">
+      <Layout
+        {...layoutProps}
+        title="👤 Profile"
+      >
         <Card>
           <h2>{userName}</h2>
 
-          <p>
-            Role: <strong>{role}</strong>
-          </p>
+          <p>Role: {role}</p>
+
+          <p>Contact: {contact}</p>
 
           <p>
-            Contact: <strong>{contact}</strong>
+            Language:
+            {language}
           </p>
 
-          <p>
-            Language: <strong>{language}</strong>
-          </p>
-
-          <Button className="danger" onClick={logout}>
+          <Button
+            className="danger"
+            onClick={logout}
+          >
             🚪 {t.logout}
           </Button>
         </Card>
@@ -2160,14 +3233,17 @@ function App() {
     );
   }
 
-  /* ==================================================
+  /* =======================================================
      FALLBACK
-  ================================================== */
+  ======================================================= */
 
   return (
-    <Layout {...layoutProps} title="Application">
+    <Layout
+      {...layoutProps}
+      title="Page Not Found"
+    >
       <Card>
-        <h2>Page not found.</h2>
+        <p>The requested page was not found.</p>
 
         <Button onClick={goDashboard}>
           Go to Dashboard

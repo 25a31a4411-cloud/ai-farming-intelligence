@@ -1,10 +1,44 @@
-/* ==================================================
-   GLOBAL RESET
-================================================== */
+/* =========================================================
+   AI FARMING SELLING INTELLIGENCE
+   FINAL HACKATHON PROTOTYPE - APP.CSS
+========================================================= */
 
 * {
   box-sizing: border-box;
 }
+
+:root {
+  --primary: #166534;
+  --primary-dark: #14532d;
+  --primary-light: #dcfce7;
+  --secondary: #f0fdf4;
+
+  --success: #16a34a;
+  --warning: #ca8a04;
+  --warning-bg: #fef9c3;
+
+  --danger: #dc2626;
+  --danger-bg: #fee2e2;
+
+  --info: #2563eb;
+  --info-bg: #dbeafe;
+
+  --text: #1f2937;
+  --muted: #6b7280;
+
+  --border: #d1d5db;
+  --card-border: #e5e7eb;
+
+  --background: #f4f7f2;
+  --white: #ffffff;
+
+  --shadow:
+    0 8px 25px rgba(20, 83, 45, 0.08);
+}
+
+/* =========================================================
+   BASE
+========================================================= */
 
 html {
   scroll-behavior: smooth;
@@ -13,9 +47,16 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f3f7f2;
-  color: #1f2937;
+
+  font-family:
+    Arial,
+    Helvetica,
+    "Noto Sans Telugu",
+    "Noto Sans Devanagari",
+    sans-serif;
+
+  background: var(--background);
+  color: var(--text);
 }
 
 button,
@@ -34,102 +75,145 @@ button:disabled {
   opacity: 0.6;
 }
 
-/* ==================================================
-   MAIN APPLICATION
-================================================== */
+input,
+select,
+textarea {
+  color: var(--text);
+}
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+/* =========================================================
+   APP
+========================================================= */
 
 .app {
   min-height: 100vh;
+
   background:
     radial-gradient(
       circle at top right,
-      rgba(134, 239, 172, 0.16),
-      transparent 32%
+      rgba(220, 252, 231, 0.8),
+      transparent 35%
     ),
     linear-gradient(
       135deg,
-      #f7fbf6,
+      #f8fcf7,
       #eef7ec
     );
 }
 
-/* ==================================================
-   TOP NAVIGATION BAR
-================================================== */
+/* =========================================================
+   TOP BAR
+========================================================= */
 
 .topbar {
   width: 100%;
-  padding: 16px 7%;
-  background: linear-gradient(
-    135deg,
-    #14532d,
-    #15803d
-  );
+
+  background:
+    linear-gradient(
+      135deg,
+      #14532d,
+      #166534
+    );
+
   color: white;
 
+  padding: 16px 7%;
+
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+
   gap: 20px;
 
+  position: sticky;
+  top: 0;
+
+  z-index: 100;
+
   box-shadow:
-    0 3px 15px
-    rgba(0, 0, 0, 0.14);
+    0 3px 15px rgba(0, 0, 0, 0.14);
 }
 
+.brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand h2,
 .topbar h2 {
-  margin: 0 0 5px;
+  margin: 0;
+
   font-size: 21px;
+  font-weight: 800;
 }
 
+.brand small,
 .topbar small {
-  opacity: 0.9;
+  margin-top: 4px;
+
+  opacity: 0.85;
+
   font-size: 13px;
 }
 
 .top-info {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
+
+  flex-wrap: wrap;
+
   gap: 10px;
 }
 
 .top-info span {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 5px;
+
   padding: 7px 12px;
-  border-radius: 999px;
+
+  border-radius: 20px;
 
   font-size: 13px;
-  font-weight: 600;
 
   background:
-    rgba(255, 255, 255, 0.15);
+    rgba(255, 255, 255, 0.14);
 }
 
-.online {
-  background: #15803d !important;
+.top-info .online {
+  background: #15803d;
 }
 
-.offline {
-  background: #b45309 !important;
+.top-info .offline {
+  background: #b45309;
 }
 
-/* ==================================================
-   PAGE CONTENT
-================================================== */
+/* =========================================================
+   CONTENT
+========================================================= */
 
 .content {
   width: min(1180px, 92%);
+
   margin: auto;
-  padding: 35px 0 25px;
+
+  padding:
+    32px 0
+    28px;
 }
 
 .content > h1 {
   margin:
-    0
-    0
+    0 0
     25px;
 
-  color: #14532d;
+  color: var(--primary-dark);
 
   font-size:
     clamp(
@@ -138,19 +222,19 @@ button:disabled {
       36px
     );
 
-  font-weight: 750;
+  font-weight: 800;
 }
 
-/* ==================================================
-   CARDS
-================================================== */
+/* =========================================================
+   CARD
+========================================================= */
 
 .card {
-  background: white;
+  background: var(--white);
 
   border:
     1px solid
-    #e2ebe0;
+    var(--card-border);
 
   border-radius: 18px;
 
@@ -159,8 +243,7 @@ button:disabled {
   margin-bottom: 18px;
 
   box-shadow:
-    0 7px 24px
-    rgba(20, 83, 45, 0.08);
+    var(--shadow);
 
   transition:
     transform 0.2s ease,
@@ -169,16 +252,18 @@ button:disabled {
 }
 
 .card:hover {
+  transform:
+    translateY(-2px);
+
   box-shadow:
-    0 10px 28px
+    0 12px 30px
     rgba(20, 83, 45, 0.11);
 }
 
 .card h1,
 .card h2,
-.card h3,
-.card h4 {
-  color: #14532d;
+.card h3 {
+  color: var(--primary-dark);
 }
 
 .card h1 {
@@ -193,8 +278,15 @@ button:disabled {
   margin-top: 0;
 }
 
+.card p {
+  line-height: 1.6;
+}
+
 .selected {
-  border: 2px solid #22c55e;
+  border:
+    2px solid
+    #22c55e;
+
   background:
     linear-gradient(
       135deg,
@@ -203,61 +295,43 @@ button:disabled {
     );
 }
 
-/* ==================================================
-   DASHBOARD GRID
-================================================== */
+/* =========================================================
+   GRID
+========================================================= */
 
 .grid {
   display: grid;
+
   gap: 18px;
 }
 
 .grid.two {
   grid-template-columns:
-    repeat(2, minmax(0, 1fr));
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
 }
 
 .grid.three {
   grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-}
-
-.grid.four {
-  grid-template-columns:
-    repeat(4, minmax(0, 1fr));
+    repeat(
+      3,
+      minmax(0, 1fr)
+    );
 }
 
 .grid .card {
   margin-bottom: 0;
 }
 
-/* ==================================================
-   DASHBOARD MENU CARDS
-================================================== */
-
-.grid.three .card,
-.grid.two .card {
-  height: 100%;
-}
-
-.dashboard-card {
-  text-align: center;
-}
-
-.dashboard-card h2 {
-  font-size: 34px;
-}
-
-.dashboard-card h3 {
-  margin-bottom: 15px;
-}
-
-/* ==================================================
-   FORMS
-================================================== */
+/* =========================================================
+   FORM
+========================================================= */
 
 .form-card {
-  max-width: 750px;
+  width: 100%;
+  max-width: 700px;
 }
 
 .field {
@@ -268,13 +342,23 @@ button:disabled {
 
   gap: 7px;
 
-  margin-bottom: 17px;
+  margin-bottom: 18px;
+}
+
+.field label {
+  font-size: 14px;
+
+  font-weight: 700;
 
   color: #374151;
-
-  font-size: 14px;
-  font-weight: 650;
 }
+
+/*
+   IMPORTANT:
+   This styling does not cause rerendering.
+   Focus is preserved by keeping Input and
+   Select components outside App() in App.jsx.
+*/
 
 .field input,
 .field select,
@@ -282,36 +366,27 @@ button:disabled {
   width: 100%;
 
   padding:
-    12px
-    14px;
+    13px 14px;
 
   border:
     1px solid
-    #d1d5db;
+    var(--border);
 
-  border-radius: 10px;
+  border-radius: 11px;
 
   outline: none;
-
-  color: #1f2937;
 
   background: white;
 
   transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease;
-}
-
-.field textarea {
-  min-height: 110px;
-  resize: vertical;
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .field input:hover,
 .field select:hover,
 .field textarea:hover {
-  border-color: #86b99a;
+  border-color: #86efac;
 }
 
 .field input:focus,
@@ -323,7 +398,7 @@ button:disabled {
     0 0 0 3px
     rgba(34, 197, 94, 0.14);
 
-  background: #fcfffc;
+  outline: none;
 }
 
 .field input::placeholder,
@@ -331,62 +406,65 @@ button:disabled {
   color: #9ca3af;
 }
 
-/* ==================================================
+/* =========================================================
    BUTTONS
-================================================== */
+========================================================= */
 
 .btn {
   border: none;
-
-  padding:
-    11px
-    19px;
-
-  border-radius: 10px;
-
-  color: white;
 
   background:
     linear-gradient(
       135deg,
       #15803d,
-      #166534
+      #16a34a
     );
+
+  color: white;
+
+  padding:
+    11px 18px;
+
+  border-radius: 10px;
 
   font-weight: 700;
 
   margin:
-    5px
-    7px
-    5px
-    0;
+    5px 6px
+    5px 0;
 
   transition:
     transform 0.18s ease,
     box-shadow 0.18s ease,
     opacity 0.18s ease;
+
+  box-shadow:
+    0 3px 8px
+    rgba(22, 163, 74, 0.18);
 }
 
 .btn:hover:not(:disabled) {
-  transform: translateY(-1px);
+  transform:
+    translateY(-2px);
 
   box-shadow:
-    0 5px 14px
-    rgba(21, 128, 61, 0.25);
+    0 6px 15px
+    rgba(22, 163, 74, 0.25);
 }
 
 .btn:active:not(:disabled) {
-  transform: translateY(0);
+  transform:
+    translateY(0);
 }
 
 .btn.secondary {
-  color: #166534;
+  background: #e8f3e9;
 
-  background: #e8f4ea;
+  color: var(--primary);
 }
 
-.btn.secondary:hover {
-  background: #d9ecdc;
+.btn.secondary:hover:not(:disabled) {
+  background: #d8efdc;
 }
 
 .btn.success {
@@ -394,13 +472,8 @@ button:disabled {
     linear-gradient(
       135deg,
       #16a34a,
-      #15803d
+      #22c55e
     );
-}
-
-.btn.warning {
-  color: white;
-  background: #d97706;
 }
 
 .btn.danger {
@@ -408,13 +481,13 @@ button:disabled {
     linear-gradient(
       135deg,
       #dc2626,
-      #b91c1c
+      #ef4444
     );
 }
 
-/* ==================================================
-   NAVIGATION FOOTER
-================================================== */
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
 .navigation {
   width: min(1180px, 92%);
@@ -422,22 +495,19 @@ button:disabled {
   margin: auto;
 
   padding:
-    12px
-    0
+    10px 0
     35px;
 
   display: flex;
 
   justify-content: space-between;
 
-  align-items: center;
-
   gap: 15px;
 }
 
-/* ==================================================
+/* =========================================================
    SPLASH SCREEN
-================================================== */
+========================================================= */
 
 .splash {
   min-height: 100vh;
@@ -447,18 +517,16 @@ button:disabled {
   text-align: center;
 
   display: flex;
-
   flex-direction: column;
 
   justify-content: center;
-
   align-items: center;
 
   background:
     radial-gradient(
       circle at top,
-      rgba(220, 252, 231, 0.3),
-      transparent 42%
+      rgba(220, 252, 231, 0.35),
+      transparent 45%
     ),
     linear-gradient(
       135deg,
@@ -470,7 +538,7 @@ button:disabled {
 }
 
 .splash .logo {
-  font-size: 88px;
+  font-size: 90px;
 
   margin-bottom: 10px;
 
@@ -480,26 +548,37 @@ button:disabled {
     infinite;
 }
 
-.splash h1 {
-  margin:
-    10px
-    0;
+@keyframes floatLogo {
+  0%,
+  100% {
+    transform:
+      translateY(0);
+  }
 
-  max-width: 900px;
+  50% {
+    transform:
+      translateY(-8px);
+  }
+}
+
+.splash h1 {
+  max-width: 950px;
+
+  margin:
+    10px 0;
 
   font-size:
     clamp(
-      32px,
+      34px,
       6vw,
-      58px
+      62px
     );
+
+  line-height: 1.1;
 }
 
 .splash p {
-  margin:
-    0
-    0
-    30px;
+  max-width: 700px;
 
   font-size:
     clamp(
@@ -507,49 +586,43 @@ button:disabled {
       2vw,
       22px
     );
+
+  margin-bottom: 30px;
+
+  opacity: 0.95;
 }
 
 .splash .btn {
-  padding:
-    15px
-    30px;
-
   background: white;
 
-  color: #166534;
+  color: var(--primary);
 
-  font-size: 16px;
+  padding:
+    15px 30px;
+
+  font-size: 17px;
 }
 
-@keyframes floatLogo {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-/* ==================================================
-   STATUS / ALERT BOXES
-================================================== */
+/* =========================================================
+   STATUS BOXES
+========================================================= */
 
 .warning {
   margin: 15px 0;
 
   padding: 15px;
 
-  border-left:
-    4px solid
-    #eab308;
+  border-radius: 12px;
 
-  border-radius: 10px;
-
-  background: #fff9db;
+  background: var(--warning-bg);
 
   color: #854d0e;
+
+  border-left:
+    5px solid
+    #eab308;
+
+  line-height: 1.6;
 }
 
 .success-box {
@@ -557,31 +630,17 @@ button:disabled {
 
   padding: 15px;
 
-  border-left:
-    4px solid
-    #22c55e;
-
-  border-radius: 10px;
+  border-radius: 12px;
 
   background: #dcfce7;
 
   color: #166534;
-}
-
-.error-box {
-  margin: 15px 0;
-
-  padding: 15px;
 
   border-left:
-    4px solid
-    #dc2626;
+    5px solid
+    #22c55e;
 
-  border-radius: 10px;
-
-  background: #fee2e2;
-
-  color: #991b1b;
+  line-height: 1.6;
 }
 
 .info-box {
@@ -589,86 +648,41 @@ button:disabled {
 
   padding: 15px;
 
+  border-radius: 12px;
+
+  background: var(--info-bg);
+
+  color: #1d4ed8;
+
   border-left:
-    4px solid
+    5px solid
     #2563eb;
-
-  border-radius: 10px;
-
-  background: #eff6ff;
-
-  color: #1e40af;
 }
 
-/* ==================================================
-   AI SCORE
-================================================== */
+/* =========================================================
+   SCORE
+========================================================= */
 
 .score {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  min-height: 150px;
-
   font-size:
     clamp(
-      45px,
+      42px,
       8vw,
-      75px
+      74px
     );
 
-  font-weight: 800;
-
-  color: #15803d;
+  font-weight: 900;
 
   text-align: center;
 
-  background:
-    radial-gradient(
-      circle,
-      #f0fdf4,
-      transparent 70%
-    );
+  color: var(--success);
+
+  padding: 20px;
 }
 
-/* ==================================================
-   AI RECOMMENDATION CARDS
-================================================== */
-
-.recommendation-card {
-  position: relative;
-
-  overflow: hidden;
-}
-
-.recommendation-card::before {
-  content: "";
-
-  position: absolute;
-
-  left: 0;
-  top: 0;
-
-  width: 5px;
-  height: 100%;
-
-  background: #22c55e;
-}
-
-.recommendation-title {
-  display: flex;
-
-  align-items: center;
-
-  gap: 10px;
-}
-
-/* ==================================================
-   QUICK BUTTONS
-================================================== */
+/* =========================================================
+   QUICK ACTIONS
+========================================================= */
 
 .quick-buttons {
   display: flex;
@@ -680,9 +694,9 @@ button:disabled {
   margin-bottom: 20px;
 }
 
-/* ==================================================
-   MESSAGES / CUSTOMER QUESTIONS
-================================================== */
+/* =========================================================
+   MESSAGES
+========================================================= */
 
 .messages {
   max-height: 350px;
@@ -695,13 +709,12 @@ button:disabled {
 }
 
 .messages p {
-  padding: 12px;
-
-  margin:
-    8px
-    0;
+  padding: 12px 14px;
 
   border-radius: 12px;
+
+  margin:
+    10px 0;
 
   line-height: 1.5;
 }
@@ -711,7 +724,7 @@ button:disabled {
 
   border-left:
     4px solid
-    #16a34a;
+    #22c55e;
 }
 
 .ai-msg {
@@ -719,495 +732,56 @@ button:disabled {
 
   border-left:
     4px solid
-    #6b7280;
+    #9ca3af;
 }
 
-.farmer-msg {
-  background: #eff6ff;
-
-  border-left:
-    4px solid
-    #2563eb;
-}
-
-/* ==================================================
-   PROGRESS TRACKING
-================================================== */
+/* =========================================================
+   ORDER PROGRESS
+========================================================= */
 
 .progress {
-  margin:
-    20px
-    0;
+  margin: 20px 0;
 }
 
 .progress p {
-  margin: 0;
-
-  padding:
-    11px
-    12px;
+  padding: 12px 15px;
 
   border-left:
     4px solid
     #d1d5db;
 
-  color: #6b7280;
+  background: #f9fafb;
 
-  background: #fafafa;
-}
+  margin: 8px 0;
 
-.progress p:first-child {
   border-radius:
-    10px
-    10px
-    0
-    0;
-}
-
-.progress p:last-child {
-  border-radius:
-    0
-    0
-    10px
-    10px;
+    0 10px 10px 0;
 }
 
 .active-step {
   border-left-color:
     #16a34a !important;
 
-  color:
-    #166534 !important;
-
   background:
     #f0fdf4 !important;
 
-  font-weight: 750;
-}
-
-/* ==================================================
-   RISK INDICATORS
-================================================== */
-
-.risk-low {
-  color: #15803d;
-
-  font-weight: 700;
-}
-
-.risk-medium {
-  color: #b45309;
-
-  font-weight: 700;
-}
-
-.risk-high {
-  color: #b91c1c;
-
-  font-weight: 700;
-}
-
-.risk-card {
-  border-left:
-    5px solid
-    #eab308;
-}
-
-.risk-card.high {
-  border-left-color:
-    #dc2626;
-}
-
-.risk-card.low {
-  border-left-color:
-    #16a34a;
-}
-
-/* ==================================================
-   TRANSACTION STATUS
-================================================== */
-
-.transaction-success {
-  color: #15803d;
-
-  font-weight: 750;
-}
-
-.transaction-pending {
-  color: #b45309;
-
-  font-weight: 750;
-}
-
-.transaction-failed {
-  color: #b91c1c;
-
-  font-weight: 750;
-}
-
-.transaction-card {
-  border-left:
-    5px solid
-    #2563eb;
-}
-
-/* ==================================================
-   CUSTOMER HISTORY
-================================================== */
-
-.history-item {
-  padding: 15px;
-
-  border:
-    1px solid
-    #e5e7eb;
-
-  border-radius: 12px;
-
-  margin-bottom: 12px;
-
-  background: #fafdf9;
-}
-
-.history-item h3 {
-  margin:
-    0
-    0
-    8px;
-}
-
-.history-item p {
-  margin:
-    5px
-    0;
-}
-
-/* ==================================================
-   STORAGE FEASIBILITY
-================================================== */
-
-.feasibility-score {
-  font-size: 42px;
-
-  font-weight: 800;
-
-  color: #15803d;
-
-  text-align: center;
-
-  padding: 20px;
-}
-
-.feasible {
-  border-left:
-    5px solid
-    #16a34a;
-}
-
-.not-feasible {
-  border-left:
-    5px solid
-    #dc2626;
-}
-
-/* ==================================================
-   FUTURE CROP PREDICTION
-================================================== */
-
-.prediction-card {
-  position: relative;
-
-  overflow: hidden;
-
-  border-left:
-    5px solid
-    #7c3aed;
-}
-
-.prediction-score {
-  font-size: 35px;
-
-  font-weight: 800;
-
-  color: #6d28d9;
-}
-
-.demand-high {
-  color: #15803d;
-  font-weight: 750;
-}
-
-.demand-medium {
-  color: #b45309;
-  font-weight: 750;
-}
-
-.demand-low {
-  color: #b91c1c;
-  font-weight: 750;
-}
-
-/* ==================================================
-   LOGISTICS
-================================================== */
-
-.logistics-card {
-  border-left:
-    5px solid
-    #2563eb;
-}
-
-.cost-value {
-  color: #14532d;
-
-  font-size: 26px;
+  color:
+    #166534 !important;
 
   font-weight: 800;
 }
 
-.location-box {
-  padding: 14px;
+/* =========================================================
+   TEXT UTILITIES
+========================================================= */
 
-  border-radius: 10px;
-
-  background: #eff6ff;
-
-  border:
-    1px solid
-    #bfdbfe;
-
-  color: #1e40af;
-
-  margin: 12px 0;
+.muted {
+  color: var(--muted);
 }
 
-/* ==================================================
-   NET RETURN
-================================================== */
-
-.net-return {
-  padding: 20px;
-
-  border-radius: 14px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #ecfdf5,
-      #f0fdf4
-    );
-
-  border:
-    1px solid
-    #bbf7d0;
-
-  margin: 15px 0;
-}
-
-.net-return h2 {
-  margin: 0;
-
-  color: #15803d;
-}
-
-.net-return-value {
-  font-size:
-    clamp(
-      30px,
-      5vw,
-      50px
-    );
-
-  font-weight: 800;
-
-  color: #166534;
-}
-
-/* ==================================================
-   EXPLAINABLE AI
-================================================== */
-
-.explainable-ai {
-  border-left:
-    5px solid
-    #7c3aed;
-
-  background:
-    linear-gradient(
-      135deg,
-      #faf5ff,
-      #ffffff
-    );
-}
-
-.explainable-ai h3 {
-  color: #6d28d9;
-}
-
-.ai-factor {
-  padding: 12px;
-
-  margin: 8px 0;
-
-  border-radius: 9px;
-
-  background: white;
-
-  border:
-    1px solid
-    #e9d5ff;
-}
-
-/* ==================================================
-   AI RELIABILITY SCORE
-================================================== */
-
-.reliability-score {
-  font-size: 46px;
-
-  font-weight: 800;
-
-  color: #15803d;
-
+.center {
   text-align: center;
 }
-
-.reliability-details {
-  display: grid;
-
-  grid-template-columns:
-    repeat(
-      auto-fit,
-      minmax(150px, 1fr)
-    );
-
-  gap: 12px;
-}
-
-.reliability-item {
-  padding: 14px;
-
-  border-radius: 10px;
-
-  background: #f8fafc;
-
-  border:
-    1px solid
-    #e5e7eb;
-}
-
-/* ==================================================
-   MARKET DATA
-================================================== */
-
-.market-price {
-  font-size: 32px;
-
-  font-weight: 800;
-
-  color: #15803d;
-}
-
-.market-positive {
-  color: #15803d;
-}
-
-.market-negative {
-  color: #dc2626;
-}
-
-/* ==================================================
-   TABLE STYLE
-================================================== */
-
-.table-container {
-  width: 100%;
-
-  overflow-x: auto;
-
-  border-radius: 12px;
-
-  border:
-    1px solid
-    #e5e7eb;
-}
-
-table {
-  width: 100%;
-
-  border-collapse: collapse;
-
-  background: white;
-}
-
-th,
-td {
-  padding: 13px;
-
-  text-align: left;
-
-  border-bottom:
-    1px solid
-    #e5e7eb;
-}
-
-th {
-  background: #f0fdf4;
-
-  color: #14532d;
-
-  font-weight: 750;
-}
-
-tr:hover td {
-  background: #fafdf9;
-}
-
-/* ==================================================
-   BADGES
-================================================== */
-
-.badge {
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 5px;
-
-  padding:
-    5px
-    10px;
-
-  border-radius: 999px;
-
-  font-size: 12px;
-
-  font-weight: 700;
-}
-
-.badge.success {
-  color: #166534;
-  background: #dcfce7;
-}
-
-.badge.warning {
-  color: #92400e;
-  background: #fef3c7;
-}
-
-.badge.danger {
-  color: #991b1b;
-  background: #fee2e2;
-}
-
-.badge.info {
-  color: #1e40af;
-  background: #dbeafe;
-}
-
-/* ==================================================
-   DIVIDERS
-================================================== */
 
 hr {
   border: none;
@@ -1216,80 +790,297 @@ hr {
     1px solid
     #e5e7eb;
 
+  margin: 22px 0;
+}
+
+/* =========================================================
+   CROP IMAGE / CAMERA
+========================================================= */
+
+.crop-preview,
+.image-preview {
+  width: 100%;
+
+  max-width: 420px;
+
+  max-height: 300px;
+
+  object-fit: cover;
+
+  border-radius: 14px;
+
   margin:
-    22px
-    0;
+    12px 0;
+
+  border:
+    1px solid
+    #d1d5db;
 }
 
-/* ==================================================
-   MUTED TEXT
-================================================== */
+.camera-box {
+  padding: 18px;
 
-.muted {
-  color: #6b7280;
+  border:
+    2px dashed
+    #86efac;
+
+  border-radius: 14px;
+
+  background:
+    #f0fdf4;
+
+  margin: 15px 0;
 }
 
-.small-text {
-  font-size: 13px;
+/* =========================================================
+   LIVE LOCATION TRACKING
+========================================================= */
+
+.location-tracker {
+  position: relative;
+
+  padding: 20px;
+
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eff6ff,
+      #f0fdf4
+    );
+
+  border:
+    1px solid
+    #bfdbfe;
 }
 
-/* ==================================================
-   EMPTY STATE
-================================================== */
+.location-route {
+  height: 8px;
 
-.empty-state {
-  padding: 35px 20px;
+  width: 100%;
 
-  text-align: center;
+  margin: 18px 0;
 
-  color: #6b7280;
+  border-radius: 20px;
+
+  background: #d1d5db;
+
+  overflow: hidden;
 }
 
-.empty-state h3 {
-  color: #374151;
+.location-progress {
+  height: 100%;
+
+  width: 50%;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      #16a34a,
+      #2563eb
+    );
+
+  transition:
+    width 0.4s ease;
 }
 
-/* ==================================================
-   LOADING
-================================================== */
+/* =========================================================
+   TRANSACTION STATUS
+========================================================= */
 
-.loading {
-  text-align: center;
+.transaction-card {
+  border-left:
+    5px solid
+    #16a34a;
+}
 
-  padding: 30px;
+.transaction-pending {
+  border-left-color:
+    #eab308;
+}
 
+.transaction-completed {
+  border-left-color:
+    #16a34a;
+}
+
+.transaction-risk-high {
+  border-left-color:
+    #dc2626;
+}
+
+.transaction-risk-medium {
+  border-left-color:
+    #f59e0b;
+}
+
+.transaction-risk-low {
+  border-left-color:
+    #16a34a;
+}
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+.badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding:
+    5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  margin-right: 6px;
+}
+
+.badge.success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge.warning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge.danger {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.badge.info {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+/* =========================================================
+   STORAGE CENTER CARDS
+========================================================= */
+
+.storage-center {
+  border-left:
+    5px solid
+    #2563eb;
+}
+
+.storage-charge {
   color: #166534;
 
-  font-weight: 700;
+  font-size: 20px;
+
+  font-weight: 800;
 }
 
-/* ==================================================
-   RESPONSIVE TABLET
-================================================== */
+/* =========================================================
+   FARMER DETAILS
+========================================================= */
 
-@media (max-width: 1000px) {
-  .grid.three,
-  .grid.four {
+.farmer-profile {
+  display: flex;
+
+  gap: 18px;
+
+  align-items: flex-start;
+
+  flex-wrap: wrap;
+}
+
+.farmer-photo {
+  width: 120px;
+  height: 120px;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+
+  border:
+    4px solid
+    #dcfce7;
+}
+
+.farmer-details {
+  flex: 1;
+
+  min-width: 200px;
+}
+
+/* =========================================================
+   VOICE BUTTON
+========================================================= */
+
+.voice-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+.listening {
+  animation:
+    listeningPulse
+    1.2s infinite;
+}
+
+@keyframes listeningPulse {
+  0% {
+    box-shadow:
+      0 0 0 0
+      rgba(220, 38, 38, 0.5);
+  }
+
+  70% {
+    box-shadow:
+      0 0 0 12px
+      rgba(220, 38, 38, 0);
+  }
+
+  100% {
+    box-shadow:
+      0 0 0 0
+      rgba(220, 38, 38, 0);
+  }
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 950px) {
+  .grid.three {
     grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-  }
-
-  .content {
-    width: min(94%, 900px);
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
   }
 }
 
-/* ==================================================
-   RESPONSIVE MOBILE
-================================================== */
+@media (max-width: 800px) {
+  .grid.two,
+  .grid.three {
+    grid-template-columns: 1fr;
+  }
 
-@media (max-width: 700px) {
   .topbar {
-    padding: 16px 5%;
+    position: relative;
 
     flex-direction: column;
 
     align-items: flex-start;
+
+    padding:
+      16px 5%;
   }
 
   .top-info {
@@ -1297,19 +1088,13 @@ hr {
   }
 
   .content {
-    width: 92%;
+    width: 94%;
 
     padding-top: 25px;
   }
 
-  .grid.two,
-  .grid.three,
-  .grid.four {
-    grid-template-columns: 1fr;
-  }
-
   .navigation {
-    width: 92%;
+    width: 94%;
 
     flex-direction: column;
   }
@@ -1317,68 +1102,45 @@ hr {
   .navigation .btn {
     width: 100%;
 
-    margin: 0;
+    margin: 4px 0;
   }
 
   .card {
     padding: 18px;
+  }
 
-    border-radius: 15px;
+  .farmer-profile {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 500px) {
+  .splash {
+    padding: 20px;
+  }
+
+  .splash .logo {
+    font-size: 65px;
   }
 
   .btn {
     width: 100%;
 
     margin:
-      7px
-      0;
-  }
-
-  .quick-buttons .btn {
-    width: auto;
+      6px 0;
   }
 
   .top-info .btn {
     width: auto;
   }
 
-  .splash {
-    padding: 20px;
-  }
-
-  .splash .logo {
-    font-size: 70px;
-  }
-
   .field input,
   .field select,
   .field textarea {
-    padding: 13px;
-  }
-}
-
-/* ==================================================
-   SMALL MOBILE DEVICES
-================================================== */
-
-@media (max-width: 420px) {
-  .content > h1 {
-    font-size: 25px;
-  }
-
-  .topbar h2 {
-    font-size: 18px;
-  }
-
-  .card {
-    padding: 15px;
+    font-size: 16px;
   }
 
   .score {
-    font-size: 48px;
-  }
-
-  .reliability-score {
-    font-size: 38px;
+    font-size: 52px;
   }
 }
