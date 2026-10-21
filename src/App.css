@@ -1144,3 +1144,221 @@ hr {
     font-size: 52px;
   }
 }
+
+/* =========================================================
+   FARMER SMART CENTER ADDITIONS
+========================================================= */
+.prototype-notice {
+  padding: 12px 14px;
+  border-left: 4px solid #ca8a04;
+  border-radius: 8px;
+  background: #fffbeb;
+  color: #713f12;
+  line-height: 1.55;
+}
+
+.smart-result {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid #bbf7d0;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #f0fdf4, #ffffff);
+  line-height: 1.65;
+}
+
+.smart-result h3 { margin-top: 0; color: var(--primary-dark); }
+.smart-result p:last-child { margin-bottom: 0; }
+.crop-doctor-image {
+  display: block;
+  width: min(100%, 480px);
+  max-height: 360px;
+  object-fit: contain;
+  margin: 14px 0;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: #f9fafb;
+}
+.profit-positive { color: #15803d !important; }
+.profit-negative { color: #b91c1c !important; }
+
+@media (max-width: 600px) {
+  .smart-result { padding: 14px; }
+  .crop-doctor-image { max-height: 260px; }
+}
+
+
+/* =========================================================
+   FARMER DASHBOARD - MODERN SMART FARM WORKSPACE
+========================================================= */
+.farmer-welcome-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(210px, .7fr);
+  gap: 24px;
+  align-items: center;
+  padding: clamp(24px, 4vw, 42px);
+  margin-bottom: 32px;
+  color: #f0fdf4;
+  border: 1px solid rgba(187, 247, 208, .35);
+  border-radius: 24px;
+  background: radial-gradient(circle at 85% 15%, rgba(134, 239, 172, .28), transparent 34%), linear-gradient(125deg, #123d2a, #166534 62%, #15803d);
+  box-shadow: 0 18px 42px rgba(20, 83, 45, .18);
+  overflow: hidden;
+}
+.farmer-welcome-copy h2 { margin: 10px 0 12px; color: #fff; font-size: clamp(25px, 3vw, 36px); line-height: 1.15; }
+.farmer-welcome-copy p { max-width: 680px; margin: 0; color: #dcfce7; font-size: 16px; line-height: 1.7; }
+.dashboard-eyebrow { display: inline-block; color: #15803d; font-size: 11px; font-weight: 800; letter-spacing: .13em; line-height: 1.5; }
+.farmer-welcome-panel .dashboard-eyebrow { color: #bbf7d0; }
+.farmer-hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.farmer-hero-actions .btn { margin: 0; }
+.farmer-hero-stat { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; padding: 22px; border: 1px solid rgba(220, 252, 231, .25); border-radius: 18px; background: rgba(5, 46, 22, .25); backdrop-filter: blur(8px); }
+.hero-stat-icon { font-size: 30px; }
+.hero-stat-label, .hero-stat-caption { color: #dcfce7; font-size: 12px; }
+.farmer-hero-stat strong { color: #fff; font-size: 42px; line-height: 1.1; }
+.dashboard-section { margin: 30px 0 38px; }
+.dashboard-section-heading { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
+.dashboard-section-heading h2 { margin: 5px 0 0; color: #14532d; font-size: clamp(21px, 2.2vw, 27px); }
+.dashboard-section-heading p { max-width: 440px; margin: 0 0 2px; color: #64748b; font-size: 13px; line-height: 1.6; }
+.farmer-core-grid .card { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; border-top: 3px solid #86efac; }
+.farmer-action-card h3 { margin: 4px 0 0; }
+.farmer-action-card p { flex: 1; margin: 0 0 8px; color: #64748b; font-size: 14px; }
+.farmer-action-card .btn { margin-top: auto; }
+.farmer-card-icon { display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; flex: 0 0 46px; border-radius: 14px; background: #dcfce7; font-size: 23px; }
+.farmer-smart-section { padding: clamp(18px, 3vw, 28px); border: 1px solid #dcefe0; border-radius: 24px; background: linear-gradient(145deg, rgba(240, 253, 244, .85), rgba(255,255,255,.96)); }
+.farmer-smart-tile { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 19px; border: 1px solid #e0e9e1; border-radius: 17px; background: #fff; color: #1f2937; text-align: left; box-shadow: 0 4px 14px rgba(20, 83, 45, .045); transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+.farmer-smart-tile:hover { transform: translateY(-3px); border-color: #86efac; box-shadow: 0 12px 24px rgba(20, 83, 45, .10); }
+.farmer-smart-tile:focus-visible, .farmer-operation-tile:focus-visible { outline: 3px solid #22c55e; outline-offset: 3px; }
+.farmer-tile-top { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.farmer-tile-tag { padding: 5px 8px; border-radius: 999px; background: #f0fdf4; color: #166534; font-size: 10px; font-weight: 800; letter-spacing: .04em; }
+.farmer-smart-tile > strong { color: #14532d; font-size: 16px; }
+.farmer-tile-description { flex: 1; color: #64748b; font-size: 13px; line-height: 1.55; }
+.farmer-tile-link { display: flex; justify-content: space-between; width: 100%; padding-top: 9px; border-top: 1px solid #eef2ef; color: #15803d; font-size: 12px; font-weight: 800; }
+.dashboard-data-note { margin: 16px 2px 0; padding: 12px 14px; border-left: 3px solid #d97706; border-radius: 8px; background: #fffbeb; color: #854d0e; font-size: 12px; line-height: 1.6; }
+.farmer-operations-grid { gap: 12px; }
+.farmer-operation-tile { display: flex; align-items: center; gap: 12px; min-height: 66px; padding: 15px; border: 1px solid #e5e7eb; border-radius: 14px; background: #fff; color: #334155; text-align: left; transition: border-color .18s ease, background .18s ease; }
+.farmer-operation-tile:hover { border-color: #86efac; background: #f7fef8; }
+.farmer-operation-tile > span:first-child { font-size: 22px; }
+.farmer-operation-tile strong { flex: 1; font-size: 13px; }
+.operation-arrow { color: #16a34a; font-size: 19px; }
+@media (max-width: 760px) {
+  .farmer-welcome-panel { grid-template-columns: 1fr; }
+  .farmer-hero-stat { display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 12px; }
+  .hero-stat-icon { grid-row: span 2; }
+  .farmer-hero-stat strong { grid-column: 2; font-size: 32px; }
+  .hero-stat-caption { grid-column: 2; }
+  .dashboard-section-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+}
+@media (max-width: 600px) {
+  .farmer-welcome-panel { padding: 22px; border-radius: 18px; }
+  .farmer-hero-actions { flex-direction: column; align-items: stretch; }
+  .farmer-hero-actions .btn { width: 100%; }
+  .farmer-smart-section { padding: 14px; }
+  .farmer-smart-tile { padding: 15px; }
+}
+
+/* =========================================================
+   AUTH, LIVE GPS EVIDENCE, SELLING AND ORDER FLOW
+========================================================= */
+.auth-card { max-width: 640px; margin: 0 auto; }
+.auth-intro { text-align: center; margin-bottom: 1.25rem; }
+.auth-lock { display: inline-grid; place-items: center; width: 58px; height: 58px; border-radius: 18px; background: rgba(27, 125, 80, .12); font-size: 1.8rem; }
+.auth-intro h2 { margin: .7rem 0 .25rem; }
+.auth-intro p, .auth-role-note { color: var(--muted, #667085); }
+.otp-demo-panel { margin: 1rem 0; padding: 1rem; border: 1px solid rgba(27, 125, 80, .28); border-radius: 14px; background: rgba(27, 125, 80, .06); display: grid; gap: .55rem; }
+.otp-demo-panel input { width: 100%; padding: .8rem; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 1.1rem; letter-spacing: .25em; }
+.otp-demo-panel p, .prototype-notice { font-size: .88rem; line-height: 1.55; }
+.otp-verified { font-weight: 700; color: #177245; }
+.live-evidence-card { display: grid; gap: .75rem; margin: 1rem 0; padding: 1rem; border-radius: 16px; border: 1px solid rgba(25, 118, 85, .22); background: rgba(25, 118, 85, .045); }
+.gps-status { padding: .7rem .85rem; border-radius: 10px; font-weight: 700; font-size: .9rem; }
+.gps-ready { color: #126b43; background: #e6f7ed; }
+.gps-pending { color: #8a5800; background: #fff4d6; }
+.gps-coordinates { overflow-wrap: anywhere; font-size: .9rem; }
+.live-capture-panel { margin: 1rem 0; padding: 1rem; border-radius: 16px; background: #101b25; color: #fff; }
+.live-capture-panel video { display: block; width: 100%; max-height: 420px; object-fit: contain; border-radius: 12px; background: #030712; }
+.camera-actions { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: .8rem; }
+.recording-indicator { color: #ffb4b4; font-weight: 700; animation: recordPulse 1.2s ease-in-out infinite alternate; }
+@keyframes recordPulse { from { opacity: .6; } to { opacity: 1; } }
+.evidence-preview { margin: 1rem 0; padding: .85rem; border: 1px solid #cfe8d8; border-radius: 14px; background: #f5fbf7; }
+.evidence-preview p { color: #176b42; font-weight: 700; margin-bottom: 0; }
+.offer-review-card { max-width: 850px; margin-inline: auto; }
+.offer-verdict { margin: 1rem 0; padding: 1rem; border-radius: 12px; border: 1px solid transparent; }
+.offer-verdict p { margin-bottom: 0; }
+.offer-verdict.pending { background: #fff8e6; border-color: #f2d58b; color: #76500a; }
+.offer-verdict.risk { background: #fff0f0; border-color: #f2b8b8; color: #8b2525; }
+.offer-verdict.safe { background: #eaf8ef; border-color: #b8e4c7; color: #17643c; }
+.channel-status { display: inline-block; margin-top: .4rem; padding: .4rem .65rem; border-radius: 999px; background: #eef2f6; color: #334155; font-size: .82rem; font-weight: 700; }
+.transaction-stepper { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .5rem; margin-bottom: 1.25rem; }
+.transaction-stepper span { padding: .65rem .5rem; text-align: center; border-radius: 10px; background: #f0f3f6; color: #5b6472; font-size: .82rem; font-weight: 700; }
+.transaction-stepper .current { background: #e0f5e8; color: #17643c; box-shadow: inset 0 -3px #2d9860; }
+.transaction-assurance { margin: 1rem 0; padding: 1rem; border-left: 4px solid #2b8a60; border-radius: 8px; background: #f2f8f4; }
+.transaction-assurance p { margin: .35rem 0 0; }
+.order-tracking-header { margin-bottom: 1rem; }
+.order-tracking-header h2 { margin: .35rem 0; }
+.order-tracking-card .progress { display: grid; gap: .35rem; }
+.order-tracking-card .progress p { padding: .7rem .85rem; border-radius: 10px; background: #f3f5f7; }
+.order-tracking-card .progress p.active-step { background: #e0f5e8; color: #17643c; font-weight: 800; border-left: 4px solid #2b8a60; }
+@media (max-width: 680px) {
+  .transaction-stepper { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .camera-actions { flex-direction: column; }
+  .camera-actions .btn { width: 100%; }
+}
+
+/* Buyer/farmer shared transaction cards */
+.transaction-card-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-pill.status-success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.transaction-card .btn {
+  margin-top: 8px;
+}
+
+/* Buyer/farmer location maps, notifications and COD controls */
+.location-map-card { min-width: 0; }
+.location-map-frame { display: block; width: 100%; min-height: 260px; border: 0; border-radius: 14px; margin: 12px 0; background: #eef2f7; }
+.buyer-location-card { margin-bottom: 20px; }
+.notification-card { border-left: 4px solid #d97706; }
+.cod-settings-card { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.transaction-assurance { margin: 14px 0; }
+@media (max-width: 640px) { .location-map-frame { min-height: 220px; } }
+
+
+/* Professional order/payment timeline and pickup-location details */
+.transaction-location-panel, .transaction-history-list { margin-top: 18px; padding: 16px; border: 1px solid var(--border, #dbe3e8); border-radius: 14px; background: var(--surface-soft, #f8fafb); }
+.transaction-location-panel h4, .transaction-history-list h4 { margin: 0 0 12px; }
+.location-pair { display: grid; gap: 8px; margin-bottom: 12px; overflow-wrap: anywhere; }
+.map-open-link { display: inline-flex; margin-top: 8px; font-weight: 700; text-decoration: none; color: var(--primary, #16734a); }
+.map-open-link:hover { text-decoration: underline; }
+.transaction-history-event { display: grid; grid-template-columns: minmax(120px, .8fr) minmax(140px, 1fr); gap: 4px 12px; padding: 10px 0; border-top: 1px solid var(--border, #dbe3e8); }
+.transaction-history-event small { grid-column: 1 / -1; color: var(--muted, #64748b); line-height: 1.45; }
+@media (max-width: 600px) { .transaction-history-event { grid-template-columns: 1fr; } }
+
+
+/* Automatic GPS route and transport estimate */
+.location-route-summary {
+  margin: 12px 0 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--border, #d8e2dd);
+  border-radius: 14px;
+  background: var(--surface-soft, rgba(30, 120, 80, 0.06));
+  line-height: 1.6;
+}
+.location-route-summary strong { display: block; margin-bottom: 4px; }
